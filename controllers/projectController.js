@@ -8,6 +8,7 @@ exports.index = function(req, res, next) {
     res.render('projects', {
       title: 'Tom\'s site - projects',
       projects: projects,
+      page: 'projects'
     });
   });
 }

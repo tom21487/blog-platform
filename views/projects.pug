@@ -12,7 +12,7 @@ block content
   div#projects-container
     each project in projects
       div.box
-        strong.title #[p #{project.name}]
+        strong.title #[p #{project.title}]
         div.tagspace
           each tag in project.tags
             span.tag #{tag}

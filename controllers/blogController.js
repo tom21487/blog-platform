@@ -9,6 +9,7 @@ exports.index = function(req, res, next) {
     res.render('blog', {
       title: 'Tom\'s site - blog',
       blogs: blogs,
+      page: 'blog'
     });
   });
 }
