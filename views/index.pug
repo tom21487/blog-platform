@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  // About showcase
+  p#about-text
+    span.
+      Hi, I’m Tom. I like to make stuff with software. I’m a full stack
+      developer and I also write algorithms using C/C++. As my resume
+      says, I’m a student programmer/engineer.
+    | 
+    a(href='about.html') More about me
+  div.break
+
+  // Projects showcase
+  center #[p What I'm working on:]
+  div.quick-view
+    div.box
+      strong.title #[p Sleep tracker]
+      div.tagspace
+        span.tag javascript
+        span.tag working on
+      img.cover-image(src='/images/1.jpeg')
+      p.description A simple MERN stack application that may help you sleep. This app is built with React and it uses client-side fetching.
+        
+    div.box
+      strong.title #[p Quick maths]
+      div.tagspace
+        span.tag c++
+        span.tag working on      
+      img.cover-image(src='/images/2.jpg')
+      p.description C++ computer algebra system for fast problem solving.
+  center #[a(href='projects.html') #[p More projects]]
+  div.break
+        
+  // Blog showcase
+  center #[p Latest from the blog:]
+  div.quick-view
+    div.box
+      strong.title #[p Setting up a linux]
+      div.tagspace
+        span.tag javascript
+        span.tag working on
+      img.cover-image(src='/images/3.jpg')
+      p.description Ubuntu 20.04 is amazing. They've fixed a lot of their...
+
+    div.box
+      strong.title #[p Introduction to the MERN stack]
+      div.tagspace
+        span.tag c++
+        span.tag working on
+      img.cover-image(src='/images/4.jpg')
+      p.description How to get started writing full stack applications.
+  center #[a(href='blog.html') #[p More blog posts]]  

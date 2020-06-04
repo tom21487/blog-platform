@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div#page-container
+      div#content-wrap
+        include navbar.pug
+        block content
+      include footer.pug
+    script(src='/javascripts/navbar.js')
+    script(src='/javascripts/footer.js')

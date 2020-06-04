@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  p#tag-filter
+    span Filter by tag:
+    // Create a list of all tags or something
+    span.tag c++
+    span.tag javascript
+    span.tag complete
+    span.tag working on
+
+  div#projects-container
+    each project in projects
+      div.box
+        strong.title #[p #{project.name}]
+        div.tagspace
+          each tag in project.tags
+            span.tag #{tag}
+        img.cover-image(src=project.imgURL)
+        p.description #{project.description}
+    else
+      p There are no projects
+    

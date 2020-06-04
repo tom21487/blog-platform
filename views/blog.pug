@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h3 List of blogs
+  each blog in blogs
+    p #{blog.title}
+  else
+    p There are no blogs
+    
