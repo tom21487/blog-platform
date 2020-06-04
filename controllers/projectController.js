@@ -1,4 +1,6 @@
-var projectsCollection = require('../mongo').getProjects();
+var mongo = require('../mongo');
+var db = mongo.getDb();
+var projectsCollection = db.collection('projects');
 
 exports.index = function(req, res, next) {
   projectsCollection.find().toArray(function(err, projects) {

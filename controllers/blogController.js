@@ -1,4 +1,6 @@
-var blogsCollection = require('../mongo').getBlogs();
+var mongo = require('../mongo');
+var db = mongo.getDb();
+var blogsCollection = db.collection('blogs');
 
 exports.index = function(req, res, next) {
   blogsCollection.find().toArray(function(err, blogs) {

@@ -58,7 +58,7 @@ mongo.connect(function(err) {
   });
 
   process.on('SIGINT', function() {
-    client.close(function() {
+    mongo.close(function() {
       console.log('Connection to MongoDB closed by user.');
       process.exit(0);
     });
