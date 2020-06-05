@@ -12,10 +12,14 @@ module.exports = {
     });
   },
   getDb: function() {
+    if (!db || !client.isConnected()) {
+      console.error("Connection has been unexpectedly closed, unable to return database!");
+      return;
+    }
     return db;
   },
   close: function(callback) {
-    client.close(function() {
+    client.close(false, function() {
       return callback();
     });
   }
