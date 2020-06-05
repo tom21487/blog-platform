@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h3 #{project.title}
+  div.tagspace
+    each tag in project.tags
+      span.tag #{tag}
+  img.cover-image(src=project.imgURL)
+  p.description
+    span #{project.description}

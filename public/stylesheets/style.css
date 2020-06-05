@@ -1,5 +1,5 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: Helvetica, Arial, sans-serif;
   margin: 0;
 }
 
@@ -79,6 +79,10 @@ body {
 
 /* Box */
 .box {
+  /* Remove default link styling */
+  /*text-decoration: none;
+  color: black;*/
+
   display: inline-block;
   box-sizing: border-box;
   vertical-align: top;
@@ -90,7 +94,7 @@ body {
 }
 .box:hover {
   /*background-color: lightgray;*/
-  cursor: pointer;
+  /*cursor: pointer;*/
   box-shadow: 0 0 10px rgb(90, 90, 90);
 }
 .box .title {

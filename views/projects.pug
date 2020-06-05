@@ -19,7 +19,10 @@ block content
           each tag in project.tags
             span.tag #{tag}
         img.cover-image(src=project.imgURL)
-        p.description #{project.description}
+        p.description
+          span #{project.description}
+          | 
+          a(href=project.url) More.
     else
       p There are no projects
     
