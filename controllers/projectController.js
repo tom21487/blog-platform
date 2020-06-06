@@ -17,7 +17,6 @@ exports.index = function(req, res, next) {
 }
 
 exports.detail = function(req, res, next) {
-  console.log(req.params.id);
   projectsCollection.findOne({_id: new ObjectID("5ed73f153fbc3a324a80ca31")}, function(err, project) {
     if (err) {
       return next(err);

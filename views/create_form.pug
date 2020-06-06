@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h3 Create new post
+  form(method='POST' action='')
+  
+    label(for='type') type:
+    select#type
+      option project
+      option blog
+    br
+    span tags:
+    button add tag
+    br
+    button(type='submit') submit
