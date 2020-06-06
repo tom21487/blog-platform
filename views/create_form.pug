@@ -14,33 +14,57 @@ block content
 
     | tags:
     div#tagspace
-      div
-        input(type='text' placeholder='enter tag here')
-        button(type='button' onClick='removeTag()') x
     button(type='button' onClick='addTag()') add tag
     
     button(type='submit' style="display: block") submit
   
   // Maybe move this script to another file in /public
   script.
+    // Not sure if this is global enough
+    let tagSpace = document.getElementById('tagspace');
+
     function addTag() {
       let newTag = document.createElement('div');
+      newTag.id = tagSpace.childElementCount;
+      // In the future, get this id from the mongoDB id model
+      // (each document will have its own id)
 
       let textInput = document.createElement('input');
       textInput.type = 'text';
-      textInput.placeholder = 'enter tag here';
+      textInput.placeholder = newTag.id;
+      //textInput.required = 'true';
       newTag.appendChild(textInput);
 
       let buttonRemove = document.createElement('button');
       buttonRemove.type = 'button';
       buttonRemove.innerText = 'x';
-      buttonRemove.addEventListener('click', removeTag);
+      buttonRemove.addEventListener('click', removeTag.bind(null, newTag.id));
       newTag.appendChild(buttonRemove);
       
-      let tagspace = document.getElementById('tagspace');
       tagspace.appendChild(newTag);
     }
 
-    function removeTag() {
-      alert('Remove tag');
+    function removeTag(id) {
+      console.log(`id: ${id}, childElementCount: ${tagSpace.childElementCount}`);
+      for (let i = id+1; i < tagSpace.childElementCount; ++i) {
+        console.log('updating id: ' + i);
+        let tagToUpdate = document.getElementById(i);
+        tagToUpdate.id--;
+        tagToUpdate.childNodes[0].placeholder = tagToUpdate.id;
+      }
+      let tagToRemove = document.getElementById(id);
+      tagToRemove.remove();
+      /*
+        a b c  d  e f
+        0 1 2  3  4 5
+
+        a b c  d  e f
+        0 1 2 [3] 4 5
+
+        a b c e f
+        0 1 2 4 5
+
+        a b c e f
+        0 1 2 3 4
+      */
     }
