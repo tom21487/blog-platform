@@ -5,11 +5,30 @@ block content
   form(method='POST' action='')
   
     label(for='type') type:
-    select#type
+    select#type(style="display: block")
       option project
       option blog
-    br
-    span tags:
-    button add tag
-    br
-    button(type='submit') submit
+
+    label(for='title') title:
+    input#title(type='text' style="display: block")
+
+    | tags:
+    div#tagspace
+      div.tagInput
+        input(type='text')
+        button(type='button' onClick='removeTag()') x
+    button(type='button' onClick='addTag()') add tag
+    
+    button(type='submit' style="display: block") submit
+  
+  // Maybe move this script to another file in /public
+  script.
+    function addTag() {
+      var tagspace = document.getElementById('tagspace');
+      // Instead of adding pure HTML, construct a DOM tag object
+      tagspace.innerHTML += "<input type='text'/>";
+    }
+
+    function removeTag() {
+      alert('Remove tag');
+    }
