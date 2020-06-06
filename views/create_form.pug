@@ -14,8 +14,8 @@ block content
 
     | tags:
     div#tagspace
-      div.tagInput
-        input(type='text')
+      div
+        input(type='text' placeholder='enter tag here')
         button(type='button' onClick='removeTag()') x
     button(type='button' onClick='addTag()') add tag
     
@@ -24,9 +24,21 @@ block content
   // Maybe move this script to another file in /public
   script.
     function addTag() {
-      var tagspace = document.getElementById('tagspace');
-      // Instead of adding pure HTML, construct a DOM tag object
-      tagspace.innerHTML += "<input type='text'/>";
+      let newTag = document.createElement('div');
+
+      let textInput = document.createElement('input');
+      textInput.type = 'text';
+      textInput.placeholder = 'enter tag here';
+      newTag.appendChild(textInput);
+
+      let buttonRemove = document.createElement('button');
+      buttonRemove.type = 'button';
+      buttonRemove.innerText = 'x';
+      buttonRemove.addEventListener('click', removeTag);
+      newTag.appendChild(buttonRemove);
+      
+      let tagspace = document.getElementById('tagspace');
+      tagspace.appendChild(newTag);
     }
 
     function removeTag() {
