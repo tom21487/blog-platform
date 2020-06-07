@@ -4,36 +4,47 @@ block content
   h3 Create new post
   form(method='POST' action='')
   
-    label(for='type') type:
-    select#type(style="display: block")
+    | type:
+    select(name='type' style="display: block")
       option project
       option blog
 
-    label(for='title') title:
-    input#title(type='text' style="display: block")
+    | title:
+    input(name='title' type='text' style="display: block" autocomplete='off')
 
+    | description:
+    input(name='description' type='text' style="display: block" autocomplete="off")
+    
     | tags:
     div#tagspace
+      div#tag0
+        // Select from all tags
+        select(name="tags")
+          each tag in tags
+            option #{tag.title}
+        button(type='button' onClick="removeTag('tag0')") x
     button(type='button' onClick='addTag()') add tag
-    
+    button(type='button') manage tags
     button(type='submit' style="display: block") submit
   
   // Maybe move this script to another file in /public
   script.
-    // Not sure if this is global enough
-    let tagSpace = document.getElementById('tagspace');
+    // In the future, get this id from the mongoDB id model
+    // (each document will have its own id)
+    var tempID = 1;
+    var tags = !{JSON.stringify(tags)};
 
     function addTag() {
       let newTag = document.createElement('div');
-      newTag.id = tagSpace.childElementCount;
-      // In the future, get this id from the mongoDB id model
-      // (each document will have its own id)
+      newTag.id = 'tag' + tempID;
 
-      let textInput = document.createElement('input');
-      textInput.type = 'text';
-      textInput.placeholder = newTag.id;
-      //textInput.required = 'true';
-      newTag.appendChild(textInput);
+      let selectInput = document.createElement('select');
+      for (tag of tags) {
+        let option = document.createElement('option');
+        option.innerText = tag.title;
+        selectInput.appendChild(option);
+      }
+      newTag.appendChild(selectInput);
 
       let buttonRemove = document.createElement('button');
       buttonRemove.type = 'button';
@@ -41,30 +52,13 @@ block content
       buttonRemove.addEventListener('click', removeTag.bind(null, newTag.id));
       newTag.appendChild(buttonRemove);
       
+      let tagSpace = document.getElementById('tagspace');
       tagspace.appendChild(newTag);
+
+      ++tempID;
     }
 
     function removeTag(id) {
-      console.log(`id: ${id}, childElementCount: ${tagSpace.childElementCount}`);
-      for (let i = id+1; i < tagSpace.childElementCount; ++i) {
-        console.log('updating id: ' + i);
-        let tagToUpdate = document.getElementById(i);
-        tagToUpdate.id--;
-        tagToUpdate.childNodes[0].placeholder = tagToUpdate.id;
-      }
       let tagToRemove = document.getElementById(id);
       tagToRemove.remove();
-      /*
-        a b c  d  e f
-        0 1 2  3  4 5
-
-        a b c  d  e f
-        0 1 2 [3] 4 5
-
-        a b c e f
-        0 1 2 4 5
-
-        a b c e f
-        0 1 2 3 4
-      */
     }
