@@ -7,7 +7,7 @@ mongo.connect(function(err) {
   if (err) { console.error(err); return; }
 
   // Start app after mongoDB has connected
-  console.log("Connected successfully to MongoDB, starting Express app.");
+  console.log("Connected successfully to MongoDB.");
 
   // Core requires
   var express = require('express');
@@ -56,12 +56,12 @@ mongo.connect(function(err) {
   });
 
   app.listen(port, function() {
-    console.log(`App listening at http://localhost:${port}`);
+    console.log(`Express app listening at http://localhost:${port} .`);
   });
 
   process.on('SIGINT', function() {
     mongo.close(function() {
-      console.log('Connection to MongoDB closed by user.');
+      console.log('\nConnection to MongoDB closed by user.');
       process.exit(0);
     });
   });

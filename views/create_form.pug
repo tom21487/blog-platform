@@ -16,6 +16,7 @@ block content
     input(name='description' type='text' style="display: block" autocomplete="off")
     
     | tags:
+    // Maybe a checkbox would be better imo (wait no, what if you had too many tags)
     div#tagspace
       div#tag0
         // Select from all tags
@@ -25,6 +26,7 @@ block content
         button(type='button' onClick="removeTag('tag0')") x
     button(type='button' onClick='addTag()') add tag
     button(type='button') manage tags
+    
     button(type='submit' style="display: block") submit
   
   // Maybe move this script to another file in /public
@@ -39,6 +41,8 @@ block content
       newTag.id = 'tag' + tempID;
 
       let selectInput = document.createElement('select');
+      selectInput.name = 'tags';
+      // Should be for tag of tags that aren't selected
       for (tag of tags) {
         let option = document.createElement('option');
         option.innerText = tag.title;
