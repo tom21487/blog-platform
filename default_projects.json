@@ -1,0 +1,54 @@
+[{
+  "_id": {
+    "$oid": "5ed73f153fbc3a324a80ca31"
+  },
+  "title": "Sleep tracker",
+  "imgURL": "/images/1.jpeg",
+  "description": "A simple MERN stack application that may help you sleep. This app is built with React and it uses client-side fetching.",
+  "tags": [
+    "javascript",
+    "working on"
+  ],
+  "date": {
+    "$date": "2020-06-03T06:11:33.038Z"
+  },
+  "url": "/projects/5ed73f153fbc3a324a80ca31",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ed73f153fbc3a324a80ca32"
+  },
+  "title": "Quick maths",
+  "imgURL": "/images/2.jpg",
+  "description": "C++ computer algebra system for fast problem solving.",
+  "tags": [
+    "c++",
+    "working on"
+  ],
+  "date": {
+    "$date": "2020-06-03T06:11:33.038Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ed8fdb8d932d91c62bba341"
+  },
+  "title": "Ice cube notes",
+  "tags": [
+    "javascript",
+    "complete"
+  ],
+  "imgURL": "/images/3.jpg",
+  "description": "A syncing note application that puts you in control."
+},{
+  "_id": {
+    "$oid": "5ed8fe93d932d91c62bba344"
+  },
+  "title": "Pixelator",
+  "tags": [
+    "c++",
+    "complete"
+  ],
+  "imgURL": "/images/4.jpg",
+  "description": "Pixelate images. Great for profile pictures."
+}]

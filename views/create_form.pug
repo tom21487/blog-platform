@@ -2,67 +2,33 @@ extends layout
 
 block content
   h3 Create new post
-  form(method='POST' action='')
+  form(method='POST' action='' style="margin: 10%")
   
-    | type:
-    select(name='type' style="display: block")
-      option project
-      option blog
+    div.form-group
+      | type: 
+      select(name='type')
+        option project
+        option blog
 
-    | title:
-    input(name='title' type='text' style="display: block" autocomplete='off')
+    div.form-group
+      | title: 
+      input(name='title' type='text' autocomplete='off')
 
-    | description:
-    input(name='description' type='text' style="display: block" autocomplete="off")
+    div.form-group
+      | description: 
+      input(name='description' type='text' autocomplete="off")
     
-    | tags:
-    // Maybe a checkbox would be better imo (wait no, what if you had too many tags)
-    div#tagspace
-      div#tag0
-        // Select from all tags
-        select(name="tags")
-          each tag in tags
-            option #{tag.title}
-        button(type='button' onClick="removeTag('tag0')") x
-    button(type='button' onClick='addTag()') add tag
-    button(type='button') manage tags
+    div.form-group
+      | tags: 
+      each tag, index in tags
+        input(name='tags' type='checkbox' value=tag.title checked=tag.checked)
+        | #{tag.title}
+        if index < tags.length - 1
+          | ,
+      | 
+      a(href='/tags') (manage tags)
     
-    button(type='submit' style="display: block") submit
-  
-  // Maybe move this script to another file in /public
-  script.
-    // In the future, get this id from the mongoDB id model
-    // (each document will have its own id)
-    var tempID = 1;
-    var tags = !{JSON.stringify(tags)};
-
-    function addTag() {
-      let newTag = document.createElement('div');
-      newTag.id = 'tag' + tempID;
-
-      let selectInput = document.createElement('select');
-      selectInput.name = 'tags';
-      // Should be for tag of tags that aren't selected
-      for (tag of tags) {
-        let option = document.createElement('option');
-        option.innerText = tag.title;
-        selectInput.appendChild(option);
-      }
-      newTag.appendChild(selectInput);
-
-      let buttonRemove = document.createElement('button');
-      buttonRemove.type = 'button';
-      buttonRemove.innerText = 'x';
-      buttonRemove.addEventListener('click', removeTag.bind(null, newTag.id));
-      newTag.appendChild(buttonRemove);
+    div.form-group
+      | upload files...
       
-      let tagSpace = document.getElementById('tagspace');
-      tagspace.appendChild(newTag);
-
-      ++tempID;
-    }
-
-    function removeTag(id) {
-      let tagToRemove = document.getElementById(id);
-      tagToRemove.remove();
-    }
+    button(type='submit' style="display: block") submit

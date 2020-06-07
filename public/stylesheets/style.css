@@ -211,3 +211,8 @@ body {
   cursor: pointer;
   font-weight: bold;
 }
+
+/* Form group */
+.form-group {
+  display: block;
+}
