@@ -1,23 +1,27 @@
 var mongo = require('../mongo');
 var db = mongo.getDb();
 var projectsCollection = db.collection('projects');
-var ObjectID = require('mongodb').ObjectID;
+var tagsCollection = db.collection('tags');
 
 exports.index = function(req, res, next) {
+  // Run these asynchronously in the future: https://codehandbook.org/how-to-run-javascript-promises-in-parallel/
   projectsCollection.find().toArray(function(err, projects) {
-    if (err) {
-      return next(err);
-    }
-    res.render('projects', {
-      title: 'Tom\'s site - projects',
-      projects: projects,
-      page: 'projects'
+    if (err) return next(err);
+    tagsCollection.find().toArray(function(err, tags) {
+      if (err) return next(err);
+      res.render('projects', {
+        title: 'Tom\'s site - projects',
+        projects: projects,
+        page: 'projects',
+        tags: tags
+      });
     });
   });
 }
 
 exports.detail = function(req, res, next) {
-  projectsCollection.findOne({_id: new ObjectID("5ed73f153fbc3a324a80ca31")}, function(err, project) {
+  console.log(req.params.id);
+  projectsCollection.findOne({formattedName: req.params.id}, function(err, project) {
     if (err) {
       return next(err);
     }

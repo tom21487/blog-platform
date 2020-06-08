@@ -1,16 +1,13 @@
 extends layout
 
 block content
-  a(href='/create') Create new project.
+  a(href='/create' style="margin-left: 10px") Create new project.
   p#tag-filter
     span Filter by tag:
-    // Create a db collection of all tags or something
-    // Then use ID pointers for each project document's
-    // tag attributes, idk
-    span.tag c++
-    span.tag javascript
-    span.tag complete
-    span.tag working on
+    each tag in tags
+      span.tag #{tag.title}
+    else
+      p There are no tags
 
   div#projects-container
     each project in projects
