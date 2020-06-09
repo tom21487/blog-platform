@@ -29,7 +29,14 @@ block content
       a(href='/tags') (manage tags)
     
     div.form-group
-      | upload image
+      | modules
+      select(style="display: block")
+        option text
+        option image
+      button add module
+      
+    div.form-group
+      | upload image (this should go in modules section)
       input(type='file' name='image')
 
     button(type='submit' style="display: block") submit
