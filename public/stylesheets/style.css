@@ -1,5 +1,5 @@
 body {
-  font: Helvetica, Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
 }
 
@@ -117,6 +117,10 @@ body {
 
 /* Tag */
 .tag {
+  /* Remove button styling */
+  border: none;
+  font-size: 14px;
+  color: black;
   background-color: rgb(192, 228, 241);
   padding: 5px;
   border-radius: 5px;

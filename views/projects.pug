@@ -2,10 +2,11 @@ extends layout
 
 block content
   a(href='/create' style="margin-left: 10px") Create new project.
-  p#tag-filter
-    span Filter by tag:
+
+  form#tag-filter(method='GET' action='')
+    | Filter by tag:
     each tag in tags
-      span.tag #{tag.title}
+      button.tag(type='submit' name='tag' value=tag.title) #{tag.title}
     else
       p There are no tags
 
@@ -22,5 +23,5 @@ block content
           | 
           a(href=project.url) More.
     else
-      p There are no projects
+      p There are no projects matching your filter
     
