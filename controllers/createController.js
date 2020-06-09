@@ -37,16 +37,14 @@ exports.sendToDb = function(req, res, next) {
       title: fields.title,
       tags: tags,
       description: fields.description,
+      image: files.image.name
     });
 
     projectsCollection.insertOne(project, function(err, result) {
       if (err) return next(err);
 
       // image upload
-      var oldpath = files.image.path;
-      // folder needs to be created beforehand, maybe use fs?
-      var newpath = './img/' + files.image.name;
-      fs.rename(oldpath, newpath, function(err) {
+      fs.rename(files.image.path, "./public" + project.imgURL, function(err) {
         if (err) return next(err);
         res.redirect(project.url);
       });

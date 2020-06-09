@@ -3,13 +3,16 @@ class Project {
   // Creates a new project object
   // based on an object parameter
   constructor(p) {
+    // user-defined
     this.title = p.title;
     this.tags = p.tags;
     this.description = p.description,
-    this.imgURL = '/images/1.jpeg',
     this._id = formatName(p.title);
-    // OR this._id = new ObjectID();
+    this.image = p.image;
+
+    // auto-generated
     this.url = '/projects/' + this._id;
+    this.imgURL = '/images/projects/' + this.image;
   }
 }
 
