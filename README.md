@@ -1,6 +1,6 @@
 # Stuff to do
-Clean up routing (you don't need so many route files)
-Create page
+Clean up routing
+- Have 1 route file, and like lots of controllers
+Module-based creation
 Authentication
 Multilingual features
-Tag system

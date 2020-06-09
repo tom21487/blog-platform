@@ -2,7 +2,7 @@ extends layout
 
 block content
   h3 Create new post
-  form(method='POST' action='' style="margin: 10%")
+  form(method='POST' action='' enctype="multipart/form-data" style="margin: 10%")
   
     div.form-group
       | type: 
@@ -29,6 +29,7 @@ block content
       a(href='/tags') (manage tags)
     
     div.form-group
-      | upload files...
-      
+      | upload image
+      input(type='file' name='image')
+
     button(type='submit' style="display: block") submit

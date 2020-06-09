@@ -6,4 +6,5 @@ var createController = require('../controllers/createController.js');
 
 router.get('/', createController.index);
 router.post('/', createController.sendToDb);
+
 module.exports = router;

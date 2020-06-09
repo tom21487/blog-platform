@@ -1,8 +1,14 @@
 var mongo = require('../mongo');
 var db = mongo.getDb();
+
 var tagsCollection = db.collection('tags');
 var projectsCollection = db.collection('projects');
+
+var formidable = require('formidable');
+var fs = require('fs');
+
 var Project = require('../models/project');
+
 
 exports.index = function(req, res, next) {
   tagsCollection.find({title: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
@@ -16,23 +22,35 @@ exports.index = function(req, res, next) {
 }
 
 exports.sendToDb = function(req, res, next) {
-  // Manual tags array conversion
-  let tags = req.body.tags;
-  if (!req.body.tags) {
-    tags = new Array("not tagged");
-  } else if (!(req.body.tags instanceof Array)) {
-    tags = new Array(req.body.tags);
-  }
-
-  let project = new Project({
-    title: req.body.title,
-    tags: tags,
-    description: req.body.description,
-  });
-
-  projectsCollection.insertOne(project, function(err, result) {
+  const form = formidable({ multiples: true });
+  form.parse(req, (err, fields, files) => {
     if (err) return next(err);
-    res.redirect(project.url);
+    // Manual tags array conversion
+    let tags = fields.tags;
+    if (!fields.tags) {
+      tags = new Array("not tagged");
+    } else if (!(fields.tags instanceof Array)) {
+      tags = new Array(fields.tags);
+    }
+
+    let project = new Project({
+      title: fields.title,
+      tags: tags,
+      description: fields.description,
+    });
+
+    projectsCollection.insertOne(project, function(err, result) {
+      if (err) return next(err);
+
+      // image upload
+      var oldpath = files.image.path;
+      // folder needs to be created beforehand, maybe use fs?
+      var newpath = './img/' + files.image.name;
+      fs.rename(oldpath, newpath, function(err) {
+        if (err) return next(err);
+        res.redirect(project.url);
+      });
+    });
   });
 }
 
