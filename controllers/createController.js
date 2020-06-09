@@ -5,7 +5,7 @@ var projectsCollection = db.collection('projects');
 var Project = require('../models/project');
 
 exports.index = function(req, res, next) {
-  tagsCollection.find().toArray(function(err, tags) {
+  tagsCollection.find({title: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
     res.render('create_form', {
       title: 'Create new post',
@@ -32,7 +32,7 @@ exports.sendToDb = function(req, res, next) {
 
   projectsCollection.insertOne(project, function(err, result) {
     if (err) return next(err);
-    res.redirect('/projects'); // should really redirect to newProject's url
+    res.redirect(project.url);
   });
 }
 
