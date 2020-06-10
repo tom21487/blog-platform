@@ -29,14 +29,55 @@ block content
       a(href='/tags') (manage tags)
     
     div.form-group
-      | modules
-      select(style="display: block")
-        option text
-        option image
-      button add module
-      
-    div.form-group
-      | upload image (this should go in modules section)
-      input(type='file' name='image')
+      | modules:
+      br
+      div#allmodules
+        div#module0
+          select(onchange="displayField('module0')")
+            option(value='text' selected) text
+            option(value='image') image
+          textarea(name='text' style="display: block; height: 100px;")
+          button(type='button') x
+    //  
+      div.form-group
+        | upload image (this should go in modules section)
+        input(type='file' name='image')
 
     button(type='submit' style="display: block") submit
+
+  script.
+    // Move to /public/javascripts/
+    function displayField(id) {
+      let module = document.getElementById(id);
+      let mode = module.childNodes[0].value;
+      let oldInput = module.childNodes[1];
+      let newInput;
+      if (mode == 'text') {
+        newInput = document.createElement('textarea');
+        newInput.type = 'textarea';
+        newInput.name = 'text'
+        newInput.style.display = "block";
+        newInput.style.height = "100px";
+      }
+      else {
+        newInput = document.createElement('input');
+        newInput.type = 'file';
+        newInput.name = 'image';
+        newInput.style.display = "inline";
+      }
+      oldInput.remove();
+      let button = module.childNodes[1];
+      console.log(button);
+      module.insertBefore(newInput, button);
+    }
+
+    function addModule() {
+      var count = 0;
+      var allModules = document.getElementById("module");
+      
+      let newModule = document.createElement('select');
+      let textOption = document.createElement('option');
+      textOption.innerText = 'text';
+      let imgOption = document.createElement('text');
+      imgOption.innerText = 'img';
+    };
