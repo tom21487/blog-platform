@@ -36,17 +36,13 @@ block content
           select(onchange="displayField('module0')")
             option(value='text' selected) text
             option(value='image') image
-          textarea(name='text' style="display: block; height: 100px;")
-          button(type='button') x
-    //  
-      div.form-group
-        | upload image (this should go in modules section)
-        input(type='file' name='image')
+          textarea(name='text' style="display: block; height: 100px;") module0
+          button(type='button' onclick="deleteModule('module0')") x
+      button(type='button' onclick="addModule()") add module
 
     button(type='submit' style="display: block") submit
 
   script.
-    // Move to /public/javascripts/
     function displayField(id) {
       let module = document.getElementById(id);
       let mode = module.childNodes[0].value;
@@ -72,12 +68,52 @@ block content
     }
 
     function addModule() {
-      var count = 0;
-      var allModules = document.getElementById("module");
+      var allModules = document.getElementById("allmodules");
+      var newModule = document.createElement('div');
+      newModule.id = "module" + allModules.childNodes.length;
       
-      let newModule = document.createElement('select');
+      let moduleSelect = document.createElement('select');
+      moduleSelect.addEventListener('change', displayField.bind(null, newModule.id));
       let textOption = document.createElement('option');
+      textOption.value = 'text';
       textOption.innerText = 'text';
-      let imgOption = document.createElement('text');
-      imgOption.innerText = 'img';
+
+      let imgOption = document.createElement('option');
+      imgOption.value = 'image';
+      imgOption.innerText = 'image';
+
+      moduleSelect.appendChild(textOption);
+      moduleSelect.appendChild(imgOption);
+
+      let textArea = document.createElement('textarea');
+      textArea.name = 'text';
+      textArea.style.display = "block";
+      textArea.style.height = "100px";
+      textArea.innerText = newModule.id;
+
+      let deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
+      deleteBtn.innerText = 'x';
+      deleteBtn.addEventListener('click', deleteModule.bind(null, newModule.id));
+
+      newModule.appendChild(moduleSelect);
+      newModule.appendChild(textArea);
+      newModule.appendChild(deleteBtn);
+
+      allModules.appendChild(newModule);
     };
+
+    function deleteModule(id) {
+      let rank = parseInt(id.slice(6, id.length), 10);
+      let allModules = document.getElementById("allmodules");
+      for (let i = rank+1; i < allModules.childNodes.length; ++i) {
+        // currentModule is passed by reference
+        let currentModule = allModules.childNodes[i];
+        let currentRank = parseInt(currentModule.id.slice(6, currentModule.id.length), 10);
+        currentRank -= 1;
+        currentModule.id = "module" + currentRank;
+        currentModule.childNodes[1].innerText = currentModule.id;
+      }
+      let moduleToDelete = document.getElementById(id);
+      moduleToDelete.remove();
+    }
