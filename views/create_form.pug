@@ -21,7 +21,7 @@ block content
     div.form-group
       | tags: 
       each tag, index in tags
-        input(name='tags' type='checkbox' value=tag.title checked=tag.checked)
+        input(name='tags[]' type='checkbox' value=tag.title checked=tag.checked)
         | #{tag.title}
         if index < tags.length - 1
           | ,
@@ -36,7 +36,13 @@ block content
           select(onchange="displayField('module0')")
             option(value='text' selected) text
             option(value='image') image
-          textarea(name='text' style="display: block; height: 100px;") module0
+
+          // Seems like formidable doesn't work with arrays right now?
+          // Try multer???
+
+          //textarea(name='text' style="display: block; height: 100px;") module0
+          //input(name="test[]" type='text' value='module1')
+          //input(name="test[]" type='text' value='module2')
           button(type='button' onclick="deleteModule('module0')") x
       button(type='button' onclick="addModule()") add module
 

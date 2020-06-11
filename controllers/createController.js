@@ -25,6 +25,11 @@ exports.sendToDb = function(req, res, next) {
   const form = formidable({ multiples: true });
   form.parse(req, (err, fields, files) => {
     if (err) return next(err);
+
+    // Module debugging
+    console.log(JSON.stringify({ err, fields, files }, null, 2));
+
+    /*
     // Manual tags array conversion
     let tags = fields.tags;
     if (!fields.tags) {
@@ -49,6 +54,7 @@ exports.sendToDb = function(req, res, next) {
         res.redirect(project.url);
       });
     });
+    */
   });
 }
 
