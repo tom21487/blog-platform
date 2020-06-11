@@ -44,6 +44,7 @@ block content
 
   script.
     function displayField(id) {
+      console.log(`displayField(${id})`);
       let module = document.getElementById(id);
       let mode = module.childNodes[0].value;
       let oldInput = module.childNodes[1];
@@ -54,6 +55,7 @@ block content
         newInput.name = 'text'
         newInput.style.display = "block";
         newInput.style.height = "100px";
+        newInput.innerText = id;
       }
       else {
         newInput = document.createElement('input');
@@ -63,17 +65,17 @@ block content
       }
       oldInput.remove();
       let button = module.childNodes[1];
-      console.log(button);
       module.insertBefore(newInput, button);
     }
 
     function addModule() {
-      var allModules = document.getElementById("allmodules");
-      var newModule = document.createElement('div');
+      let allModules = document.getElementById("allmodules");
+      let newModule = document.createElement('div');
       newModule.id = "module" + allModules.childNodes.length;
       
       let moduleSelect = document.createElement('select');
-      moduleSelect.addEventListener('change', displayField.bind(null, newModule.id));
+      //moduleSelect.addEventListener('change', displayField.bind(null, newModule.id));
+      moduleSelect.onchange = displayField.bind(null, newModule.id);
       let textOption = document.createElement('option');
       textOption.value = 'text';
       textOption.innerText = 'text';
@@ -94,7 +96,8 @@ block content
       let deleteBtn = document.createElement('button');
       deleteBtn.type = 'button';
       deleteBtn.innerText = 'x';
-      deleteBtn.addEventListener('click', deleteModule.bind(null, newModule.id));
+      //deleteBtn.addEventListener('click', deleteModule.bind(null, newModule.id));
+      deleteBtn.onclick = deleteModule.bind(null, newModule.id);
 
       newModule.appendChild(moduleSelect);
       newModule.appendChild(textArea);
@@ -112,6 +115,10 @@ block content
         let currentRank = parseInt(currentModule.id.slice(6, currentModule.id.length), 10);
         currentRank -= 1;
         currentModule.id = "module" + currentRank;
+        let moduleSelect = currentModule.childNodes[0];
+        moduleSelect.onchange = displayField.bind(null, currentModule.id);
+        let deleteBtn = currentModule.childNodes[2];
+        deleteBtn.onclick = deleteModule.bind(null, currentModule.id);
         currentModule.childNodes[1].innerText = currentModule.id;
       }
       let moduleToDelete = document.getElementById(id);
