@@ -22,39 +22,30 @@ exports.index = function(req, res, next) {
 }
 
 exports.sendToDb = function(req, res, next) {
-  const form = formidable({ multiples: true });
-  form.parse(req, (err, fields, files) => {
+
+  console.log("files:")
+  console.log(req.files);
+  console.log("body:");
+  console.log(req.body);
+
+  // Manual tags array conversion
+  let tags = fields.tags;
+  if (!fields.tags) {
+    tags = new Array("not tagged");
+  } else if (!(fields.tags instanceof Array)) {
+    tags = new Array(fields.tags);
+  }
+
+  let project = new Project({
+    title: fields.title,
+    tags: tags,
+    description: fields.description,
+    image: files.image.name
+  });
+
+  projectsCollection.insertOne(project, function(err, result) {
     if (err) return next(err);
-
-    // Module debugging
-    console.log(JSON.stringify({ err, fields, files }, null, 2));
-
-    /*
-    // Manual tags array conversion
-    let tags = fields.tags;
-    if (!fields.tags) {
-      tags = new Array("not tagged");
-    } else if (!(fields.tags instanceof Array)) {
-      tags = new Array(fields.tags);
-    }
-
-    let project = new Project({
-      title: fields.title,
-      tags: tags,
-      description: fields.description,
-      image: files.image.name
-    });
-
-    projectsCollection.insertOne(project, function(err, result) {
-      if (err) return next(err);
-
-      // image upload
-      fs.rename(files.image.path, "./public" + project.imgURL, function(err) {
-        if (err) return next(err);
-        res.redirect(project.url);
-      });
-    });
-    */
+      res.redirect(project.url);
   });
 }
 
