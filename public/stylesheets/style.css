@@ -202,8 +202,8 @@ body {
   bottom: 0;
   height: 2.5rem;            /* Footer height */
   left: 50%;
-  width: 300px;
-  margin-left: -100px;
+  /*width: 300px;*/
+  margin-left: -150px;
 }
 #footer span {
   padding: 10px;

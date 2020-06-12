@@ -1,8 +1,6 @@
 extends layout
 
 block content
-  a(href='/create' style="margin-left: 10px") Create new project.
-
   form#tag-filter(method='GET' action='')
     | Filter by tag:
     each tag in tags

@@ -29,18 +29,18 @@ exports.sendToDb = function(req, res, next) {
   console.log(req.body);
 
   // Manual tags array conversion
-  let tags = fields.tags;
-  if (!fields.tags) {
+  let tags = req.body.tags;
+  if (!tags) {
     tags = new Array("not tagged");
   } else if (!(fields.tags instanceof Array)) {
-    tags = new Array(fields.tags);
+    tags = new Array(req.body.tags);
   }
 
   let project = new Project({
-    title: fields.title,
+    title: req.body.title,
     tags: tags,
-    description: fields.description,
-    image: files.image.name
+    description: req.body.description,
+    image: req.files.image.name
   });
 
   projectsCollection.insertOne(project, function(err, result) {
