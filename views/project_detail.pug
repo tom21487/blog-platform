@@ -3,14 +3,16 @@ extends layout
 block content
   h3 #{project.title}
   div.tagspace
+    | Tags: 
     each tag in project.tags
       span.tag #{tag}
   p.description
+    | Description: 
     span #{project.description}
   each block in project.blocks
     if (block.type == "text")
       p #{block.content}
     else if (block.type == "image")
-      img(src=block.content)
+      img.block-img(src=block.content)
     else
       p ERROR undefined block type

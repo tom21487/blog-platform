@@ -1,7 +1,4 @@
 class Project {
-  // CONSTRUCTOR
-  // Creates a new project object
-  // based on an object parameter
   constructor(p) {
     // user-defined
     this.title = p.title;
@@ -10,7 +7,7 @@ class Project {
     this._id = formatName(p.title);
     this.blocks = p.blocks;
     this.coverImage = p.coverImage;
-    
+
     // auto-generated
     this.url = '/projects/' + this._id;
   }
