@@ -195,15 +195,19 @@ body {
   min-height: 100vh;
 }
 #content-wrap {
-  padding-bottom: 5rem;    /* Footer height */
+  padding-bottom: 5rem;
 }
 #footer {
   position: absolute;
   bottom: 0;
-  height: 2.5rem;            /* Footer height */
-  left: 50%;
-  /*width: 300px;*/
-  margin-left: -150px;
+  height: 2.5rem;
+  /* Centering */
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
 #footer span {
   padding: 10px;
