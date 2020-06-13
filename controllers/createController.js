@@ -19,37 +19,44 @@ exports.showForm = function(req, res, next) {
 
 exports.sendToDb = function(req, res, next) {
 
-  // DEBUG LOGS
+  // PART 0: DEBUG LOGS
   /* console.log("files:")
   console.log(req.files);
   console.log("body:");
   console.log(req.body); */
 
-  // Manual text array conversion
+  // PART 1: ARRAY CONVERSIONS
+  let tags = req.body.tags;
+  if (!tags) {
+    tags = new Array("not tagged");
+  } else if (!(req.body.tags instanceof Array)) {
+    tags = new Array(req.body.tags);
+  }
   let text = req.body.text;
   if (!(req.body.text instanceof Array)) {
     text = new Array(req.body.text);
   }
 
+  // PART 2: BLOCK BUILDING
   let allBlocks = [];
   let coverImage = "";
-  let text_idx = 0;
-  let image_idx = 0;
+  let textIdx = 0, imageIdx = 0;
+
   for (section of req.body.order) {
     let newBlock = {
       type: section,
       content: ""
     }
     if (section === 'text') {
-      newBlock.content = text[text_idx];
-      text_idx++;
+      newBlock.content = text[textIdx];
+      textIdx++;
     } else if (section === 'image') {
-      newBlock.content = '/images/' + req.files[image_idx].filename;
+      newBlock.content = '/images/' + req.files[imageIdx].filename;
       // In the future, allow the user to choose the cover image
-      if (image_idx === 0) {
+      if (imageIdx === 0) {
         coverImage = newBlock.content;
       }
-      image_idx++;
+      imageIdx++;
     } else {
       console.error("ERROR undefined block type");
       return next();
@@ -57,16 +64,7 @@ exports.sendToDb = function(req, res, next) {
     allBlocks.push(newBlock);
   }
 
-  console.log(allBlocks);
-
-  // Manual tags array conversion
-  let tags = req.body.tags;
-  if (!tags) {
-    tags = new Array("not tagged");
-  } else if (!(req.body.tags instanceof Array)) {
-    tags = new Array(req.body.tags);
-  }
-
+  // PART 4: ADD PROJECT TO DATABASE
   let project = new Project({
     title: req.body.title,
     tags: tags,
