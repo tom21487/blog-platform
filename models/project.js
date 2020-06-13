@@ -9,10 +9,11 @@ class Project {
     this.description = p.description,
     this._id = formatName(p.title);
     this.image = p.image;
-
+    this.blocks = p.blocks;
+    
     // auto-generated
     this.url = '/projects/' + this._id;
-    this.imgURL = '/images/projects/' + this.image;
+    this.imgURL = '/images/' + this.image;
   }
 }
 

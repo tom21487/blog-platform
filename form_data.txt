@@ -1,0 +1,34 @@
+files:
+[
+  {
+    fieldname: 'image',
+    originalname: 'option1.png',
+    encoding: '7bit',
+    mimetype: 'image/png',
+    destination: './public/',
+    filename: '9a2a4d7fdc336a9d540b699c31f00192',
+    path: 'public/9a2a4d7fdc336a9d540b699c31f00192',
+    size: 42919
+  },
+  {
+    fieldname: 'image',
+    originalname: 'option2.png',
+    encoding: '7bit',
+    mimetype: 'image/png',
+    destination: './public/',
+    filename: '3c2cd9f3ee0b80a7db90d943d87dce42',
+    path: 'public/3c2cd9f3ee0b80a7db90d943d87dce42',
+    size: 35449
+  }
+]
+body:
+[Object: null prototype] {
+  type: 'project',
+  title: 'Test project',
+  description: 'This is made with C++',
+  tags: [ 'c++', 'javascript' ],
+  text: [
+    'I decided to build a test project, which would be fun!',
+    'Here is another block of text. Again, this is for testing purposes.'
+  ]
+}

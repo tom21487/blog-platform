@@ -32,8 +32,9 @@ block content
       | modules:
       br
       div#allmodules
+
         div#module0
-          select(onchange="displayField('module0')")
+          select(name='order' onchange="displayField('module0')")
             option(value='text' selected) text
             option(value='image') image
           textarea(name='text' style="display: block; height: 100px;") module0
@@ -74,6 +75,7 @@ block content
       
       let moduleSelect = document.createElement('select');
       //moduleSelect.addEventListener('change', displayField.bind(null, newModule.id));
+      moduleSelect.name = 'order';
       moduleSelect.onchange = displayField.bind(null, newModule.id);
       let textOption = document.createElement('option');
       textOption.value = 'text';

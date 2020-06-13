@@ -8,6 +8,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 
 var Project = require('../models/project');
+const { text } = require('express');
 
 
 exports.index = function(req, res, next) {
@@ -28,11 +29,37 @@ exports.sendToDb = function(req, res, next) {
   console.log("body:");
   console.log(req.body);
 
+  // Manual text array conversion
+  let text = req.body.text;
+  if (!(req.body.text instanceof Array)) {
+    text = new Array(req.body.text);
+  }
+
+  let allBlocks = [];
+  let text_idx = 0;
+  let image_idx = 0;
+  for (section of req.body.order) {
+    console.log(section);
+    if (section === 'text') {
+      allBlocks.push(text[text_idx]);
+      text_idx++;
+    } else if (section === 'image') {
+      let imgURL = '/images/' + req.files[image_idx].filename;
+      allBlocks.push(imgURL);
+      image_idx++;
+    } else {
+      console.error("ERROR undefined order.")
+      next();
+    }
+  }
+
+  console.log(allBlocks);
+
   // Manual tags array conversion
   let tags = req.body.tags;
   if (!tags) {
     tags = new Array("not tagged");
-  } else if (!(fields.tags instanceof Array)) {
+  } else if (!(req.body.tags instanceof Array)) {
     tags = new Array(req.body.tags);
   }
 
@@ -40,7 +67,7 @@ exports.sendToDb = function(req, res, next) {
     title: req.body.title,
     tags: tags,
     description: req.body.description,
-    image: req.files.image.name
+    blocks: allBlocks
   });
 
   projectsCollection.insertOne(project, function(err, result) {

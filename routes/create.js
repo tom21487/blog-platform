@@ -5,7 +5,7 @@ var router = express.Router();
 var createController = require('../controllers/createController.js');
 
 var multer = require('multer');
-var upload = multer({dest: './public/'});
+var upload = multer({dest: './public/images'});
 
 router.get('/', createController.index);
 router.post('/', upload.array('image'), createController.sendToDb);
