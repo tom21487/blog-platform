@@ -3,6 +3,7 @@ extends layout
 block content
   form#tag-filter(method='GET' action='')
     | Filter by tag:
+    button.tag(type='button' onclick='location.href="/projects"') all tags
     each tag in tags
       button.tag(type='submit' name='tag' value=tag.title) #{tag.title}
     else
