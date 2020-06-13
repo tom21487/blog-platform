@@ -20,7 +20,7 @@ class Project {
 // 2. Converts " " and "/" to "-"
 // 3. Converts "A-Z" to "a-z"
 // This is an alternative to:
-//  https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/encodeuricomponent
+// https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/encodeuricomponent
 function formatName(myStr) {
   for (let i = myStr.length-1; i >= 0; --i) {
     let code = myStr.charCodeAt(i);
