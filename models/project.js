@@ -8,12 +8,11 @@ class Project {
     this.tags = p.tags;
     this.description = p.description,
     this._id = formatName(p.title);
-    this.image = p.image;
     this.blocks = p.blocks;
+    this.coverImage = p.coverImage;
     
     // auto-generated
     this.url = '/projects/' + this._id;
-    this.imgURL = '/images/' + this.image;
   }
 }
 

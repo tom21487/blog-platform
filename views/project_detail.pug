@@ -5,6 +5,12 @@ block content
   div.tagspace
     each tag in project.tags
       span.tag #{tag}
-  img.cover-image(src=project.imgURL)
   p.description
     span #{project.description}
+  each block in project.blocks
+    if (block.type == "text")
+      p #{block.content}
+    else if (block.type == "image")
+      img(src=block.content)
+    else
+      p ERROR undefined block type

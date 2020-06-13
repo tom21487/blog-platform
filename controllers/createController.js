@@ -24,10 +24,11 @@ exports.index = function(req, res, next) {
 
 exports.sendToDb = function(req, res, next) {
 
-  console.log("files:")
+  // DEBUG LOGS
+  /* console.log("files:")
   console.log(req.files);
   console.log("body:");
-  console.log(req.body);
+  console.log(req.body); */
 
   // Manual text array conversion
   let text = req.body.text;
@@ -36,21 +37,29 @@ exports.sendToDb = function(req, res, next) {
   }
 
   let allBlocks = [];
+  let coverImage = "";
   let text_idx = 0;
   let image_idx = 0;
   for (section of req.body.order) {
-    console.log(section);
+    let newBlock = {
+      type: section,
+      content: ""
+    }
     if (section === 'text') {
-      allBlocks.push(text[text_idx]);
+      newBlock.content = text[text_idx];
       text_idx++;
     } else if (section === 'image') {
-      let imgURL = '/images/' + req.files[image_idx].filename;
-      allBlocks.push(imgURL);
+      newBlock.content = '/images/' + req.files[image_idx].filename;
+      // In the future, allow the user to choose the cover image
+      if (image_idx === 0) {
+        coverImage = newBlock.content;
+      }
       image_idx++;
     } else {
-      console.error("ERROR undefined order.")
-      next();
+      console.error("ERROR undefined block type");
+      return next();
     }
+    allBlocks.push(newBlock);
   }
 
   console.log(allBlocks);
@@ -67,7 +76,8 @@ exports.sendToDb = function(req, res, next) {
     title: req.body.title,
     tags: tags,
     description: req.body.description,
-    blocks: allBlocks
+    blocks: allBlocks,
+    coverImage: coverImage
   });
 
   projectsCollection.insertOne(project, function(err, result) {
