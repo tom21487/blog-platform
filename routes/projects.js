@@ -4,7 +4,7 @@ var router = express.Router();
 // Require controller modules
 var projectController = require('../controllers/projectController.js');
 
-router.get('/', projectController.index);
+router.get('/', projectController.list);
 router.get('/:id', projectController.detail);
 
 module.exports = router;

@@ -4,14 +4,9 @@ var db = mongo.getDb();
 var tagsCollection = db.collection('tags');
 var projectsCollection = db.collection('projects');
 
-var formidable = require('formidable');
-var fs = require('fs');
-
 var Project = require('../models/project');
-const { text } = require('express');
 
-
-exports.index = function(req, res, next) {
+exports.showForm = function(req, res, next) {
   tagsCollection.find({title: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
     res.render('create_form', {

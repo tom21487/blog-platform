@@ -3,7 +3,7 @@ var db = mongo.getDb();
 var projectsCollection = db.collection('projects');
 var tagsCollection = db.collection('tags');
 
-exports.index = function(req, res, next) {
+exports.list = function(req, res, next) {
   // Run these asynchronously in the future: https://codehandbook.org/how-to-run-javascript-promises-in-parallel/
   let queryObject = req.query.tag ? {tags: req.query.tag} : {};
 
@@ -11,7 +11,7 @@ exports.index = function(req, res, next) {
     if (err) return next(err);
     tagsCollection.find().toArray(function(err, tags) {
       if (err) return next(err);
-      res.render('projects', {
+      res.render('projects_list', {
         title: 'Tom\'s site - projects',
         projects: projects,
         page: 'projects',
