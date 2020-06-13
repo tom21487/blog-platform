@@ -209,13 +209,13 @@ body {
   right: 0;
   text-align: center;
 }
-#footer span {
+#footer span, a {
   padding: 10px;
 }
-#footer span .langBtn.selected {
+#footer span.langBtn.selected {
   font-weight: bold;
 }
-#footer span .langBtn:hover {
+#footer span.langBtn:hover {
   cursor: pointer;
   font-weight: bold;
 }
