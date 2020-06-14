@@ -1,3 +1,5 @@
+var blocksGlobalArray = [];
+
 class Block {
   constructor() {
     // CONTAINER
@@ -68,6 +70,7 @@ class Block {
       currentblock.childNodes[1].innerText = currentblock.id;
     }
     document.getElementById(this.container.id).remove();
+    blocksGlobalArray.splice(rank, 1);
   }
 }
 
@@ -75,4 +78,5 @@ function addBlock() {
   let allBlocks = document.getElementById("all-blocks");
   var block = new Block();
   allBlocks.appendChild(block.container);
+  blocksGlobalArray.push(block);
 }
