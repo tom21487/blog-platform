@@ -1,13 +1,10 @@
 var mongo = require('../mongo');
 var db = mongo.getDb();
 
-var tagsCollection = db.collection('tags');
-var projectsCollection = db.collection('projects');
-
-var Project = require('../models/project');
+var Post = require('../models/post');
 
 exports.showForm = function(req, res, next) {
-  tagsCollection.find({title: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
+  db.collection('tags').find({title: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
     res.render('create_form', {
       title: 'Create new post',
@@ -18,7 +15,6 @@ exports.showForm = function(req, res, next) {
 }
 
 exports.sendToDb = function(req, res, next) {
-
   // PART 0: DEBUG LOGS
   /* console.log("files:")
   console.log(req.files);
@@ -65,17 +61,20 @@ exports.sendToDb = function(req, res, next) {
   }
 
   // PART 4: ADD PROJECT TO DATABASE
-  let project = new Project({
+  let post = new Post({
     title: req.body.title,
+    type: req.body.type,
     tags: tags,
     description: req.body.description,
     blocks: allBlocks,
     coverImage: coverImage
   });
 
-  projectsCollection.insertOne(project, function(err, result) {
+  let collectionString = req.body.type + "s";
+
+  db.collection(collectionString).insertOne(project, function(err, result) {
     if (err) return next(err);
-      res.redirect(project.url);
+      res.redirect(post.url);
   });
 }
 

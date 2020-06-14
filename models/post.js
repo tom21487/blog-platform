@@ -1,7 +1,8 @@
-class Project {
+class Post {
   constructor(p) {
     // user-defined
     this.title = p.title;
+    this.type = p.type;
     this.tags = p.tags;
     this.description = p.description,
     this._id = formatName(p.title);
@@ -9,7 +10,11 @@ class Project {
     this.coverImage = p.coverImage;
 
     // auto-generated
-    this.url = '/projects/' + this._id;
+    this.url = '/' + this.type;
+    if (this.type === 'project') {
+      this.url += 's';
+    }
+    this.url += '/' + this._id;
   }
 }
 

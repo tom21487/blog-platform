@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h3 #{blog.title}
+  div.tagspace
+    | Tags: 
+    each tag in blog.tags
+      span.tag #{tag}
+  p.description
+    | Description: 
+    span #{blog.description}
+  each block in blog.blocks
+    if (block.type == "text")
+      p #{block.content}
+    else if (block.type == "image")
+      img.block-img(src=block.content)
+    else
+      p ERROR undefined block type
+  

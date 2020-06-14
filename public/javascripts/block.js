@@ -1,3 +1,5 @@
+// Maybe put the x button next to the select?
+
 var blocksGlobalArray = [];
 
 class Block {
@@ -66,7 +68,6 @@ class Block {
       let currentRank = parseInt(currentblock.id.slice(5, currentblock.id.length), 10);
       currentRank -= 1;
       currentblock.id = "block" + currentRank;
-      console.log(currentblock.id);
       currentblock.childNodes[1].innerText = currentblock.id;
     }
     document.getElementById(this.container.id).remove();

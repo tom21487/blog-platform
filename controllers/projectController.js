@@ -6,7 +6,6 @@ var tagsCollection = db.collection('tags');
 exports.list = function(req, res, next) {
   // Run these asynchronously in the future: https://codehandbook.org/how-to-run-javascript-promises-in-parallel/
   let queryObject = req.query.tag ? {tags: req.query.tag} : {};
-
   projectsCollection.find(queryObject).toArray(function(err, projects) {
     if (err) return next(err);
     tagsCollection.find().toArray(function(err, tags) {

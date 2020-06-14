@@ -5,6 +5,6 @@ var router = express.Router();
 var blogController = require('../controllers/blogController.js');
 
 /* GET about listing. */
-router.get('/', blogController.index);
+router.get('/', blogController.list);
 
 module.exports = router;
