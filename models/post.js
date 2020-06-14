@@ -48,4 +48,4 @@ function formatName(myStr) {
   return myStr;
 }
 
-module.exports = Project;
+module.exports = Post;

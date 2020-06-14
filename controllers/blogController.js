@@ -20,9 +20,9 @@ exports.list = function(req, res, next) {
 exports.detail = function(req, res, next) {
   db.collection('blogs').findOne({_id: req.params.id}, function(err, blog) {
     if (err) return next(err);
-    res.render('blog_detail', {
+    res.render('post_detail', {
       title: 'Blog Post - ' + blog.title,
-      blog: blog,
+      post: blog,
       page: 'blog'
     });
   });

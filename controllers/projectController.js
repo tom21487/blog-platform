@@ -25,9 +25,9 @@ exports.detail = function(req, res, next) {
     if (err) {
       return next(err);
     }
-    res.render('project_detail', {
+    res.render('post_detail', {
       title: 'Project - ' + project.title,
-      project: project,
+      post: project,
       page: 'projects'
     });
   });

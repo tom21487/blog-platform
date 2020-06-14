@@ -72,7 +72,7 @@ exports.sendToDb = function(req, res, next) {
 
   let collectionString = req.body.type + "s";
 
-  db.collection(collectionString).insertOne(project, function(err, result) {
+  db.collection(collectionString).insertOne(post, function(err, result) {
     if (err) return next(err);
       res.redirect(post.url);
   });

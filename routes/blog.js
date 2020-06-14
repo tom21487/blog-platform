@@ -6,5 +6,6 @@ var blogController = require('../controllers/blogController.js');
 
 /* GET about listing. */
 router.get('/', blogController.list);
+router.get('/:id', blogController.detail);
 
 module.exports = router;
