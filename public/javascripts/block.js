@@ -21,24 +21,25 @@ class Block {
     this.select.appendChild(imgOption);
     this.select.addEventListener('change', this.displayField.bind(this));
 
-    // INPUT
-    this.input = "hello world!";
-    this.input = document.createElement('textarea');
-    this.input.name = 'text';
-    this.input.style.display = "block";
-    this.input.style.height = "100px";
-    this.input.innerText = this.container.id;
-
     // DELETE BUTTON
     this.deleteBtn = document.createElement('button');
     this.deleteBtn.type = 'button';
     this.deleteBtn.innerText = 'x';
     this.deleteBtn.addEventListener('click', this.delete.bind(this));
 
+    // INPUT
+    this.input = "hello world!";
+    this.input = document.createElement('textarea');
+    this.input.name = 'text';
+    this.input.style.display = "block";
+    this.input.style.height = "100px";
+    this.input.style.marginBottom = "20px";
+    this.input.innerText = this.container.id;
+
     // APPEND ELEMENTS
     this.container.appendChild(this.select);
-    this.container.appendChild(this.input);
     this.container.appendChild(this.deleteBtn);
+    this.container.appendChild(this.input);
   }
 
   displayField() {
@@ -48,15 +49,17 @@ class Block {
       this.input.name = 'text'
       this.input.style.display = "block";
       this.input.style.height = "100px";
+      this.input.style.marginBottom = "20px";
     }
     else {
       this.input = document.createElement('input');
       this.input.type = 'file';
       this.input.name = 'image';
-      this.input.style.display = "inline";
+      this.input.style.display = "block";
+      this.input.style.marginBottom = "20px";
     }
     this.input.innerText = this.container.id;
-    this.container.insertBefore(this.input, this.deleteBtn);
+    this.container.appendChild(this.input);
   }
 
   delete() {
@@ -68,7 +71,7 @@ class Block {
       let currentRank = parseInt(currentblock.id.slice(5, currentblock.id.length), 10);
       currentRank -= 1;
       currentblock.id = "block" + currentRank;
-      currentblock.childNodes[1].innerText = currentblock.id;
+      currentblock.childNodes[2].innerText = currentblock.id;
     }
     document.getElementById(this.container.id).remove();
     blocksGlobalArray.splice(rank, 1);
