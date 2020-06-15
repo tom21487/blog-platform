@@ -75,7 +75,6 @@ exports.sendToDb = function(req, res, next) {
     title: req.body.title,
     type: req.body.type,
     tags: tags,
-    description: req.body.description,
     blocks: allBlocks,
     coverImage: coverImage
   });

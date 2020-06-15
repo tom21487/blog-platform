@@ -4,7 +4,6 @@ class Post {
     this.title = p.title;
     this.type = p.type;
     this.tags = p.tags;
-    this.description = p.description,
     this._id = formatName(p.title);
     this.blocks = p.blocks;
     this.coverImage = p.coverImage;
