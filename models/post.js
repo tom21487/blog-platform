@@ -7,7 +7,8 @@ class Post {
     this._id = formatName(p.title);
     this.blocks = p.blocks;
     this.coverImage = p.coverImage;
-
+    this.description = p.description;
+    
     // auto-generated
     this.url = '/' + this.type;
     if (this.type === 'project') {

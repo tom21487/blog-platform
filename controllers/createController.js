@@ -43,7 +43,7 @@ exports.sendToDb = function(req, res, next) {
 
   // PART 2: BLOCK BUILDING
   let allBlocks = [];
-  let coverImage = "";
+  let coverImage = "", description = "";
   let textIdx = 0, imageIdx = 0;
 
   console.log('order:');
@@ -55,13 +55,11 @@ exports.sendToDb = function(req, res, next) {
     }
     if (section === 'text') {
       newBlock.content = text[textIdx];
+      if (textIdx === 0) description = newBlock.content;
       textIdx++;
     } else if (section === 'image') {
       newBlock.content = '/images/' + req.files[imageIdx].filename;
-      // In the future, allow the user to choose the cover image
-      if (imageIdx === 0) {
-        coverImage = newBlock.content;
-      }
+      if (imageIdx === 0) coverImage = newBlock.content;
       imageIdx++;
     } else {
       console.error("ERROR undefined block type");
@@ -76,7 +74,8 @@ exports.sendToDb = function(req, res, next) {
     type: req.body.type,
     tags: tags,
     blocks: allBlocks,
-    coverImage: coverImage
+    coverImage: coverImage,
+    description: description
   });
 
   let collectionString = req.body.type + "s";
