@@ -29,8 +29,16 @@ exports.sendToDb = function(req, res, next) {
     tags = new Array(req.body.tags);
   }
   let text = req.body.text;
-  if (!(req.body.text instanceof Array)) {
+  if (!text) {
+    text = new Array();
+  } if (!(req.body.text instanceof Array)) {
     text = new Array(req.body.text);
+  }
+  let order = req.body.order;
+  if (!order) {
+    order = new Array();
+  } else if (!(req.body.order instanceof Array)) {
+    order = new Array(req.body.order);
   }
 
   // PART 2: BLOCK BUILDING
@@ -38,7 +46,9 @@ exports.sendToDb = function(req, res, next) {
   let coverImage = "";
   let textIdx = 0, imageIdx = 0;
 
-  for (section of req.body.order) {
+  console.log('order:');
+  console.log(order);
+  for (section of order) {
     let newBlock = {
       type: section,
       content: ""
