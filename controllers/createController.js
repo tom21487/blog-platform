@@ -70,7 +70,7 @@ exports.sendToDb = function(req, res, next) {
     } else if (section === 'image') {
       newBlock.url = '/images/' + req.files[imageIdx].filename;
       if (imageIdx === 0)
-        coverImage = newBlock.content;
+        coverImage = newBlock.url;
       imageIdx++;
     } else {
       console.error("ERROR undefined block type");

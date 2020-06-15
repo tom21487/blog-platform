@@ -1,17 +1,17 @@
 extends layout
 
 block content
-  h3 #{post.title_en}
+  h3 #{post.titleEn}
   div.tagspace
     | Tags: 
     each tag in post.tags
       span.tag #{tag}
   p.description
     | Description: 
-    span #{post.description_en}
+    span #{post.descriptionEn}
   each block in post.blocks
     if (block.type == "text")
-      p #{block.content_en}
+      p #{block.contentEn}
     else if (block.type == "image")
       img.block-img(src=block.url)
     else
