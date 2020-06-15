@@ -6,7 +6,7 @@ class Block {
   constructor() {
     // CONTAINER
     this.container = document.createElement('div');
-    this.container.id = "block" + document.getElementById("all-blocks").childNodes.length;
+    this.container.id = document.getElementById("all-blocks").childNodes.length;
     
     // SELECT
     this.select = document.createElement('select');
@@ -28,49 +28,77 @@ class Block {
     this.deleteBtn.addEventListener('click', this.delete.bind(this));
 
     // INPUT
-    this.input = "hello world!";
-    this.input = document.createElement('textarea');
-    this.input.name = 'text';
-    this.input.style.display = "block";
-    this.input.style.height = "100px";
-    this.input.style.marginBottom = "20px";
-    this.input.innerText = this.container.id;
+    this.inputEn = document.createElement('textarea');
+    this.inputEn.name = 'text';
+    this.inputEn.style.display = "block";
+    this.inputEn.style.height = "100px";
+    this.inputEn.style.marginBottom = "20px";
+    this.inputEn.placeholder = "en" + this.container.id;
 
+    this.inputCn = document.createElement('textarea');
+    this.inputCn.name = 'text';
+    this.inputCn.style.display = "block";
+    this.inputCn.style.height = "100px";
+    this.inputCn.style.marginBottom = "20px";
+    this.inputCn.placeholder = "cn" + this.container.id;
+
+    this.inputImg = document.createElement('input');
+    this.inputImg.type = 'file';
+    this.inputImg.name = 'image';
+    this.inputImg.style.display = "block";
+    this.inputImg.style.marginBottom = "20px";
+    
     // APPEND ELEMENTS
     this.container.appendChild(this.select);
     this.container.appendChild(this.deleteBtn);
-    this.container.appendChild(this.input);
+    this.container.appendChild(this.inputEn);
+    this.container.appendChild(this.inputCn);
   }
 
   displayField() {
-    this.input.remove();
     if (this.select.value == 'text') {
-      this.input = document.createElement('textarea');
-      this.input.name = 'text'
-      this.input.style.display = "block";
-      this.input.style.height = "100px";
-      this.input.style.marginBottom = "20px";
+      this.inputImg.remove();
+
+      this.inputEn = document.createElement('textarea');
+      this.inputEn.name = 'text';
+      this.inputEn.style.display = "block";
+      this.inputEn.style.height = "100px";
+      this.inputEn.style.marginBottom = "20px";
+      this.inputEn.placeholder = "en" + this.container.id;
+
+      this.inputCn = document.createElement('textarea');
+      this.inputCn.name = 'text';
+      this.inputCn.style.display = "block";
+      this.inputCn.style.height = "100px";
+      this.inputCn.style.marginBottom = "20px";
+      this.inputCn.placeholder = "cn" + this.container.id;
+
+      this.container.appendChild(this.inputEn);
+      this.container.appendChild(this.inputCn);
     }
     else {
-      this.input = document.createElement('input');
-      this.input.type = 'file';
-      this.input.name = 'image';
-      this.input.style.display = "block";
-      this.input.style.marginBottom = "20px";
+      this.inputEn.remove();
+      this.inputCn.remove();
+
+      this.inputImg = document.createElement('input');
+      this.inputImg.type = 'file';
+      this.inputImg.name = 'image';
+      this.inputImg.style.display = "block";
+      this.inputImg.style.marginBottom = "20px";
+
+      this.container.appendChild(this.inputImg);
     }
-    this.input.innerText = this.container.id;
-    this.container.appendChild(this.input);
   }
 
   delete() {
     let allBlocks = document.getElementById("all-blocks");
-    let rank = parseInt(this.container.id.slice(5, this.container.id.length), 10);
+    let rank = parseInt(this.container.id, 10);
     for (let i = rank+1; i < allBlocks.childNodes.length; ++i) {
       // currentblock is passed by reference
       let currentblock = allBlocks.childNodes[i];
-      let currentRank = parseInt(currentblock.id.slice(5, currentblock.id.length), 10);
+      let currentRank = parseInt(currentblock.id, 10);
       currentRank -= 1;
-      currentblock.id = "block" + currentRank;
+      currentblock.id = currentRank;
       currentblock.childNodes[2].innerText = currentblock.id;
     }
     document.getElementById(this.container.id).remove();

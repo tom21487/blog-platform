@@ -11,9 +11,13 @@ block content
         option blog
 
     div.form-group
-      | title: 
-      input(name='title' type='text' autocomplete='off' required)
-    
+      | title_en: 
+      input(name='title_en' type='text' autocomplete='off' required)
+      
+    div.form-group
+      | title_cn: 
+      input(name='title_cn' type='text' autocomplete='off' required)
+
     div.form-group
       | tags: 
       each tag, index in tags
