@@ -12,13 +12,13 @@ block content
   div#projects-container
     each project in projects
       div.box
-        strong.title #[p #{project.title}]
+        strong.title #[p #{project.title_en}]
         div.tagspace
           each tag in project.tags
             span.tag #{tag}
         img.cover-image(src=project.coverImage)
         p.description
-          span #{project.description}
+          span #{project.description_en}
           | 
           a(href=project.url) More.
     else

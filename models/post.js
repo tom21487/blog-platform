@@ -1,13 +1,16 @@
 class Post {
   constructor(p) {
     // user-defined
-    this.title = p.title;
+    this.titleEn = p.titleEn;
+    this.titleCn = p.titleCn;
+    this.descriptionEn = p.descriptionEn;
+    this.descriptionCn = p.descriptionCn;
+
     this.type = p.type;
     this.tags = p.tags;
-    this._id = formatName(p.title);
+    this._id = formatName(p.titleEn);
     this.blocks = p.blocks;
     this.coverImage = p.coverImage;
-    this.description = p.description;
     
     // auto-generated
     this.url = '/' + this.type;

@@ -1,5 +1,3 @@
-// Maybe put the x button next to the select?
-
 var blocksGlobalArray = [];
 
 class Block {
@@ -29,18 +27,20 @@ class Block {
 
     // INPUT
     this.inputEn = document.createElement('textarea');
-    this.inputEn.name = 'text';
+    this.inputEn.name = 'textEn';
     this.inputEn.style.display = "block";
     this.inputEn.style.height = "100px";
     this.inputEn.style.marginBottom = "20px";
     this.inputEn.placeholder = "en" + this.container.id;
+    this.inputEn.value = "";
 
     this.inputCn = document.createElement('textarea');
-    this.inputCn.name = 'text';
+    this.inputCn.name = 'textCn';
     this.inputCn.style.display = "block";
     this.inputCn.style.height = "100px";
     this.inputCn.style.marginBottom = "20px";
     this.inputCn.placeholder = "cn" + this.container.id;
+    this.inputCn.value = "";
 
     this.inputImg = document.createElement('input');
     this.inputImg.type = 'file';
@@ -60,18 +60,20 @@ class Block {
       this.inputImg.remove();
 
       this.inputEn = document.createElement('textarea');
-      this.inputEn.name = 'text';
+      this.inputEn.name = 'textEn';
       this.inputEn.style.display = "block";
       this.inputEn.style.height = "100px";
       this.inputEn.style.marginBottom = "20px";
       this.inputEn.placeholder = "en" + this.container.id;
+      this.inputEn.value = "";
 
       this.inputCn = document.createElement('textarea');
-      this.inputCn.name = 'text';
+      this.inputCn.name = 'textCn';
       this.inputCn.style.display = "block";
       this.inputCn.style.height = "100px";
       this.inputCn.style.marginBottom = "20px";
       this.inputCn.placeholder = "cn" + this.container.id;
+      this.inputCn.value = "";
 
       this.container.appendChild(this.inputEn);
       this.container.appendChild(this.inputCn);
