@@ -14,13 +14,17 @@ exports.list = function(req, res, next) {
         title: 'Tom\'s site - projects',
         projects: projects,
         page: 'projects',
-        tags: tags
+        tags: tags,
+        language: req.params.language
       });
     });
   });
 }
 
 exports.detail = function(req, res, next) {
+  console.log('req.params:');
+  console.log(req.params);
+  
   projectsCollection.findOne({_id: req.params.id}, function(err, project) {
     if (err) {
       return next(err);
@@ -28,7 +32,8 @@ exports.detail = function(req, res, next) {
     res.render('post_detail', {
       title: 'Project - ' + project.title,
       post: project,
-      page: 'projects'
+      page: 'projects',
+      language: req.params.language
     });
   });
 }

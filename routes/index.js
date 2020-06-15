@@ -5,7 +5,8 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Tom\'s site - home',
-    page: 'home'
+    page: 'home',
+    language: req.params.language
   });
 });
 

@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 
 // Require controller modules
 var aboutController = require('../controllers/aboutController.js');

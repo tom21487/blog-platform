@@ -33,10 +33,10 @@ mongo.connect(function(err) {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, 'public')));
 
-  app.use('/', indexRouter);
-  app.use('/about', aboutRouter);
-  app.use('/projects', projectsRouter);
-  app.use('/blog', blogRouter);
+  app.use('/:language', indexRouter);
+  app.use('/:language/about', aboutRouter);
+  app.use('/:language/projects', projectsRouter);
+  app.use('/:language/blog', blogRouter);
   app.use('/create', createRouter);
   
   // catch 404 and forward to error handler

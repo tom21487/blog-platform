@@ -1,7 +1,14 @@
 extends layout
 
 block content
-  h3 #{post.titleEn}
+
+  if language == "en"
+    h3 #{post.titleEn}
+  else if language == "cn"
+    h3 #{post.titleEn}
+  else
+    h3 undefined language!
+    
   div.tagspace
     | Tags: 
     each tag in post.tags
@@ -11,7 +18,14 @@ block content
     span #{post.descriptionEn}
   each block in post.blocks
     if (block.type == "text")
-      p #{block.contentEn}
+
+      if language == "en"
+        p #{block.contentEn}
+      else if language == "cn"
+        p #{block.contentCn}
+      else
+        p undefined language!
+
     else if (block.type == "image")
       img.block-img(src=block.url)
     else

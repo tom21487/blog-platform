@@ -3,7 +3,7 @@ extends layout
 block content
   form#tag-filter(method='GET' action='')
     | Filter by tag:
-    button.tag(type='button' onclick='location.href="/projects"') all tags
+    button.tag(type='button' onclick='redirect()') all tags
     each tag in tags
       button.tag(type='submit' name='tag' value=tag.title) #{tag.title}
     else
@@ -12,15 +12,33 @@ block content
   div#projects-container
     each project in projects
       div.box
-        strong.title #[p #{project.titleEn}]
+
+        if language == "en"
+          strong.title #[p #{project.titleEn}]
+        else if language == "cn"
+          strong.title #[p #{project.titleCn}]
+        else
+          strong.title #[p undefined language!]
+
         div.tagspace
           each tag in project.tags
             span.tag #{tag}
         img.cover-image(src=project.coverImage)
         p.description
-          span #{project.descriptionEn}
-          | 
+
+          if language == "en"
+            span #{project.descriptionEn}
+          else if language == "cn"
+            span #{project.descriptionCn}
+          else
+            span undefined language!
+            
           a(href=project.url) More.
     else
       p There are no projects matching your filter
+  script.
+    var language = !{JSON.stringify(language)};
+    function redirect() {
+      window.location.href=`/${language}/projects`;
+    }
     
