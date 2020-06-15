@@ -9,7 +9,8 @@ exports.showForm = function(req, res, next) {
     res.render('create_form', {
       title: 'Create new post',
       page: 'home',
-      tags: tags
+      tags: tags,
+      language: req.params.language
     });
   });
 }
@@ -73,8 +74,9 @@ exports.sendToDb = function(req, res, next) {
         coverImage = newBlock.url;
       imageIdx++;
     } else {
-      console.error("ERROR undefined block type");
-      return next();
+      var err = new Error('Undefined block type');
+      err.status = 404;
+      return next(err);
     }
     allBlocks.push(newBlock);
   }
@@ -88,13 +90,21 @@ exports.sendToDb = function(req, res, next) {
     blocks: allBlocks,
     coverImage: coverImage,
     descriptionEn: descriptionEn,
-    descriptionCn: descriptionCn
+    descriptionCn: descriptionCn,
   });
 
   let collectionString = req.body.type + "s";
   db.collection(collectionString).insertOne(post, function(err, result) {
     if (err) return next(err);
-      res.redirect(post.url);
+      if (req.body.userLanguage === "en") {
+        res.redirect(post.urlEn);
+      } else if (req.body.userLanguage === "cn") {
+        res.redirect(post.urlCn);
+      } else {
+        var err = new Error('Unknown user language');
+        err.status = 404;
+        return next(err);
+      }
   });
 }
 

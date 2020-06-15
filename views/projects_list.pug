@@ -28,12 +28,12 @@ block content
 
           if language == "en"
             span #{project.descriptionEn}
+            a(href=project.urlEn) More
           else if language == "cn"
             span #{project.descriptionCn}
+            a(href=project.urlCn) 更多
           else
-            span undefined language!
-            
-          a(href=project.url) More.
+            span undefined language!            
     else
       p There are no projects matching your filter
   script.

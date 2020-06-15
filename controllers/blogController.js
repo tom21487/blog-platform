@@ -11,7 +11,8 @@ exports.list = function(req, res, next) {
         title: 'Tom\'s site - blog',
         blogs: blogs,
         page: 'blog',
-        tags: tags
+        tags: tags,
+        language: req.params.language
       });
     });
   });
@@ -23,7 +24,8 @@ exports.detail = function(req, res, next) {
     res.render('post_detail', {
       title: 'Blog Post - ' + blog.title,
       post: blog,
-      page: 'blog'
+      page: 'blog',
+      language: req.params.language
     });
   });
 }

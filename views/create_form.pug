@@ -33,6 +33,9 @@ block content
       br
       div#all-blocks
       button(type='button' onclick="addBlock()") add block
+    
+    input(type='hidden' name='userLanguage') #{language}
+
     button(type='submit' style="display: block") submit
 
   script(src='/javascripts/block.js')

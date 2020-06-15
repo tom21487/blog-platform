@@ -1,7 +1,8 @@
 nav#navbar(data-select=page)
   div.hamburger.icon(onclick='toggleHamburger()')
-  div.navbox #[a(href='/' + language) Home]
-  div.navbox #[a(href='/about') About]
-  div.navbox #[a(href='/projects') Projects]
-  div.navbox #[a(href='/blog') Blog]
-  div.navbox #[a(href='contact.html') Contact]
+  - var header = '/' + language;
+  div.navbox #[a(href=header) Home]
+  div.navbox #[a(href=header + '/about') About]
+  div.navbox #[a(href=header + '/projects') Projects]
+  div.navbox #[a(href=header + '/blog') Blog]
+  div.navbox #[a(href=header + '/contact') Contact]

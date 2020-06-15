@@ -13,11 +13,14 @@ class Post {
     this.coverImage = p.coverImage;
     
     // auto-generated
-    this.url = '/' + this.type;
+    this.urlEn = `/en/${this.type}`;
+    this.urlCn = `/cn/${this.type}`;
     if (this.type === 'project') {
-      this.url += 's';
+      this.urlEn += 's';
+      this.urlCn += 's';
     }
-    this.url += '/' + this._id;
+    this.urlEn += `/${this._id}`;
+    this.urlCn += `/${this._id}`;
   }
 }
 

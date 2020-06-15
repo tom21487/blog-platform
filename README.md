@@ -1,7 +1,7 @@
 # Stuff to do
 Authentication
 Multilingual features
-Editing
+Editing (control panel)
 Page switching
 
 Language switching as follows:
