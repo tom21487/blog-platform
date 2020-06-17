@@ -12,7 +12,11 @@ block content
 
         div.tagspace
           each tag in post.tags
-            span.tag #{tag}
+            span.tag 
+              if tag == "not tagged" && language == "cn"
+                | 无标签
+              else
+                | #{tag}
         img.cover-image(src=post.coverImage)
         
         p.description

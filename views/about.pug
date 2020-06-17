@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  // About showcase
   p#about-text
     if language == "en"
       span.
@@ -13,7 +12,7 @@ block content
         In 2014, I founded Ice Cube Studios, where I make lots of cool
         things, such as a calculator. You can view my resume here (PDF).
         If you want to contact me, let’s talk. My contact page is
-      a(href='contact.html') here
+      a(href='/contact') here
       |.
     else if language == "cn"
       span.
@@ -22,8 +21,6 @@ block content
         我力图用变成技能和社交能力解决苦难的问题。2014年，我创立了冰块工作室，并在那里
         做了很有意思的项目，比如一款计算器软件。你可以在这里查看我的简历(PDF)。我十分
         期待与您
-      a(href='contact.html') 联系
+      a(href='/contact') 联系
       |。
-    else
-      p undefined language!
   img#about-img(src='images/_avatar.png')
