@@ -1,65 +1,65 @@
 extends layout
 
 block content
-  // About showcase
+  -
+    let text = {};
+    if (language === "en") {
+      text.aboutSummary = "Hi, I’m Tom. I like to make stuff with software. I’m a full stack developer and I also write algorithms using C/C++. As my resume says, I’m a student programmer/engineer.";
+      text.aboutLink = "More about me";
+      text.projectsHeading = "What I'm working on:";
+      text.projects = [];
+      for (project of projects) {
+        text.projects.push({
+          title: project.titleEn,
+          tags: project.tags,
+          coverImage: project.coverImage,
+          description: project.descriptionEn,
+          url: project.urlEn
+        });
+      }
+      text.projectsLink = "More";
+      text.noProjects = "No projects";
+      text.moreProjects = "More projects";
+    } else if (language === "cn") {
+      text.aboutSummary = "你好，我是Tom。我喜欢用软件创作东西。我是一位全栈开发者，我也用C/C++写算法。据我的简历所写，我是一位学生软件工程师。";
+      text.aboutLink = "更多";
+      text.projectsHeading = "近期项目：";
+      text.projects = [];
+      for (project of projects) {
+        let tags = project.tags[0] == "not tagged" && language == "cn" ? new Array("无标签") : project.tags;
+        text.projects.push({
+          title: project.titleCn,
+          tags: tags,
+          coverImage: project.coverImage,
+          description: project.descriptionCn,
+          url: project.urlCn
+        });
+      }
+      text.projectsLink = "更多";
+      text.noProjects = "没有项目";
+      text.moreProjects = "更多项目";
+    }
   p#about-text
-    if language == "en"
-      span.
-        Hi, I’m Tom. I like to make stuff with software. I’m a full stack
-        developer and I also write algorithms using C/C++. As my resume
-        says, I’m a student programmer/engineer.
-      a(href='/en/about') More about me
-    else if language == "cn"
-      span.
-        你好，我是Tom。我喜欢用软件创作东西。我是一位全栈开发者，我也用C/C++写算法。
-        据我的简历所写，我是一位学生软件工程师。
-      a(href='/cn/about') 更多
+    | #{text.aboutSummary}  
+    a(href='/en/about') #{text.aboutLink}
   div.break
-
-  // Projects showcase
-  center
-    p
-      if language == "en"
-        | What I'm working on:
-      else if language == "cn"
-        | 近期项目：
-  each project in projects
-    div.quick-view
+  center #[p #{text.projectsHeading}]
+  div.quick-view
+    each project in text.projects
       div.box
-        strong.title
-          p
-            if language == "en"
-              | #{project.titleEn}
-            else if language == "cn"
-              | #{project.titleCn}
+        strong.title #[p #{project.title}]
         div.tagspace
           each tag in project.tags
-            span.tag
-              if tag == "not tagged" && language == "cn"
-                | 无标签
-              else
-                | #{tag}
+            span.tag #{tag}
         img.cover-image(src=project.coverImage)
         p.description
-          if language == "en"
-            span #{project.descriptionEn}
-            a(href=project.urlEn) More
-          else if language == "cn"
-            span #{project.descriptionCn}
-            a(href=project.urlCn) 更多
-  else
-    p
-      if language == "en"
-        | No projects!
-      else if language == "cn"
-        | 没有项目
+          | #{project.description}
+          a(href=project.url) #{text.projectLinks}
+    else
+      p #{text.noProjects}
   center
     a(href='projects.html')
-      p
-        if language == "en"
-          | More projects
-        else if langauge == "cn"
-          | 更多项目
+      p #{text.moreProjects}
   div.break
         
   // Blog showcase
