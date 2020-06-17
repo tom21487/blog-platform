@@ -3,6 +3,7 @@ Authentication
 Multilingual features
 Editing (control panel)
 Page switching
+Tag manager
 
 Language switching as follows:
 https://www.mozilla.org/en-US/firefox/new/

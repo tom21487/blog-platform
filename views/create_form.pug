@@ -3,12 +3,11 @@ extends layout
 block content
   center #[h2 Create new post]
   form(method='POST' action='' enctype="multipart/form-data" style="margin-left: 25%")
-  
     div.form-group
       | type: 
       select(name='type')
-        option project
-        option blog
+        option(value='project') project
+        option(value='blog') blog
 
     div.form-group
       | title (en): 
@@ -33,9 +32,7 @@ block content
       br
       div#all-blocks
       button(type='button' onclick="addBlock()") add block
-    
+
     input(type='hidden' name='userLanguage' value=language)
-
     button(type='submit' style="display: block") submit
-
   script(src='/javascripts/block.js')
