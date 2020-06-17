@@ -7,9 +7,9 @@ exports.list = function(req, res, next) {
     if (err) return next(err);
     db.collection('tags').find().toArray(function(err, tags) {
       if (err) return next(err);
-      res.render('blogs_list', {
+      res.render('post_list', {
         title: 'Tom\'s site - blog',
-        blogs: blogs,
+        posts: blogs,
         page: 'blog',
         tags: tags,
         language: req.params.language

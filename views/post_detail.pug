@@ -1,32 +1,38 @@
 extends layout
 
 block content
-
-  if language == "en"
-    h3 #{post.titleEn}
-  else if language == "cn"
-    h3 #{post.titleEn}
-  else
-    h3 undefined language!
+  h3
+    if language == "en"
+      | #{post.titleEn}
+    else if language == "cn"
+      | #{post.titleCn}
     
   div.tagspace
-    | Tags: 
+    if language == "en"
+      | Tags: 
+    else if language == "cn"
+      | 标签：
     each tag in post.tags
-      span.tag #{tag}
+      span.tag
+        if tag == "not tagged" && language == "cn"
+          | 无标签
+        else
+          | #{tag}
+
   p.description
-    | Description: 
-    span #{post.descriptionEn}
+    if language == "en"
+      | Description: 
+      span #{post.descriptionEn}
+    else if language == "cn"
+      | 描述：
+      span #{post.descriptionCn}
+
   each block in post.blocks
     if (block.type == "text")
-
-      if language == "en"
-        p #{block.contentEn}
-      else if language == "cn"
-        p #{block.contentCn}
-      else
-        p undefined language!
-
+      p
+        if language == "en"
+          | #{block.contentEn}
+        else if language == "cn"
+          | #{block.contentCn}
     else if (block.type == "image")
       img.block-img(src=block.url)
-    else
-      p ERROR undefined block type

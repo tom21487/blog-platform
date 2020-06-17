@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  include tag_filter.pug
+  div(id=page + '-container')
+    each post in posts
+      div.box
+        if language == "en"
+          strong.title #[p #{post.titleEn}]
+        else if language == "cn"
+          strong.title #[p #{post.titleCn}]
+
+        div.tagspace
+          each tag in post.tags
+            span.tag #{tag}
+        img.cover-image(src=post.coverImage)
+        
+        p.description
+          if language == "en"
+            span #{post.descriptionEn}
+            a(href=post.urlEn) More
+          else if language == "cn"
+            span #{post.descriptionCn}
+            a(href=post.urlCn) 更多
+    else
+      p
+        if language == "en"
+          | There are no posts matching your filter
+        else if language == "cn"
+          | 找不到符合标签选项的项目
+  script.
+    var language = !{JSON.stringify(language)};
+    var page = !{JSON.stringify(page)};
+    function redirect() {
+      window.location.href=`/${language}/${page}`;
+    }

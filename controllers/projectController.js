@@ -10,9 +10,9 @@ exports.list = function(req, res, next) {
     if (err) return next(err);
     tagsCollection.find().toArray(function(err, tags) {
       if (err) return next(err);
-      res.render('projects_list', {
+      res.render('post_list', {
         title: 'Tom\'s site - projects',
-        projects: projects,
+        posts: projects,
         page: 'projects',
         tags: tags,
         language: req.params.language
@@ -22,9 +22,6 @@ exports.list = function(req, res, next) {
 }
 
 exports.detail = function(req, res, next) {
-  console.log('req.params:');
-  console.log(req.params);
-  
   projectsCollection.findOne({_id: req.params.id}, function(err, project) {
     if (err) {
       return next(err);
