@@ -29,7 +29,9 @@ block content
         strong.title
           p
             if language == "en"
-              | #{project}
+              | #{project.titleEn}
+            else if language == "cn"
+              | #{project.titleCn}
         div.tagspace
           each tag in project.tags
             span.tag
