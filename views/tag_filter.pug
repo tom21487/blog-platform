@@ -1,0 +1,22 @@
+form#tag-filter(method='GET' action='')
+  if language == "en"
+    | Filter by tag:
+  else if language == "cn"
+    | 标签过滤：
+  button.tag(type='button' onclick='redirect()')
+    if language == "en"
+      | all tags
+    else if language == "cn"
+      | 全部标签
+  each tag in tags
+    button.tag(type='submit' name='tag' value=tag.title)
+      if tag.title == "not tagged" && language == "cn"
+        | 无标签
+      else
+        | #{tag.title}
+  else
+    p
+      if language == "en"
+        | There are no tags
+      else if language == "cn"
+        | 没有标签

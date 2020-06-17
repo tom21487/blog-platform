@@ -1,14 +1,7 @@
 extends layout
 
 block content
-  form#tag-filter(method='GET' action='')
-    | Filter by tag:
-    button.tag(type='button' onclick='redirect()') all tags
-    each tag in tags
-      button.tag(type='submit' name='tag' value=tag.title) #{tag.title}
-    else
-      p There are no tags
-
+  include tag_filter.pug
   div#projects-container
     each project in projects
       div.box
@@ -17,8 +10,6 @@ block content
           strong.title #[p #{project.titleEn}]
         else if language == "cn"
           strong.title #[p #{project.titleCn}]
-        else
-          strong.title #[p undefined language!]
 
         div.tagspace
           each tag in project.tags
@@ -32,10 +23,14 @@ block content
           else if language == "cn"
             span #{project.descriptionCn}
             a(href=project.urlCn) 更多
-          else
-            span undefined language!            
+
     else
-      p There are no projects matching your filter
+      p
+        if language == "en"
+          | There are no projects matching your filter
+        else if language == "cn"
+          | 找不到符合标签选项的项目
+
   script.
     var language = !{JSON.stringify(language)};
     function redirect() {

@@ -3,16 +3,27 @@ extends layout
 block content
   // About showcase
   p#about-text
-    span.
-      Hi, I’m Tom. I like to make stuff with software. I’m a full stack
-      developer and I also write algorithms using C/C++. As my resume
-      says, I’m a student programmer/engineer. Solid foundation in
-      mathematics and algorithmic thinking. Seeking to use programming
-      skills and collaboration to tackle tough problems.
-      In 2014, I founded Ice Cube Studios, where I make lots of cool
-      things, such as a calculator. You can view my resume here (PDF).
-      If you want to contact me, let’s talk. My contact page is
-    | 
-    a(href='contact.html') here
-    |.
+    if language == "en"
+      span.
+        Hi, I’m Tom. I like to make stuff with software. I’m a full stack
+        developer and I also write algorithms using C/C++. As my resume
+        says, I’m a student programmer/engineer. Solid foundation in
+        mathematics and algorithmic thinking. Seeking to use programming
+        skills and collaboration to tackle tough problems.
+        In 2014, I founded Ice Cube Studios, where I make lots of cool
+        things, such as a calculator. You can view my resume here (PDF).
+        If you want to contact me, let’s talk. My contact page is
+      a(href='contact.html') here
+      |.
+    else if language == "cn"
+      span.
+        你好，我是Tom。我喜欢用软件创作东西。我是一位全栈开发者，我也用C/C++写算法。
+        据我的简历所写，我是一位学生软件工程师。本人数学和算法思维基础扎实。
+        我力图用变成技能和社交能力解决苦难的问题。2014年，我创立了冰块工作室，并在那里
+        做了很有意思的项目，比如一款计算器软件。你可以在这里查看我的简历(PDF)。我十分
+        期待与您
+      a(href='contact.html') 联系
+      |。
+    else
+      p undefined language!
   img#about-img(src='images/avatar.png')
