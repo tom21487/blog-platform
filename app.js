@@ -19,8 +19,8 @@ mongo.connect(function(err) {
   var aboutRouter = require('./routes/about');
   var projectsRouter = require('./routes/projects');
   var blogRouter = require('./routes/blog');
-  var createRouter = require('./routes/create');
   var contactRouter = require('./routes/contact');
+  var controlRouter = require('./routes/control');
 
   var app = express();
   var port = 3000;
@@ -34,11 +34,11 @@ mongo.connect(function(err) {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, 'public')));
 
+  app.use('/control', controlRouter);
   app.use('/:language', indexRouter);
   app.use('/:language/about', aboutRouter);
   app.use('/:language/projects', projectsRouter);
   app.use('/:language/blog', blogRouter);
-  app.use('/:language/create', createRouter);
   app.use('/:language/contact', contactRouter);
   
   // catch 404 and forward to error handler

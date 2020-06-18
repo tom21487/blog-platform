@@ -1,0 +1,11 @@
+select
+  option(value="projects") projects
+  option(value="blogs") blogs
+each project in projects
+  p
+    | #{project.titleEn} / #{project.titleCn}
+    | 
+    a(href="/control/change/update") update
+    | 
+    a(href="/control/change/delete") delete
+a(href='javascript:history.back()' style="display: block") Back

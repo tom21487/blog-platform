@@ -1,9 +1,9 @@
 # Stuff to do
 Authentication
-Multilingual features
 Editing (control panel)
 Page switching
 Tag manager
+Asynchronous queries
 
 Language switching as follows:
 https://www.mozilla.org/en-US/firefox/new/
