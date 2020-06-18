@@ -13,7 +13,7 @@ block content
       moreBlogs: ["More blogs", "更多博客"],
       projects: [],
       blogs: []
-    }
+    };
     for (project of projects) {
       text.projects.push({
         title: [project.titleEn, project.titleCn],
@@ -32,7 +32,6 @@ block content
         url: [blog.urlEn, blog.urlCn]
       });
     }
-    let lang = language == "en" ? 0 : 1;
   p#about-text
     | #{text.aboutSummary[lang]}  
     a(href='/en/about') #{text.aboutLink[lang]}
@@ -48,7 +47,7 @@ block content
         img.cover-image(src=project.coverImage)
         p.description
           | #{project.description[lang]}
-          a(href=project.url) #{text.postLink[lang]}
+          a(href=project.url[lang]) #{text.postLink[lang]}
     else
       p #{text.noProjects[lang]}
   center
@@ -57,7 +56,7 @@ block content
   div.break          
   center #[p #{text.blogHeading[lang]}]
   div.quick-view
-    each blog, index in text.blogs
+    each blog in text.blogs
       div.box
         strong.title #[p #{blog.title[lang]}]
         div.tagspace
@@ -66,7 +65,7 @@ block content
         img.cover-image(src=blog.coverImage)
         p.description
           | #{blog.description[lang]}
-          a(href=blog.url) #{text.postLink[lang]}
+          a(href=blog.url[lang]) #{text.postLink[lang]}
     else
       p #{text.noProjects[lang]}
   center

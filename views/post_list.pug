@@ -1,37 +1,36 @@
 extends layout
 
 block content
+  -
+    let text = {
+      posts: [],
+      tags: tags[0].title == "not tagged" && language == "cn" ? [{title: "没有标签"}] : tags,
+      postLink: ["More", "更多"],
+      noPosts: ["There are no results matching your filter", "找不到符合标签选项的结果"]
+    };
+    for (post of posts) {
+      text.posts.push({
+        title: [post.titleEn, post.titleCn],
+        description: [post.descriptionEn, post.descriptionCn],
+        tags: post.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : post.tags,
+        coverImage: post.coverImage,
+        url: [post.urlEn, post.urlCn]
+      });
+    }
   include tag_filter.pug
   div(id=page + '-container')
-    each post in posts
+    each post in text.posts
       div.box
-        if language == "en"
-          strong.title #[p #{post.titleEn}]
-        else if language == "cn"
-          strong.title #[p #{post.titleCn}]
-
+        strong.title #[p #{post.title[lang]}]
         div.tagspace
           each tag in post.tags
-            span.tag 
-              if tag == "not tagged" && language == "cn"
-                | 无标签
-              else
-                | #{tag}
+            span.tag #{tag}
         img.cover-image(src=post.coverImage)
-        
         p.description
-          if language == "en"
             span #{post.descriptionEn}
-            a(href=post.urlEn) More
-          else if language == "cn"
-            span #{post.descriptionCn}
-            a(href=post.urlCn) 更多
+            a(href=post.url[lang]) #{text.postLink[lang]}
     else
-      p
-        if language == "en"
-          | There are no posts matching your filter
-        else if language == "cn"
-          | 找不到符合标签选项的项目
+      p #{text.noPosts[lang]}
   script.
     var language = !{JSON.stringify(language)};
     var page = !{JSON.stringify(page)};

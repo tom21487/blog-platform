@@ -1,6 +1,6 @@
 nav#navbar(data-select=page)
   div.hamburger.icon(onclick='toggleHamburger()')
-  - var header = '/' + language;
+  - let header = '/' + language;
   if language == "en"
     div.navbox #[a(href=header) Home]
     div.navbox #[a(href=header + '/about') About]
