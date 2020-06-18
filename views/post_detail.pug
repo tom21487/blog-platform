@@ -2,7 +2,7 @@ extends layout
 
 block content
   -
-    let text = {
+    text = {
       title: [post.titleEn, post.titleCn],
       tagsHeading: ["Tags: ", "标签："],
       tags: post.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : post.tags,

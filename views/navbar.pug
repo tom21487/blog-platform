@@ -1,17 +1,16 @@
 nav#navbar(data-select=page)
   div.hamburger.icon(onclick='toggleHamburger()')
-  - let header = '/' + language;
-  if language == "en"
-    div.navbox #[a(href=header) Home]
-    div.navbox #[a(href=header + '/about') About]
-    div.navbox #[a(href=header + '/projects') Projects]
-    div.navbox #[a(href=header + '/blog') Blog]
-    div.navbox #[a(href=header + '/contact') Contact]
-  else if language == "cn"
-    div.navbox #[a(href=header) 主页]
-    div.navbox #[a(href=header + '/about') 关于]
-    div.navbox #[a(href=header + '/projects') 项目]
-    div.navbox #[a(href=header + '/blog') 博客]
-    div.navbox #[a(href=header + '/contact') 联系]
-  else
-    div undefined language!
+  -
+    text = {
+      header: '/' + language,
+      home: ["Home", "主页"],
+      about: ["About", "关于"],
+      projects: ["Projects", "项目"],
+      blog: ["Blog", "博客"],
+      contact: ["Contact", "联系"]
+    };
+  div.navbox #[a(href=text.header) #{text.home[lang]}]
+  div.navbox #[a(href=text.header + '/about') #{text.about[lang]}]
+  div.navbox #[a(href=text.header + '/projects') #{text.projects[lang]}]
+  div.navbox #[a(href=text.header + '/blog') #{text.blog[lang]}]
+  div.navbox #[a(href=text.header + '/contact') #{text.contact[lang]}]

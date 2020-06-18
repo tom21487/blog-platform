@@ -3,7 +3,9 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    - let lang = language == "en" ? 0 : 1;
+    -
+      let lang = language == "en" ? 0 : 1;
+      let text;
   body
     div#page-container
       div#content-wrap
