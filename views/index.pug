@@ -17,9 +17,21 @@ block content
           url: project.urlEn
         });
       }
-      text.projectsLink = "More";
+      text.postLink = "More";
       text.noProjects = "No projects";
       text.moreProjects = "More projects";
+      text.blogHeading = "Latest from the blog:";
+      text.blogs = [];
+      for (blog of blogs) {
+        text.blogs.push({
+          title: blog.titleEn,
+          tags: blog.tags,
+          coverImage: blog.coverImage,
+          description: blog.descriptionEn,
+          url: blog.urlEn
+        });
+      }
+      text.moreBlogs = "More blogs"
     } else if (language === "cn") {
       text.aboutSummary = "你好，我是Tom。我喜欢用软件创作东西。我是一位全栈开发者，我也用C/C++写算法。据我的简历所写，我是一位学生软件工程师。";
       text.aboutLink = "更多";
@@ -35,7 +47,7 @@ block content
           url: project.urlCn
         });
       }
-      text.projectsLink = "更多";
+      text.postLink = "更多";
       text.noProjects = "没有项目";
       text.moreProjects = "更多项目";
     }
@@ -54,7 +66,7 @@ block content
         img.cover-image(src=project.coverImage)
         p.description
           | #{project.description}
-          a(href=project.url) #{text.projectLinks}
+          a(href=project.url) #{text.postLink}
     else
       p #{text.noProjects}
   center
@@ -63,21 +75,20 @@ block content
   div.break
         
   // Blog showcase
-  center #[p Latest from the blog:]
+  center #[p #{text.blogHeading}]
   div.quick-view
-    div.box
-      strong.title #[p Setting up a linux]
-      div.tagspace
-        span.tag javascript
-        span.tag working on
-      img.cover-image(src='/images/3.jpg')
-      p.description Ubuntu 20.04 is amazing. They've fixed a lot of their...
-
-    div.box
-      strong.title #[p Introduction to the MERN stack]
-      div.tagspace
-        span.tag c++
-        span.tag working on
-      img.cover-image(src='/images/4.jpg')
-      p.description How to get started writing full stack applications.
-  center #[a(href='blog.html') #[p More blog posts]]  
+    each blog in text.blogs
+      div.box
+        strong.title #[p #{blog.title}]
+        div.tagspace
+          each tag in blog.tags
+            span.tag #{tag}
+        img.cover-image(src=blog.coverImage)
+        p.description
+          | #{blog.description}
+          a(href=blog.url) #{text.postLink}
+    else
+      p #{text.noProjects}
+  center
+    a(href='blog.html')
+      p #{text.moreBlogs}
