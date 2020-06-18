@@ -2,93 +2,73 @@ extends layout
 
 block content
   -
-    let text = {};
-    if (language === "en") {
-      text.aboutSummary = "Hi, I’m Tom. I like to make stuff with software. I’m a full stack developer and I also write algorithms using C/C++. As my resume says, I’m a student programmer/engineer.";
-      text.aboutLink = "More about me";
-      text.projectsHeading = "What I'm working on:";
-      text.projects = [];
-      for (project of projects) {
-        text.projects.push({
-          title: project.titleEn,
-          tags: project.tags,
-          coverImage: project.coverImage,
-          description: project.descriptionEn,
-          url: project.urlEn
-        });
-      }
-      text.postLink = "More";
-      text.noProjects = "No projects";
-      text.moreProjects = "More projects";
-      text.blogHeading = "Latest from the blog:";
-      text.blogs = [];
-      for (blog of blogs) {
-        text.blogs.push({
-          title: blog.titleEn,
-          tags: blog.tags,
-          coverImage: blog.coverImage,
-          description: blog.descriptionEn,
-          url: blog.urlEn
-        });
-      }
-      text.moreBlogs = "More blogs"
-    } else if (language === "cn") {
-      text.aboutSummary = "你好，我是Tom。我喜欢用软件创作东西。我是一位全栈开发者，我也用C/C++写算法。据我的简历所写，我是一位学生软件工程师。";
-      text.aboutLink = "更多";
-      text.projectsHeading = "近期项目：";
-      text.projects = [];
-      for (project of projects) {
-        let tags = project.tags[0] == "not tagged" && language == "cn" ? new Array("无标签") : project.tags;
-        text.projects.push({
-          title: project.titleCn,
-          tags: tags,
-          coverImage: project.coverImage,
-          description: project.descriptionCn,
-          url: project.urlCn
-        });
-      }
-      text.postLink = "更多";
-      text.noProjects = "没有项目";
-      text.moreProjects = "更多项目";
+    let text = {
+      aboutSummary: ["Hi, I’m Tom. I like to make stuff with software. I’m a full stack developer and I also write algorithms using C/C++. As my resume says, I’m a student programmer/engineer.", "你好，我是Tom。我喜欢用软件创作东西。我是一位全栈开发者，我也用C/C++写算法。据我的简历所写，我是一位学生软件工程师。"],
+      aboutLink: ["More about me", "更多"],
+      projectsHeading: ["What I'm working on:", "近期项目："],
+      postLink: ["More", "更多"],
+      noProjects: ["No projects", "没有项目"],
+      moreProjects: ["More projects", "更多项目"],
+      blogHeading: ["Latest from the blog:", "近期博客："],
+      moreBlogs: ["More blogs", "更多博客"],
+      projects: [],
+      blogs: []
     }
+    for (project of projects) {
+      text.projects.push({
+        title: [project.titleEn, project.titleCn],
+        description: [project.descriptionEn, project.descriptionCn],
+        tags: project.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : project.tags,
+        coverImage: project.coverImage,
+        url: [project.urlEn, project.urlCn]
+      });
+    }
+    for (blog of blogs) {
+      text.blogs.push({
+        title: [blog.titleEn, blog.titleCn],
+        description: [blog.descriptionEn, blog.descriptionCn],
+        tags: blog.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : blog.tags,
+        coverImage: blog.coverImage,
+        url: [blog.urlEn, blog.urlCn]
+      });
+    }
+    let lang = language == "en" ? 0 : 1;
   p#about-text
-    | #{text.aboutSummary}  
-    a(href='/en/about') #{text.aboutLink}
+    | #{text.aboutSummary[lang]}  
+    a(href='/en/about') #{text.aboutLink[lang]}
   div.break
-  center #[p #{text.projectsHeading}]
+  center #[p #{text.projectsHeading[lang]}]
   div.quick-view
     each project in text.projects
       div.box
-        strong.title #[p #{project.title}]
+        strong.title #[p #{project.title[lang]}]
         div.tagspace
           each tag in project.tags
             span.tag #{tag}
         img.cover-image(src=project.coverImage)
         p.description
-          | #{project.description}
-          a(href=project.url) #{text.postLink}
+          | #{project.description[lang]}
+          a(href=project.url) #{text.postLink[lang]}
     else
-      p #{text.noProjects}
+      p #{text.noProjects[lang]}
   center
-    a(href='projects.html')
-      p #{text.moreProjects}
-  div.break
-        
-  // Blog showcase
-  center #[p #{text.blogHeading}]
+    a(href='/projects')
+      p #{text.moreProjects[lang]}
+  div.break          
+  center #[p #{text.blogHeading[lang]}]
   div.quick-view
-    each blog in text.blogs
+    each blog, index in text.blogs
       div.box
-        strong.title #[p #{blog.title}]
+        strong.title #[p #{blog.title[lang]}]
         div.tagspace
           each tag in blog.tags
             span.tag #{tag}
         img.cover-image(src=blog.coverImage)
         p.description
-          | #{blog.description}
-          a(href=blog.url) #{text.postLink}
+          | #{blog.description[lang]}
+          a(href=blog.url) #{text.postLink[lang]}
     else
-      p #{text.noProjects}
+      p #{text.noProjects[lang]}
   center
     a(href='blog.html')
-      p #{text.moreBlogs}
+      p #{text.moreBlogs[lang]}
