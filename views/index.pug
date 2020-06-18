@@ -34,7 +34,7 @@ block content
     }
   p#about-text
     | #{text.aboutSummary[lang]}  
-    a(href='/en/about') #{text.aboutLink[lang]}
+    a(href='/' + language + '/about') #{text.aboutLink[lang]}
   div.break
   center #[p #{text.projectsHeading[lang]}]
   div.quick-view

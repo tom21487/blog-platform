@@ -20,7 +20,7 @@ block content
   h3 #{text.title[lang]}
   div.tagspace
     | #{text.tagsHeading[lang]}
-    each tag in post.tags
+    each tag in text.tags
       span.tag #{tag}
 
   p.description
