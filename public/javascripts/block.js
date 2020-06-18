@@ -30,7 +30,7 @@ class Block {
     this.inputEn.name = 'textEn';
     this.inputEn.style.display = "block";
     this.inputEn.style.height = "100px";
-    this.inputEn.style.marginBottom = "20px";
+    this.inputEn.style.marginBottom = "10px";
     this.inputEn.placeholder = "en" + this.container.id;
     this.inputEn.value = "";
 
@@ -38,7 +38,7 @@ class Block {
     this.inputCn.name = 'textCn';
     this.inputCn.style.display = "block";
     this.inputCn.style.height = "100px";
-    this.inputCn.style.marginBottom = "20px";
+    this.inputCn.style.marginBottom = "10px";
     this.inputCn.placeholder = "cn" + this.container.id;
     this.inputCn.value = "";
 
@@ -46,7 +46,7 @@ class Block {
     this.inputImg.type = 'file';
     this.inputImg.name = 'image';
     this.inputImg.style.display = "block";
-    this.inputImg.style.marginBottom = "20px";
+    this.inputImg.style.marginBottom = "10px";
     
     // APPEND ELEMENTS
     this.container.appendChild(this.select);
@@ -63,7 +63,7 @@ class Block {
       this.inputEn.name = 'textEn';
       this.inputEn.style.display = "block";
       this.inputEn.style.height = "100px";
-      this.inputEn.style.marginBottom = "20px";
+      this.inputEn.style.marginBottom = "10px";
       this.inputEn.placeholder = "en" + this.container.id;
       this.inputEn.value = "";
 
@@ -71,7 +71,7 @@ class Block {
       this.inputCn.name = 'textCn';
       this.inputCn.style.display = "block";
       this.inputCn.style.height = "100px";
-      this.inputCn.style.marginBottom = "20px";
+      this.inputCn.style.marginBottom = "10px";
       this.inputCn.placeholder = "cn" + this.container.id;
       this.inputCn.value = "";
 
@@ -86,7 +86,7 @@ class Block {
       this.inputImg.type = 'file';
       this.inputImg.name = 'image';
       this.inputImg.style.display = "block";
-      this.inputImg.style.marginBottom = "20px";
+      this.inputImg.style.marginBottom = "10px";
 
       this.container.appendChild(this.inputImg);
     }

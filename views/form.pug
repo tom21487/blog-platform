@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    title Create new post
+  body
+    h2 Create new post
+    form(method='POST' action='' enctype="multipart/form-data")
+      div.form-group
+        | type: 
+        select(name='type')
+          option(value='project') project
+          option(value='blog') blog
+
+      div.form-group
+        | title (en): 
+        input(name='titleEn' type='text' autocomplete='off' required)
+        
+      div.form-group
+        | title (cn):
+        input(name='titleCn' type='text' autocomplete='off' required)
+
+      div.form-group
+        | tags: 
+        each tag, index in tags
+          input(name='tags[]' type='checkbox' value=tag.title checked=tag.checked)
+          | #{tag.title}
+          if index < tags.length - 1
+            | ,
+        | 
+        a(href='/tags') (manage tags)
+      
+      div.form-group
+        | blocks:
+        br
+        div#all-blocks
+        button(type='button' onclick="addBlock()") add block
+
+      input(type='hidden' name='userLanguage' value=language)
+      button(type='submit' style="display: block") submit
+    a(href='javascript:history.back()' style="display: block") Back
+    script(src='/javascripts/block.js')

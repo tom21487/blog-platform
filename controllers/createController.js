@@ -6,7 +6,7 @@ var Post = require('../models/post');
 exports.showForm = function(req, res, next) {
   db.collection('tags').find({title: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
-    res.render('create_form', {
+    res.render('form', {
       title: 'Create new post',
       page: 'home',
       tags: tags,
