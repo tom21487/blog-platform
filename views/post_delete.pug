@@ -4,7 +4,7 @@ html
     title Delete post
   body
     h3 Are you sure you want to delete: #{post.titleEn}/#{post.titleCn}?
-    // Connect the buttons to a form
-    button yes
-    button no
-    a(href='javascript:history.back()' style="display: block") Back
+    // Make sure the action is right (because the route is weird)
+    form(method="POST" action="")
+      button(type="submit" name="result" value="yes") yes
+      button(type="submit" name="result" value="no") no

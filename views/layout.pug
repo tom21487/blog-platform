@@ -9,14 +9,13 @@ html
         lang = 0;
       else if (language == "cn")
         lang = 1;
+      else
+        console.log("undefined language!")
   body
-    if lang == undefined
-      h1 undefined language
-    else
-      div#page-container
-        div#content-wrap
-          include navbar.pug
-          block content
-        include footer.pug
-      script(src='/javascripts/navbar.js')
-      script(src='/javascripts/footer.js')
+    div#page-container
+      div#content-wrap
+        include navbar.pug
+        block content
+      include footer.pug
+    script(src='/javascripts/navbar.js')
+    script(src='/javascripts/footer.js')

@@ -95,15 +95,7 @@ exports.sendToDb = function(req, res, next) {
   let collectionString = req.body.type + "s";
   db.collection(collectionString).insertOne(post, function(err, result) {
     if (err) return next(err);
-      if (req.body.userLanguage === "en") {
-        res.redirect(post.urlEn);
-      } else if (req.body.userLanguage === "cn") {
-        res.redirect(post.urlCn);
-      } else {
-        var err = new Error('Unknown user language');
-        err.status = 404;
-        return next(err);
-      }
+    res.redirect('/control/change');
   });
 }
 

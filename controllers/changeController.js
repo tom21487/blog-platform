@@ -32,14 +32,18 @@ exports.confirmation = function(req, res, next) {
 }
 
 exports.removeFromDb = function(req, res, next) {
-  let collectionString = req.params.type + "s";
-  db.collection(collectionString).deleteOne({_id: req.params.id}, function(err, result) {
-    if (err) return next(err);
-    if (result.deletedCount != 1) {
-      var err = new Error('Incorrect deletedCount');
-      err.status = 404;
-      return next(err);
-    }
+  if (req.body.result == "yes") {
+    let collectionString = req.params.type + "s";
+    db.collection(collectionString).deleteOne({_id: req.params.id}, function(err, result) {
+      if (err) return next(err);
+      if (result.deletedCount != 1) {
+        var err = new Error('Incorrect deletedCount');
+        err.status = 404;
+        return next(err);
+      }
+      res.redirect('/control/change');
+    });
+  } else if (req.body.result == "no") {
     res.redirect('/control/change');
-  });
+  }
 }

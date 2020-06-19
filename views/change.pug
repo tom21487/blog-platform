@@ -3,6 +3,7 @@ html
   head
     title Change existing post
   body
+    h3 Change existing post
     form(method='POST' action='')
       select(name='type' onchange='this.form.submit()')
         if (type == "project")
@@ -13,7 +14,10 @@ html
           option(value="blogs" selected) blogs
     each post of posts
       div
-        | #{post.titleEn}/#{post.titleCn} 
-        a(href='change/' + type + '/' + post._id + '/update') update 
-        a(href='change/' + type + '/' + post._id + '/delete') delete 
-    a(href='javascript:history.back()' style="display: block") Back
+        | #{post.titleEn} | #{post.titleCn} 
+        | (
+        a(href='change/' + type + '/' + post._id + '/update') update
+        | ) (
+        a(href='change/' + type + '/' + post._id + '/delete') delete
+        | )
+    a(href='/control' style="display: block") Back
