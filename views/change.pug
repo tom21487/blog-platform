@@ -1,11 +1,19 @@
-select
-  option(value="projects") projects
-  option(value="blogs") blogs
-each project in projects
-  p
-    | #{project.titleEn} / #{project.titleCn}
-    | 
-    a(href="/control/change/update") update
-    | 
-    a(href="/control/change/delete") delete
-a(href='javascript:history.back()' style="display: block") Back
+doctype html
+html
+  head
+    title Change existing post
+  body
+    form(method='POST' action='')
+      select(name='type' onchange='this.form.submit()')
+        if (type == "project")
+          option(value="projects" selected) projects
+          option(value="blogs") blogs
+        else if (type == "blog")
+          option(value="projects") projects
+          option(value="blogs" selected) blogs
+    each post of posts
+      div
+        | #{post.titleEn}/#{post.titleCn} 
+        a(href='change/' + type + '/' + post._id + '/update') update 
+        a(href='change/' + type + '/' + post._id + '/delete') delete 
+    a(href='javascript:history.back()' style="display: block") Back

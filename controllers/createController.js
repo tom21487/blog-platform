@@ -10,7 +10,6 @@ exports.showForm = function(req, res, next) {
       title: 'Create new post',
       page: 'home',
       tags: tags,
-      language: req.params.language
     });
   });
 }

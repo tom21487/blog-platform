@@ -16,7 +16,12 @@ router.get('/create', createController.showForm);
 router.post('/create', upload.array('image'), createController.sendToDb);
 
 router.get('/change', changeController.list);
-router.get('/change/update', changeController.update);
-router.get('/change/delete', changeController.delete);
+router.post('/change', changeController.list);
+
+//router.get('/change/:type/:id/update', changeController.showForm);
+//router.post('/change/:type/:id/update', changeController.updateInDb);
+
+router.get('/change/:type/:id/delete', changeController.confirmation);
+router.post('/change/:type/:id/delete', changeController.removeFromDb);
 
 module.exports = router;

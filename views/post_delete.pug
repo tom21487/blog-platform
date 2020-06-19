@@ -1,4 +1,10 @@
-h2 Are you sure you want to delete?
-button yes
-button no
-a(href='javascript:history.back()' style="display: block") Back
+doctype html
+html
+  head
+    title Delete post
+  body
+    h3 Are you sure you want to delete: #{post.titleEn}/#{post.titleCn}?
+    // Connect the buttons to a form
+    button yes
+    button no
+    a(href='javascript:history.back()' style="display: block") Back
