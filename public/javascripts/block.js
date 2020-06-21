@@ -138,7 +138,15 @@ class Block {
   }
 }
 
-function addBlock(b) {
+function addBlock(options) {
+  let b = options;
+  if (options == "none") {
+    b = {
+      type: "text",
+      contentEn: "",
+      contentCn: "",
+    }
+  }
   let allBlocks = document.getElementById("all-blocks");
   var block = new Block(b);
   allBlocks.appendChild(block.container);

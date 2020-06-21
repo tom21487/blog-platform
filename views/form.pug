@@ -38,7 +38,7 @@ html
         | blocks:
         br
         div#all-blocks
-          each block, index in post.blocks
+          //- each block, index in post.blocks
             //- div(id=index)
             //-   select(name="order")
             //-     if block.type == "text"
@@ -58,16 +58,11 @@ html
             //-       // display existing imgName in the future (see createController.js)
             //-       option(value="old" selected) use existing image
             //-       option(value="new") upload new image
-        -
-          let b = {
-            type: "text",
-            contentEn: "",
-            contentCn: ""
-          };
-        button(type='button' onclick=`addBlock(${b})`) add block
+        button(type='button' onclick='addBlock("none")') add block
       button(type='submit' style="display: block") submit
     a(href='javascript:history.back()' style="display: block") Back
     script(src='/javascripts/block.js')
-    script.
-      var blocks = !{JSON.stringify(post.blocks)};
-      addExistingBlocks(blocks);
+    if post != undefined
+      script.
+        var blocks = !{JSON.stringify(post.blocks)};
+        addExistingBlocks(blocks);
