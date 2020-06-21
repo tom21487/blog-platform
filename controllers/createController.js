@@ -47,7 +47,7 @@ exports.sendToDb = function(req, res, next) {
   }
 
   // PART 2: BLOCK BUILDING
-  let allBlocks = [];
+  let allBlocks = [], allImages = [];
   let coverImage = "";
   let descriptionEn = "", descriptionCn = "";
   let textIdx = 0, imageIdx = 0;
@@ -69,8 +69,10 @@ exports.sendToDb = function(req, res, next) {
     } else if (section === 'image') {
       newBlock.url = '/images/' + req.files[imageIdx].filename;
       //newBlock.imgName = req.files[imageIdx].name
-      if (imageIdx === 0)
+      if (imageIdx === 0) {
         coverImage = newBlock.url;
+      }
+      allImages.push(newBlock);
       imageIdx++;
     } else {
       var err = new Error('Undefined block type');
@@ -90,6 +92,7 @@ exports.sendToDb = function(req, res, next) {
     coverImage: coverImage,
     descriptionEn: descriptionEn,
     descriptionCn: descriptionCn,
+    images: allImages
   });
 
   let collectionString = req.body.type + "s";

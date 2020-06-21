@@ -3,6 +3,7 @@ html
   head
     title #{title}
   body
+    h1 Create a new post to test updating! (database format has changed)
     h2 #{title}
     form(method='POST' action='' enctype="multipart/form-data")
       div.form-group
@@ -38,26 +39,6 @@ html
         | blocks:
         br
         div#all-blocks
-          //- each block, index in post.blocks
-            //- div(id=index)
-            //-   select(name="order")
-            //-     if block.type == "text"
-            //-       option(value="text" selected) text
-            //-       option(value="image") image
-            //-     else if block.type == "image"
-            //-       option(value="text") text
-            //-       option(value="image" selected) image
-            //-   button(type="button") x
-            //-   if block.type == "text"
-            //-     textarea(name="textEn" style="display: block; height: 100px; margin-bottom: 10px;" placeholder="en"+index)
-            //-       | #{block.contentEn}
-            //-     textarea(name="textCn" style="display: block; height: 100px; margin-bottom: 10px;" placeholder="cn"+index)
-            //-       | #{block.contentCn}
-            //-   else if block.type == "image"
-            //-     select(id="image"+index onchange=`toggleImageUpload('${index}')`)
-            //-       // display existing imgName in the future (see createController.js)
-            //-       option(value="old" selected) use existing image
-            //-       option(value="new") upload new image
         button(type='button' onclick='addBlock("none")') add block
       button(type='submit' style="display: block") submit
     a(href='javascript:history.back()' style="display: block") Back

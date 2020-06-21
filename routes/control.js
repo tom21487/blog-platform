@@ -19,7 +19,7 @@ router.get('/change', changeController.list);
 router.post('/change', changeController.list);
 
 router.get('/change/:type/:id/update', changeController.showForm);
-router.post('/change/:type/:id/update', changeController.updateInDb);
+router.post('/change/:type/:id/update', upload.array('image'), changeController.updateInDb);
 
 router.get('/change/:type/:id/delete', changeController.confirmation);
 router.post('/change/:type/:id/delete', changeController.removeFromDb);

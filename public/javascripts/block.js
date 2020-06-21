@@ -73,6 +73,7 @@ class Block {
       this.container.appendChild(this.inputEn);
       this.container.appendChild(this.inputCn);
     } else if (b.type == "image") {
+      this.imageUploadSelector.name = "order";
       this.container.appendChild(this.imageUploadSelector);
     }
   }
@@ -131,8 +132,16 @@ class Block {
 
   toggleImageUpload() {
     if (this.imageUploadSelector.value == "new") {
+      this.select.name = "order";
+      this.imageUploadSelector.name = "";
+      this.container.replaceChild(this.select, this.select);
+      this.container.replaceChild(this.imageUploadSelector, this.imageUploadSelector);
       this.container.appendChild(this.inputImg);
     } else if (this.imageUploadSelector.value == "old") {
+      this.select.name = "";
+      this.imageUploadSelector.name = "order";
+      this.container.replaceChild(this.select, this.select);
+      this.container.replaceChild(this.imageUploadSelector, this.imageUploadSelector);
       this.container.removeChild(this.inputImg);
     }
   }
