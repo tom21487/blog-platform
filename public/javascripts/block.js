@@ -1,7 +1,7 @@
 var blocksGlobalArray = [];
 
 class Block {
-  constructor() {
+  constructor(b) {
     // CONTAINER
     this.container = document.createElement('div');
     this.container.id = document.getElementById("all-blocks").childNodes.length;
@@ -15,6 +15,11 @@ class Block {
     let imgOption = document.createElement('option');
     imgOption.value = 'image';
     imgOption.innerText = 'image';
+    if (b.type == "text") {
+      textOption.setAttribute("selected", true);
+    } else if (b.type == "image") {
+      imgOption.setAttribute("selected", true);
+    }
     this.select.appendChild(textOption);
     this.select.appendChild(imgOption);
     this.select.addEventListener('change', this.displayField.bind(this));
@@ -32,7 +37,7 @@ class Block {
     this.inputEn.style.height = "100px";
     this.inputEn.style.marginBottom = "10px";
     this.inputEn.placeholder = "en" + this.container.id;
-    this.inputEn.value = "";
+    this.inputEn.value = b.contentEn;
 
     this.inputCn = document.createElement('textarea');
     this.inputCn.name = 'textCn';
@@ -40,19 +45,36 @@ class Block {
     this.inputCn.style.height = "100px";
     this.inputCn.style.marginBottom = "10px";
     this.inputCn.placeholder = "cn" + this.container.id;
-    this.inputCn.value = "";
+    this.inputCn.value = b.contentCn;
 
     this.inputImg = document.createElement('input');
     this.inputImg.type = 'file';
     this.inputImg.name = 'image';
     this.inputImg.style.display = "block";
     this.inputImg.style.marginBottom = "10px";
+
+    // IMAGE UPLOAD SELECTOR
+    this.imageUploadSelector = document.createElement("select");
+    let optionOld = document.createElement("option");
+    optionOld.value = "old";
+    optionOld.setAttribute("selected", true);
+    optionOld.innerText = "use existing image";
+    let optionNew = document.createElement("option");
+    optionNew.value = "new";
+    optionNew.innerText = "upload new image";
+    this.imageUploadSelector.appendChild(optionOld);
+    this.imageUploadSelector.appendChild(optionNew);
+    this.imageUploadSelector.addEventListener("change", this.toggleImageUpload.bind(this));
     
     // APPEND ELEMENTS
     this.container.appendChild(this.select);
     this.container.appendChild(this.deleteBtn);
-    this.container.appendChild(this.inputEn);
-    this.container.appendChild(this.inputCn);
+    if (b.type == "text") {
+      this.container.appendChild(this.inputEn);
+      this.container.appendChild(this.inputCn);
+    } else if (b.type == "image") {
+      this.container.appendChild(this.imageUploadSelector);
+    }
   }
 
   displayField() {
@@ -106,11 +128,39 @@ class Block {
     document.getElementById(this.container.id).remove();
     blocksGlobalArray.splice(rank, 1);
   }
+
+  toggleImageUpload() {
+    if (this.imageUploadSelector.value == "new") {
+      this.container.appendChild(this.inputImg);
+    } else if (this.imageUploadSelector.value == "old") {
+      this.container.removeChild(this.inputImg);
+    }
+  }
 }
 
-function addBlock() {
+function addBlock(b) {
   let allBlocks = document.getElementById("all-blocks");
-  var block = new Block();
+  var block = new Block(b);
   allBlocks.appendChild(block.container);
   blocksGlobalArray.push(block);
 }
+
+function addExistingBlocks(blocks) {
+  for (let i = 0; i < blocks.length; i++) {
+    addBlock(blocks[i]);
+  }
+}
+
+/* function toggleImageUpload(imageId) {
+  let imgSelect = document.getElementById(imageId);
+  if (imgSelect.value == "old") {
+    let inputImg = document.createElement('input');
+    inputImg.type = 'file';
+    inputImg.name = 'image';
+    inputImg.style.display = "block";
+    inputImg.style.marginBottom = "10px";
+    imgSelect.appendChild(inputImg);
+  } else if (imgSelect.value == "new") {
+    imgSelect.removeChild(imgSelect.childNodes[2]);
+  }
+} */

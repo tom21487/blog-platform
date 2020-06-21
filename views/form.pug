@@ -1,9 +1,9 @@
 doctype html
 html
   head
-    title Create new post
+    title #{title}
   body
-    h2 Create new post
+    h2 #{title}
     form(method='POST' action='' enctype="multipart/form-data")
       div.form-group
         | type: 
@@ -13,16 +13,21 @@ html
 
       div.form-group
         | title (en): 
-        input(name='titleEn' type='text' autocomplete='off' required)
+        input(name='titleEn' type='text' autocomplete='off' required
+        value = post==undefined ? "" : post.titleEn)
         
       div.form-group
-        | title (cn):
-        input(name='titleCn' type='text' autocomplete='off' required)
+        | title (cn): 
+        input(name='titleCn' type='text' autocomplete='off' required
+        value = post==undefined ? "" : post.titleCn)
 
       div.form-group
         | tags: 
         each tag, index in tags
-          input(name='tags[]' type='checkbox' value=tag.title checked=tag.checked)
+          if tag.checked
+            input(name='tags[]' type='checkbox' value=tag.title checked)
+          else
+            input(name='tags[]' type='checkbox' value=tag.title)
           | #{tag.title}
           if index < tags.length - 1
             | ,
@@ -33,7 +38,36 @@ html
         | blocks:
         br
         div#all-blocks
-        button(type='button' onclick="addBlock()") add block
+          each block, index in post.blocks
+            //- div(id=index)
+            //-   select(name="order")
+            //-     if block.type == "text"
+            //-       option(value="text" selected) text
+            //-       option(value="image") image
+            //-     else if block.type == "image"
+            //-       option(value="text") text
+            //-       option(value="image" selected) image
+            //-   button(type="button") x
+            //-   if block.type == "text"
+            //-     textarea(name="textEn" style="display: block; height: 100px; margin-bottom: 10px;" placeholder="en"+index)
+            //-       | #{block.contentEn}
+            //-     textarea(name="textCn" style="display: block; height: 100px; margin-bottom: 10px;" placeholder="cn"+index)
+            //-       | #{block.contentCn}
+            //-   else if block.type == "image"
+            //-     select(id="image"+index onchange=`toggleImageUpload('${index}')`)
+            //-       // display existing imgName in the future (see createController.js)
+            //-       option(value="old" selected) use existing image
+            //-       option(value="new") upload new image
+        -
+          let b = {
+            type: "text",
+            contentEn: "",
+            contentCn: ""
+          };
+        button(type='button' onclick=`addBlock(${b})`) add block
       button(type='submit' style="display: block") submit
     a(href='javascript:history.back()' style="display: block") Back
     script(src='/javascripts/block.js')
+    script.
+      var blocks = !{JSON.stringify(post.blocks)};
+      addExistingBlocks(blocks);

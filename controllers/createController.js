@@ -8,7 +8,6 @@ exports.showForm = function(req, res, next) {
     if (err) return next(err);
     res.render('form', {
       title: 'Create new post',
-      page: 'home',
       tags: tags,
     });
   });
@@ -57,7 +56,7 @@ exports.sendToDb = function(req, res, next) {
     let newBlock = {
       type: section
       // Optional fields:
-      // contentEn, contentCn, url
+      // contentEn, contentCn, url, imgName
     }
     if (section === 'text') {
       newBlock.contentEn = textEn[textIdx];
@@ -69,6 +68,7 @@ exports.sendToDb = function(req, res, next) {
       textIdx++;
     } else if (section === 'image') {
       newBlock.url = '/images/' + req.files[imageIdx].filename;
+      //newBlock.imgName = req.files[imageIdx].name
       if (imageIdx === 0)
         coverImage = newBlock.url;
       imageIdx++;
