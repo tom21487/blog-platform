@@ -73,13 +73,16 @@ class Block {
       this.container.appendChild(this.inputEn);
       this.container.appendChild(this.inputCn);
     } else if (b.type == "image") {
+      this.select.name = "";
       this.imageUploadSelector.name = "order";
       this.container.appendChild(this.imageUploadSelector);
     }
   }
 
   displayField() {
+    this.select.name = "order";
     if (this.select.value == 'text') {
+      this.imageUploadSelector.remove();
       this.inputImg.remove();
 
       this.inputEn = document.createElement('textarea');
@@ -102,6 +105,7 @@ class Block {
       this.container.appendChild(this.inputCn);
     }
     else {
+      this.container.appendChild(this.imageUploadSelector);
       this.inputEn.remove();
       this.inputCn.remove();
 
