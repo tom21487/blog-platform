@@ -23,11 +23,15 @@ exports.list = function(req, res, next) {
 
 exports.detail = function(req, res, next) {
   projectsCollection.findOne({_id: req.params.id}, function(err, project) {
-    if (err) {
-      return next(err);
+    if (err) return next(err);
+    let title = "";
+    if (req.params.language == "en") {
+      title = "Project - " + project.titleEn;
+    } else if (req.params.language == "cn") {
+      title = "项目 - " + project.titleCn;
     }
     res.render('post_detail', {
-      title: 'Project - ' + project.title,
+      title: title,
       post: project,
       page: 'projects',
       language: req.params.language

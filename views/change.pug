@@ -1,23 +1,15 @@
 doctype html
 html
   head
-    title Change existing post
+    title #{title}
   body
-    h3 Change existing post
-    form(method='POST' action='')
-      select(name='type' onchange='this.form.submit()')
-        if (type == "project")
-          option(value="projects" selected) projects
-          option(value="blogs") blogs
-        else if (type == "blog")
-          option(value="projects") projects
-          option(value="blogs" selected) blogs
+    h2 #{title}
     each post of posts
       div
         | #{post.titleEn} | #{post.titleCn} 
         | (
-        a(href='change/' + type + '/' + post._id + '/update') update
+        a(href=`/control/change/${type}/${post._id}/update`) update
         | ) (
-        a(href='change/' + type + '/' + post._id + '/delete') delete
+        a(href=`/control/change/${type}/${post._id}/delete`) delete
         | )
-    a(href='/control' style="display: block") Back
+    a(href='/control/change' style="display: block") Back

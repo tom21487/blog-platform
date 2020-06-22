@@ -4,23 +4,16 @@ var db = mongo.getDb();
 var Post = require('../models/post');
 
 exports.list = function(req, res, next) {
-  if (req.body.type == "projects" || req.body.type == undefined) {
-    db.collection("projects").find().toArray(function(err, projects) {
-      if (err) return next(err);
-      res.render('change', {
-        posts: projects,
-        type: 'project'
-      });
+  console.log("req.params.type:");
+  console.log(req.params.type);
+  db.collection(req.params.type + "s").find().toArray(function(err, posts) {
+    if (err) return next(err);
+    res.render('change', {
+      title: "Change existing " + req.params.type,
+      posts: posts,
+      type: req.params.type
     });
-  } else if (req.body.type == "blogs") {
-    db.collection("blogs").find().toArray(function(err, blogs) {
-      if (err) return next(err);
-      res.render('change', {
-        posts: blogs,
-        type: 'blog'
-      });
-    });
-  }
+  });
 }
 
 exports.showForm = function(req, res, next) {
@@ -163,6 +156,10 @@ exports.updateInDb = function(req, res, next) {
   });
 }
 
+exports.selectType = function(req, res, next) {
+  res.render('select_type');
+}
+
 exports.confirmation = function(req, res, next) {
   let collectionString = req.params.type + "s";
   db.collection(collectionString).findOne({_id: req.params.id},function(err, post) {
@@ -183,9 +180,9 @@ exports.removeFromDb = function(req, res, next) {
         err.status = 404;
         return next(err);
       }
-      res.redirect('/control/change');
+      res.redirect(`/control/change/${req.params.type}`);
     });
   } else if (req.body.result == "no") {
-    res.redirect('/control/change');
+    res.redirect(`/control/change/${req.params.type}`);
   }
 }

@@ -15,8 +15,8 @@ router.get('/', function(req, res, next) {
 router.get('/create', createController.showForm);
 router.post('/create', upload.array('image'), createController.sendToDb);
 
-router.get('/change', changeController.list);
-router.post('/change', changeController.list);
+router.get('/change', changeController.selectType);
+router.get('/change/:type', changeController.list);
 
 router.get('/change/:type/:id/update', changeController.showForm);
 router.post('/change/:type/:id/update', upload.array('image'), changeController.updateInDb);
