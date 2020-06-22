@@ -11,6 +11,7 @@ class Post {
     this._id = formatName(p.titleEn);
     this.blocks = p.blocks;
     this.coverImage = p.coverImage;
+    this.images = p.images;
     
     // auto-generated
     this.urlEn = `/en/${this.type}`;

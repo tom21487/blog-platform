@@ -1,6 +1,8 @@
 var mongo = require('../mongo');
 var db = mongo.getDb();
 
+var Post = require('../models/post');
+
 exports.list = function(req, res, next) {
   if (req.body.type == "projects" || req.body.type == undefined) {
     db.collection("projects").find().toArray(function(err, projects) {
@@ -55,6 +57,8 @@ exports.updateInDb = function(req, res, next) {
     console.log(req.files);
     console.log("body:");
     console.log(req.body);
+    console.log("original post:");
+    console.log(originalPost);
 
     // PART 1: ARRAY CONVERSIONS
     let tags = req.body.tags;
@@ -89,12 +93,9 @@ exports.updateInDb = function(req, res, next) {
     let textIdx = 0, imageIdx = 0, oldIdx = 0;
 
     for (section of order) {
-      let newBlock = {
-        type: section
-        // Optional fields:
-        // contentEn, contentCn, url, imgName
-      }
+      let newBlock = {}
       if (section === 'text') {
+        newBlock.type = "text";
         newBlock.contentEn = textEn[textIdx];
         newBlock.contentCn = textCn[textIdx];
         if (textIdx === 0) {
@@ -103,15 +104,20 @@ exports.updateInDb = function(req, res, next) {
         }
         textIdx++;
       } else if (section === 'image') {
+        newBlock.type = "image";
         newBlock.url = '/images/' + req.files[imageIdx].filename;
         //newBlock.imgName = req.files[imageIdx].name
-        if (imageIdx === 0) {
+        if (imageIdx === 0 && oldIdx === 0) {
           coverImage = newBlock.url;
         }
-        allImages.push(newBlock);
+        allImages.push(newBlock.url);
         imageIdx++;
       } else if (section === 'old') {
-        newBlock.url = '/images/' + originalPost.images[oldIdx];
+        newBlock.type = "image";
+        newBlock.url = originalPost.images[oldIdx];
+        if (imageIdx === 0 && oldIdx === 0) {
+          coverImage = newBlock.url;
+        }
         oldIdx++;
       } else {
         var err = new Error('Undefined block type');
@@ -133,6 +139,9 @@ exports.updateInDb = function(req, res, next) {
       descriptionCn: descriptionCn,
       images: allImages
     });
+
+    console.log("new post:");
+    console.log(newPost);
 
     db.collection(collectionString).updateOne({_id: req.params.id}, {$set: newPost}, function(err, result) {
       if (err) return next(err);
