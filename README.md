@@ -1,9 +1,9 @@
 # Stuff to do
 Authentication
-Editing (control panel)
 Page switching
 Tag manager
 Asynchronous queries
+Combine project controller and blog controller into post controller
 Post request after delete: https://blog.csdn.net/dreamer2020/article/details/52074516
 
 Language switching as follows:
