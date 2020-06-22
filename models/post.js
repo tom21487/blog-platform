@@ -1,6 +1,7 @@
 class Post {
   constructor(p) {
     // user-defined
+    this._id = formatName(p.titleEn);
     this.titleEn = p.titleEn;
     this.titleCn = p.titleCn;
     this.descriptionEn = p.descriptionEn;
@@ -8,7 +9,6 @@ class Post {
 
     this.type = p.type;
     this.tags = p.tags;
-    this._id = formatName(p.titleEn);
     this.blocks = p.blocks;
     this.coverImage = p.coverImage;
     this.images = p.images;

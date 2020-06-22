@@ -49,9 +49,8 @@ exports.showForm = function(req, res, next) {
   });
 }
 
-exports.updateInDb = function(req, res, next) {
-  let collectionString = req.body.type + "s";
-  db.collection(collectionString).findOne({_id: req.params.id}, function(err, originalPost) {
+exports.updateInDb = function(req, res, next) {  
+  db.collection(req.params.type + "s").findOne({_id: req.params.id}, function(err, originalPost) {
     // PART 0: DEBUG LOGS
     console.log("files:")
     console.log(req.files);
@@ -118,6 +117,7 @@ exports.updateInDb = function(req, res, next) {
         if (imageIdx === 0 && oldIdx === 0) {
           coverImage = newBlock.url;
         }
+        allImages.push(newBlock.url);
         oldIdx++;
       } else {
         var err = new Error('Undefined block type');
@@ -143,10 +143,23 @@ exports.updateInDb = function(req, res, next) {
     console.log("new post:");
     console.log(newPost);
 
-    db.collection(collectionString).updateOne({_id: req.params.id}, {$set: newPost}, function(err, result) {
-      if (err) return next(err);
-      res.redirect('/control/change');
-    });
+    if (newPost.titleEn !== originalPost.titleEn || newPost.type !== originalPost.type) {      
+      db.collection(originalPost.type + "s").deleteOne({_id: req.params.id}, function(err, result) {
+        if (err) return next(err);
+        // check result.deletedCount == 1
+        db.collection(newPost.type + "s").insertOne(newPost, function(err, result) {
+          if (err) return next(err);
+          // check result.insertedCount == 1
+          res.redirect('/control/change');
+        });
+      });
+    } else {
+      db.collection(newPost.type + "s").updateOne({_id: req.params.id}, {$set: newPost}, function(err, result) {
+        if (err) return next(err);
+        // check result.updatedCount == 1
+        res.redirect('/control/change');
+      });
+    }
   });
 }
 

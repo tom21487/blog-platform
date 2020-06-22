@@ -75,7 +75,7 @@ class Block {
     } else if (b.type == "image") {
       this.select.name = "";
       this.imageUploadSelector.name = "order";
-      this.container.appendChild(this.imageUploadSelector);
+      this.container.insertBefore(this.imageUploadSelector, this.deleteBtn);
     }
   }
 
@@ -104,8 +104,7 @@ class Block {
       this.container.appendChild(this.inputEn);
       this.container.appendChild(this.inputCn);
     }
-    else {
-      this.container.appendChild(this.imageUploadSelector);
+    else if (this.select.value == 'image') {
       this.inputEn.remove();
       this.inputCn.remove();
 
