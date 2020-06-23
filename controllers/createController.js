@@ -95,8 +95,7 @@ exports.sendToDb = function(req, res, next) {
     images: allImages
   });
 
-  let collectionString = req.body.type + "s";
-  db.collection(collectionString).insertOne(post, function(err, result) {
+  db.collection(req.body.type).insertOne(post, function(err, result) {
     if (err) return next(err);
     res.redirect('/control/change');
   });

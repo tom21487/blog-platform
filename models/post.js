@@ -14,14 +14,8 @@ class Post {
     this.images = p.images;
     
     // auto-generated
-    this.urlEn = `/en/${this.type}`;
-    this.urlCn = `/cn/${this.type}`;
-    if (this.type === 'project') {
-      this.urlEn += 's';
-      this.urlCn += 's';
-    }
-    this.urlEn += `/${this._id}`;
-    this.urlCn += `/${this._id}`;
+    this.urlEn = `/en/${this.type}/detail/${this._id}`;
+    this.urlCn = `/cn/${this.type}/detail/${this._id}`;
   }
 }
 

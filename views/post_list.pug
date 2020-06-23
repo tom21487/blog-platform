@@ -29,7 +29,9 @@ block content
             span #{post.descriptionEn}
             a(href=post.url[lang]) #{text.postLink[lang]}
     else
-      p #{text.noPosts[lang]}
+      center
+        p #{text.noPosts[lang]}
+    include page_select.pug
   script.
     var language = !{JSON.stringify(language)};
     var page = !{JSON.stringify(page)};

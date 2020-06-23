@@ -17,8 +17,7 @@ mongo.connect(function(err) {
   // Routers
   var indexRouter = require('./routes/index');
   var aboutRouter = require('./routes/about');
-  var projectsRouter = require('./routes/projects');
-  var blogRouter = require('./routes/blog');
+  var postRouter = require('./routes/post');
   var contactRouter = require('./routes/contact');
   var controlRouter = require('./routes/control');
 
@@ -37,8 +36,7 @@ mongo.connect(function(err) {
   app.use('/control', controlRouter);
   app.use('/:language', indexRouter);
   app.use('/:language/about', aboutRouter);
-  app.use('/:language/projects', projectsRouter);
-  app.use('/:language/blog', blogRouter);
+  app.use('/:language/:type', postRouter);
   app.use('/:language/contact', contactRouter);
   
   // catch 404 and forward to error handler

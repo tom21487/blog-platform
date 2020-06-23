@@ -5,7 +5,7 @@ const tabs = {
   "home": 1,
   "about": 2,
   "projects": 3,
-  "blog": 4,
+  "blogs": 4,
   "contact": 5
 }
 const selectedID = tabs[navbar.dataset.select];
