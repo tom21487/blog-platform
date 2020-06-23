@@ -1,7 +1,10 @@
 -
-  let n = (type == "projects") ? (10) : ((type == "blogs") ? (5) : (0));
-  let pages = Math.ceil(posts.length/n);
+  text.page = ["Page: ", "页数："]
+  let n = (page == "projects") ? (10) : ((page == "blogs") ? (5) : (0));
+  let pages = Math.ceil(documentCount/n);
   let p = 1;
-// if p > 1
-//- while p <= pages
-//-   span= p++
+// if pages > 1
+div(style="margin-top: 10px")
+  | #{text.page[lang]}
+  while p <= pages && p < 1000
+    a(href=`/${language}/${page}/${p}`)= p++

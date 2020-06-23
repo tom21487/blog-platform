@@ -9,12 +9,16 @@ exports.list = function(req, res, next) {
     if (err) return next(err);
     db.collection('tags').find().toArray(function(err, tags) {
       if (err) return next(err);
-      res.render('post_list', {
-        title: `Tom\'s site - ${req.params.type}`,
-        posts: posts,
-        page: req.params.type,
-        tags: tags,
-        language: req.params.language
+      db.collection(req.params.type).count(function(err, count) {
+        if (err) return next(err);
+        res.render('post_list', {
+          title: `Tom\'s site - ${req.params.type}`,
+          posts: posts,
+          page: req.params.type,
+          tags: tags,
+          language: req.params.language,
+          documentCount: count
+        });
       });
     });
   });
