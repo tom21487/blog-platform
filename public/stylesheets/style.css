@@ -177,15 +177,15 @@ body {
 }
 
 /* Blog */
-#blog-container {
+#blogs-container {
   text-align: center;
 }
-#blog-container .box {
+#blogs-container .box {
   width: 90%;
   height: 600px;
   max-width: 1000px;
 }
-#blog-container .box .cover-image {
+#blogs-container .box .cover-image {
   height: 300px;
 }
 

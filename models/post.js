@@ -1,7 +1,7 @@
 class Post {
   constructor(p) {
     // user-defined
-    this._id = formatName(p.titleEn);
+    this._id = p.titleEn;
     this.titleEn = p.titleEn;
     this.titleCn = p.titleCn;
     this.descriptionEn = p.descriptionEn;
@@ -14,8 +14,9 @@ class Post {
     this.images = p.images;
     
     // auto-generated
-    this.urlEn = `/en/${this.type}/detail/${this._id}`;
-    this.urlCn = `/cn/${this.type}/detail/${this._id}`;
+    let component = encodeURIComponent(this._id);
+    this.urlEn = `/en/${this.type}/detail/${component}`;
+    this.urlCn = `/cn/${this.type}/detail/${component}`;
   }
 }
 

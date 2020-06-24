@@ -9,7 +9,7 @@ exports.list = function(req, res, next) {
     if (err) return next(err);
     db.collection('tags').find().toArray(function(err, tags) {
       if (err) return next(err);
-      db.collection(req.params.type).count(function(err, count) {
+      db.collection(req.params.type).countDocuments(function(err, count) {
         if (err) return next(err);
         res.render('post_list', {
           title: `Tom\'s site - ${req.params.type}`,
@@ -25,13 +25,13 @@ exports.list = function(req, res, next) {
 }
 
 exports.detail = function(req, res, next) {
-  db.collection(req.params.type + "s").findOne({_id: req.params.id}, function(err, post) {
+  db.collection(req.params.type).findOne({_id: req.params.id}, function(err, post) {
     if (err) return next(err);
     let title = "";
     if (req.params.language == "en") {
-      title = `${(req.params.type == "project") ? ("Project") : ((req.params.type == "blog") ? ("Blog") : (""))} - ${post.titleEn}`;
+      title = `${(req.params.type == "projects") ? ("Project") : ((req.params.type == "blogs") ? ("Blog") : (""))} - ${post.titleEn}`;
     } else if (req.params.language == "cn") {
-      title = `${(req.params.type == "project") ? ("项目") : ((req.params.type == "blog") ? ("博客") : (""))} - ${post.titleCn}`;
+      title = `${(req.params.type == "projects") ? ("项目") : ((req.params.type == "blogs") ? ("博客") : (""))} - ${post.titleCn}`;
     }
     res.render('post_detail', {
       title: title,
