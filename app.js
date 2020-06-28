@@ -20,6 +20,7 @@ mongo.connect(function(err) {
   var postRouter = require('./routes/post');
   var contactRouter = require('./routes/contact');
   var controlRouter = require('./routes/control');
+  var userRouter = require('./routes/user');
 
   var app = express();
   var port = 3000;
@@ -34,6 +35,7 @@ mongo.connect(function(err) {
   app.use(express.static(path.join(__dirname, 'public')));
 
   app.use('/control', controlRouter);
+  app.use('/user', userRouter);
   app.use('/:language', indexRouter);
   app.use('/:language/about', aboutRouter);
   app.use('/:language/:type', postRouter);

@@ -1,7 +1,9 @@
 - text.control = ["Control panel", "控制面板"];
+- text.user = ["User", "用户"];
 footer#footer
   span &copy; 2020 Tom Jiao
   span.langBtn#enBtn(onclick="switchTo('en')") En
   |/
   span.langBtn#cnBtn(onclick="switchTo('cn')") 中文
   a(href='/control') #{text.control[lang]}
+  a(href='/user') #{text.user[lang]}
