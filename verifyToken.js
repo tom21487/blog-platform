@@ -4,8 +4,11 @@ function verifyToken(req, res, next) {
   const token = req.cookies.token;
   if (!token) return res.send("no token found in browser cookie");
   var decoded = jwt.verify(token, "secretkey");
-  if (!decoded) return res.send("invalid token");
+  // Error handling middleware currently takes care of:
+  // invalid and expired token errors
   req.userId = decoded._id;
+  console.log("req.userId");
+  console.log(req.userId);
   next();
 }
 
