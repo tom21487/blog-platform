@@ -13,6 +13,8 @@ mongo.connect(function(err) {
   var express = require('express');
   var path = require('path');
   var createError = require('http-errors');
+  var cookieParser = require("cookie-parser");
+  var verifyToken = require("./verifyToken");
 
   // Routers
   var indexRouter = require('./routes/index');
@@ -33,8 +35,9 @@ mongo.connect(function(err) {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(cookieParser());
 
-  app.use('/control', controlRouter);
+  app.use('/control', verifyToken, controlRouter);
   app.use('/user', userRouter);
   app.use('/:language', indexRouter);
   app.use('/:language/about', aboutRouter);
