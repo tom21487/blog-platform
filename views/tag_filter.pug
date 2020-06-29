@@ -6,10 +6,10 @@ form#tag-filter(method='GET' action='')
   | #{text.filter[lang]}
   button.tag(type='button' onclick='redirect()') #{text.allTags[lang]}
   each tag in tags
-    button.tag(type='submit' name='tag' value=tag.title)
-      if tag.title == "not tagged" && language == "cn"
+    button.tag(type='submit' name='tag' value=tag._id)
+      if tag._id == "not tagged" && language == "cn"
         | 没有标签
       else
-        | #{tag.title}
+        | #{tag._id}
   else
     p #{text.noTags[lang]}
