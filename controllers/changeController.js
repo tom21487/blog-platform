@@ -33,7 +33,7 @@ exports.showForm = function(req, res, next) {
         }
         checkedTags.push({title: tags[i].title, checked: tagMatch});
       }
-      res.render('form', {
+      res.render('post_form', {
         title: 'Update existing post',
         tags: checkedTags,
         post: post

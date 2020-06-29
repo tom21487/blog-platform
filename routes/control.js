@@ -26,5 +26,6 @@ router.get('/change/:type/:id/delete', changeController.confirmation);
 router.post('/change/:type/:id/delete', changeController.removeFromDb);
 
 router.get('/tags', tagController.showTags);
+router.get('/tags/create', tagController.showForm);
 
 module.exports = router;
