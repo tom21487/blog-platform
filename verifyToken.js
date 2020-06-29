@@ -7,8 +7,8 @@ function verifyToken(req, res, next) {
   // Error handling middleware currently takes care of:
   // invalid and expired token errors
   req.userId = decoded._id;
-  console.log("req.userId");
-  console.log(req.userId);
+  /* console.log("req.userId");
+  console.log(req.userId); */
   next();
 }
 

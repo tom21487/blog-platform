@@ -1,4 +1,8 @@
 extends basicHTML
 
 block content
-  p Create tag here!
+  form(method='POST' action='')
+    div.form-group
+      | name: 
+      input(name='name' autocomplete='off' required)
+    button(type='submit' style='display: block') submit

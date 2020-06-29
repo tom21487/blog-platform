@@ -12,7 +12,7 @@ exports.showTags = function(req, res, next) {
 }
 
 exports.showForm = function(req, res, next) {
-  if (err) return next(err);
+  console.log("showing form");
   res.render('tag_form', {
     title: 'Create new tag'
   });
