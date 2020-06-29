@@ -1,12 +1,9 @@
-doctype html
-html
-  head
-    title #{title}
-  body
-    h2 Sign up
-    form(method='POST' action='')
-      | username:
-      input(type='text' style='display: block' name="username")
-      | password:
-      input(type='password' style='display: block' name="password")
-      button(type='submit' style='display: block') submit
+extends basicHTML
+
+block content
+  form(method='POST' action='')
+    | username:
+    input(type='text' style='display: block' name="username")
+    | password:
+    input(type='password' style='display: block' name="password")
+    button(type='submit' style='display: block') submit

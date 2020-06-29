@@ -1,48 +1,45 @@
-doctype html
-html
-  head
-    title #{title}
-  body
-    h2 #{title}
-    form(method='POST' action='' enctype="multipart/form-data")
-      div.form-group
-        | type: 
-        select(name='type')
-          option(value='projects') project
-          option(value='blogs') blog
+extends basicHTML
 
-      div.form-group
-        | title (en): 
-        input(name='titleEn' type='text' autocomplete='off' required
-        value = post==undefined ? "" : post.titleEn)
-        
-      div.form-group
-        | title (cn): 
-        input(name='titleCn' type='text' autocomplete='off' required
-        value = post==undefined ? "" : post.titleCn)
+block content
+  form(method='POST' action='' enctype="multipart/form-data")
+    div.form-group
+      | type: 
+      select(name='type')
+        option(value='projects') project
+        option(value='blogs') blog
 
-      div.form-group
-        | tags: 
-        each tag, index in tags
-          if tag.checked
-            input(name='tags[]' type='checkbox' value=tag._id checked)
-          else
-            input(name='tags[]' type='checkbox' value=tag._id)
-          | #{tag._id}
-          if index < tags.length - 1
-            | ,
-        | 
-        a(href='/tags') (manage tags)
+    div.form-group
+      | title (en): 
+      input(name='titleEn' type='text' autocomplete='off' required
+      value = post==undefined ? "" : post.titleEn)
       
-      div.form-group
-        | blocks:
-        br
-        div#all-blocks
-        button(type='button' onclick='addBlock("none")') add block
-      button(type='submit' style="display: block") submit
-    a(href='javascript:history.back()' style="display: block") Back
-    script(src='/javascripts/block.js')
-    if post != undefined
-      script.
-        var blocks = !{JSON.stringify(post.blocks)};
-        addExistingBlocks(blocks);
+    div.form-group
+      | title (cn): 
+      input(name='titleCn' type='text' autocomplete='off' required
+      value = post==undefined ? "" : post.titleCn)
+
+    div.form-group
+      | tags: 
+      each tag, index in tags
+        if tag.checked
+          input(name='tags[]' type='checkbox' value=tag._id checked)
+        else
+          input(name='tags[]' type='checkbox' value=tag._id)
+        | #{tag._id}
+        if index < tags.length - 1
+          | ,
+      | 
+      a(href='/tags') (manage tags)
+    
+    div.form-group
+      | blocks:
+      br
+      div#all-blocks
+      button(type='button' onclick='addBlock("none")') add block
+    button(type='submit' style="display: block") submit
+  a(href='javascript:history.back()' style="display: block") Back
+  script(src='/javascripts/block.js')
+  if post != undefined
+    script.
+      var blocks = !{JSON.stringify(post.blocks)};
+      addExistingBlocks(blocks);

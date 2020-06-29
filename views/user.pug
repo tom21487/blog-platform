@@ -1,9 +1,6 @@
-doctype html
-html
-  head
-    title User
-  body
-    h2 User
-    a(href='/user/signup' style="display: block") Sign up
-    a(href='/user/login' style="display: block") Log in
-    a(href='/en' style="display: block") Home
+extends basicHTML
+
+block content
+  a(href='/user/signup' style="display: block") Sign up
+  a(href='/user/login' style="display: block") Log in
+  a(href='/en' style="display: block") Home

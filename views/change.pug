@@ -1,15 +1,12 @@
-doctype html
-html
-  head
-    title #{title}
-  body
-    h2 #{title}
-    each post of posts
-      div
-        | #{post.titleEn} | #{post.titleCn} 
-        | (
-        a(href=`/control/change/${type}/${post._id}/update`) update
-        | ) (
-        a(href=`/control/change/${type}/${post._id}/delete`) delete
-        | )
-    a(href='/control/change' style="display: block") Back
+extends basicHTML
+
+block content
+  each post of posts
+    div
+      | #{post.titleEn} | #{post.titleCn} 
+      | (
+      a(href=`/control/change/${type}/${post._id}/update`) update
+      | ) (
+      a(href=`/control/change/${type}/${post._id}/delete`) delete
+      | )
+  a(href='/control/change' style="display: block") Back

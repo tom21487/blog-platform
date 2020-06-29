@@ -1,17 +1,14 @@
-doctype html
-html
-  head
-    title #{title}
-  body
-    h2 #{title}
-    a(href='/control/tags/create' style="display: block") New tag
-    | All tags:
-    each tag of tags
-      div
-        | #{tag._id}
-        | (
-        a(href=`/control/tags/${tag._id}/update`) update
-        | ) (
-        a(href=`/control/tags/${tag._id}/delete`) delete
-        | )
-    a(href='/control/change' style="display: block") Back
+extends basicHTML
+
+block content
+  a(href='/control/tags/create' style="display: block") New tag
+  | All tags:
+  each tag of tags
+    div
+      | #{tag._id}
+      | (
+      a(href=`/control/tags/${tag._id}/update`) update
+      | ) (
+      a(href=`/control/tags/${tag._id}/delete`) delete
+      | )
+  a(href='/control/change' style="display: block") Back

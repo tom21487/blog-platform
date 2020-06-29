@@ -1,10 +1,7 @@
-doctype html
-html
-  head
-    title Control panel
-  body
-    h2 Control panel
-    a(href='/control/create' style="display: block") Create
-    a(href='/control/change' style="display: block") Change
-    a(href='/control/tags' style="display: block") Tag manager (_id = title)
-    a(href='/en' style="display: block") Home
+extends basicHTML
+
+block content
+	a(href='/control/create' style="display: block") Create
+	a(href='/control/change' style="display: block") Change
+	a(href='/control/tags' style="display: block") Tag manager (_id = title)
+	a(href='/en' style="display: block") Home

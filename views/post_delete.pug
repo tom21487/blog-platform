@@ -1,9 +1,7 @@
-doctype html
-html
-  head
-    title Delete post
-  body
-    h3 Are you sure you want to delete: #{post.titleEn}/#{post.titleCn}?
-    form(method="POST" action="")
-      button(type="submit" name="result" value="yes") yes
-      button(type="submit" name="result" value="no") no
+extends basicHTML
+
+block content
+  h3 Are you sure you want to delete: #{post.titleEn}/#{post.titleCn}?
+  form(method="POST" action="")
+    button(type="submit" name="result" value="yes") yes
+    button(type="submit" name="result" value="no") no
