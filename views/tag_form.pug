@@ -4,5 +4,6 @@ block content
   form(method='POST' action='')
     div.form-group
       | name: 
-      input(name='name' autocomplete='off' required)
+      input(name='name' autocomplete='off' required
+      value= tag==undefined ? "" : tag.name)
     button(type='submit' style='display: block') submit

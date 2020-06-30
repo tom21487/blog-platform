@@ -22,10 +22,10 @@ block content
       | tags: 
       each tag, index in tags
         if tag.checked
-          input(name='tags[]' type='checkbox' value=tag._id checked)
+          input(name='tags[]' type='checkbox' value=tag.name checked)
         else
-          input(name='tags[]' type='checkbox' value=tag._id)
-        | #{tag._id}
+          input(name='tags[]' type='checkbox' value=tag.name)
+        | #{tag.name}
         if index < tags.length - 1
           | ,
       | 
