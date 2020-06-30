@@ -7,8 +7,8 @@ block content
     div
       | #{tag.name}
       | (
-      a(href=`/control/tags/${tag.name}/update`) update
+      a(href=`/control/tags/${tag._id}/update`) update
       | ) (
-      a(href=`/control/tags/${tag.name}/delete`) delete
+      a(href=`/control/tags/${tag._id}/delete`) delete
       | )
   a(href='/control/change' style="display: block") Back

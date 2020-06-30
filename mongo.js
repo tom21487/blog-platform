@@ -1,4 +1,6 @@
-const MongoClient = require('mongodb').MongoClient;
+const mongodb = require("mongodb");
+const MongoClient = mongodb.MongoClient;
+const ObjectID = mongodb.ObjectID;
 const url = 'mongodb://localhost:27017';
 const client = new MongoClient(url, { useUnifiedTopology: true });
 
@@ -22,5 +24,8 @@ module.exports = {
     client.close(false, function() {
       return callback();
     });
+  },
+  getObjectID: function(string) {
+    return new ObjectID(string);
   }
 };

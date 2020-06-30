@@ -4,8 +4,6 @@ var db = mongo.getDb();
 var Post = require('../models/post');
 
 exports.list = function(req, res, next) {
-  console.log("req.params.type:");
-  console.log(req.params.type);
   db.collection(req.params.type + "s").find().toArray(function(err, posts) {
     if (err) return next(err);
     res.render('change', {
@@ -162,7 +160,7 @@ exports.selectType = function(req, res, next) {
 
 exports.confirmation = function(req, res, next) {
   let collectionString = req.params.type + "s";
-  db.collection(collectionString).findOne({_id: req.params.id},function(err, post) {
+  db.collection(collectionString).findOne({_id: req.params.id}, function(err, post) {
     if (err) return next(err);
     res.render('post_delete', {
       post: post

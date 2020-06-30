@@ -30,6 +30,10 @@ router.get('/tags', tagController.showTags);
 router.get('/tags/create', tagController.showCreate);
 router.post('/tags/create', tagController.sendToDb);
 
-router.get('/tags/:id/update', tagController.showUpdate); // you might need a separate id for the tag, because you will you change the name for existing posts?
+router.get('/tags/:id/update', tagController.showUpdate);
+router.post('/tags/:id/update', tagController.updateInDb);
+
+router.get('/tags/:id/delete', tagController.confirmation);
+router.post('/tags/:id/delete', tagController.removeFromDb);
 
 module.exports = router;

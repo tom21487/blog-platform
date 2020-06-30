@@ -2,7 +2,6 @@ var mongo = require('../mongo');
 var db = mongo.getDb();
 
 exports.list = function(req, res, next) {
-  console.log("req.params.type: " + req.params.type);
   let queryObject = req.query.tag ? {tags: req.query.tag} : {};
   let n = (req.params.type == "projects") ? (10) : ((req.params.type == "blogs") ? (5) : (0));
   db.collection(req.params.type).find(queryObject).sort({$natural:-1}).skip((req.params.page-1)*10).limit(n).toArray(function(err, posts) {
