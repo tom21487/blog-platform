@@ -4,6 +4,25 @@ var db = mongo.getDb();
 exports.list = function(req, res, next) {
   let queryObject = req.query.tag ? {tags: req.query.tag} : {};
   let n = (req.params.type == "projects") ? (10) : ((req.params.type == "blogs") ? (5) : (0));
+  let findPosts = db.collection(req.params.type).find(queryObject).sort({$natural:-1}).skip((req.params.page-1)*10).limit(n).toArray();
+  let findTags = db.collection('tags').find().toArray();
+  let countDocuments = db.collection(req.params.type).countDocuments();
+  Promise.all([findPosts, findTags, countDocuments])
+  .then(function(values) {
+    // Returned values will be in order of the Promises passed, regardless of completion order.
+    console.log(values);
+    // values[0] = posts
+    // values[1] = tags
+    // values[2] = document count
+  })
+  .catch(function(err) {
+    return next(err);
+  });
+}
+
+/*exports.list = function(req, res, next) {
+  let queryObject = req.query.tag ? {tags: req.query.tag} : {};
+  let n = (req.params.type == "projects") ? (10) : ((req.params.type == "blogs") ? (5) : (0));
   db.collection(req.params.type).find(queryObject).sort({$natural:-1}).skip((req.params.page-1)*10).limit(n).toArray(function(err, posts) {
     if (err) return next(err);
     db.collection('tags').find().toArray(function(err, tags) {
@@ -21,7 +40,7 @@ exports.list = function(req, res, next) {
       });
     });
   });
-}
+}*/
 
 exports.detail = function(req, res, next) {
   db.collection(req.params.type).findOne({_id: req.params.id}, function(err, post) {
