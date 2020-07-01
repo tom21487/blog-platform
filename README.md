@@ -17,6 +17,7 @@ Add multer to controller file by making controller an array of middleware functi
 Create layout for control, user
 Deploy
 Make sure creating a "not tagged" post works
+Use formatName instead of encodeURIComponent
 
 These are equal:
 // Callback

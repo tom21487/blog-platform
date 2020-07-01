@@ -2,7 +2,7 @@ extends basicHTML
 
 block content
   a(href='/control/tags/create' style="display: block") New tag
-  | All tags:
+  h4 All tags:
   each tag of tags
     div
       | #{tag.name}

@@ -1,7 +1,17 @@
 extends basicHTML
 
 block content
-  h3 Are you sure you want to delete: #{tag.name}?
-  form(method="POST" action="")
-    button(type="submit" name="result" value="yes") yes
-    button(type="submit" name="result" value="no") no
+  if projects.length > 0 || blogs.length > 0
+    h3 Cannot delete tag because the following posts contain it:
+    h4 Projects:
+    each project in projects
+      div #{project.titleEn} | #{project.titleCn}
+    h4 Blogs:
+    each blog in blogs
+      div #{blog.titleEn} | #{blog.titleCn}
+    a(href="/control/tags" style="display: block") Back
+  else
+    h3 Are you sure you want to delete: #{tag.name}?
+    form(method="POST" action="")
+      button(type="submit" name="result" value="yes") yes
+      button(type="submit" name="result" value="no") no

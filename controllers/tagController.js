@@ -2,7 +2,7 @@ var mongo = require('../mongo');
 var db = mongo.getDb();
 
 exports.showTags = function(req, res, next) {
-  db.collection("tags").find().toArray(function(err, tags) {
+  db.collection("tags").find({name: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
     res.render('tag_list', {
       title: 'Tom\'s site - tags',
@@ -45,28 +45,34 @@ exports.updateInDb = function(req, res, next) {
   );
 }
 
-exports.confirmation = function(req, res, next) {
-  db.collection("tags").findOne({ _id: mongo.getObjectID(req.params.id) }, function(err, tag) {
-    if (err) return next(err);
+exports.confirmation = async function(req, res, next) {
+  try {
+    // Find posts for matching tags
+    let findTag = db.collection("tags").findOne({ _id: mongo.getObjectID(req.params.id) });
+    let queryObject = { tags: mongo.getObjectID(req.params.id) };
+    let findProjects = db.collection("projects").find(queryObject).toArray();
+    let findBlogs = db.collection("blogs").find(queryObject).toArray();
+    let [tag, projects, blogs] = await Promise.all([findTag, findProjects, findBlogs]);
     res.render("tag_delete", {
-      tag: tag
+      tag: tag,
+      projects: projects,
+      blogs: blogs
     });
-  });
+  } catch(err) {
+    return next(err);
+  }
 }
 
-exports.removeFromDb = function(req, res, next) {
-  if (req.body.result == "yes") {
-    db.collection("tags").deleteOne({ _id: mongo.getObjectID(req.params.id) }, function(err, result) {
-      if (err) return next(err);
-      if (result.deletedCount != 1) {
-        var err = new Error('Incorrect deletedCount');
-        err.status = 404;
-        return next(err);
-      }
+exports.removeFromDb = async function(req, res, next) {
+  try {
+    if (req.body.result == "yes") {
+      await db.collection("tags").deleteOne({ _id: mongo.getObjectID(req.params.id) });
       res.redirect("/control/tags");
-    });
-  } else if (req.body.result == "no") {
-    res.redirect("/control/tags");
+    } else if (req.body.result == "no") {
+      res.redirect("/control/tags");
+    }
+  } catch(err) {
+    return next(err);
   }
 }
 
