@@ -16,6 +16,7 @@ Set up .env file to hide mongo uri, jwt secret key
 Add multer to controller file by making controller an array of middleware functions
 Create layout for control, user
 Deploy
+Make sure creating a "not tagged" post works
 
 These are equal:
 // Callback

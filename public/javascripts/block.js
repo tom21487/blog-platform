@@ -8,7 +8,7 @@ class Block {
     
     // SELECT
     this.select = document.createElement('select');
-    this.select.name = 'order';
+    this.select.name = 'order[]';
     let textOption = document.createElement('option');
     textOption.value = 'text';
     textOption.innerText = 'text';
@@ -32,7 +32,7 @@ class Block {
 
     // INPUT
     this.inputEn = document.createElement('textarea');
-    this.inputEn.name = 'textEn';
+    this.inputEn.name = 'textEn[]';
     this.inputEn.style.display = "block";
     this.inputEn.style.height = "100px";
     this.inputEn.style.marginBottom = "10px";
@@ -40,7 +40,7 @@ class Block {
     this.inputEn.value = b.contentEn;
 
     this.inputCn = document.createElement('textarea');
-    this.inputCn.name = 'textCn';
+    this.inputCn.name = 'textCn[]';
     this.inputCn.style.display = "block";
     this.inputCn.style.height = "100px";
     this.inputCn.style.marginBottom = "10px";
@@ -74,19 +74,19 @@ class Block {
       this.container.appendChild(this.inputCn);
     } else if (b.type == "image") {
       this.select.name = "";
-      this.imageUploadSelector.name = "order";
+      this.imageUploadSelector.name = "order[]";
       this.container.insertBefore(this.imageUploadSelector, this.deleteBtn);
     }
   }
 
   displayField() {
-    this.select.name = "order";
+    this.select.name = "order[]";
     if (this.select.value == 'text') {
       this.imageUploadSelector.remove();
       this.inputImg.remove();
 
       this.inputEn = document.createElement('textarea');
-      this.inputEn.name = 'textEn';
+      this.inputEn.name = 'textEn[]';
       this.inputEn.style.display = "block";
       this.inputEn.style.height = "100px";
       this.inputEn.style.marginBottom = "10px";
@@ -94,7 +94,7 @@ class Block {
       this.inputEn.value = "";
 
       this.inputCn = document.createElement('textarea');
-      this.inputCn.name = 'textCn';
+      this.inputCn.name = 'textCn[]';
       this.inputCn.style.display = "block";
       this.inputCn.style.height = "100px";
       this.inputCn.style.marginBottom = "10px";
@@ -135,14 +135,14 @@ class Block {
 
   toggleImageUpload() {
     if (this.imageUploadSelector.value == "new") {
-      this.select.name = "order";
+      this.select.name = "order[]";
       this.imageUploadSelector.name = "";
       this.container.replaceChild(this.select, this.select);
       this.container.replaceChild(this.imageUploadSelector, this.imageUploadSelector);
       this.container.appendChild(this.inputImg);
     } else if (this.imageUploadSelector.value == "old") {
       this.select.name = "";
-      this.imageUploadSelector.name = "order";
+      this.imageUploadSelector.name = "order[]";
       this.container.replaceChild(this.select, this.select);
       this.container.replaceChild(this.imageUploadSelector, this.imageUploadSelector);
       this.container.removeChild(this.inputImg);

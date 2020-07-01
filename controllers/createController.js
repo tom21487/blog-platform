@@ -21,30 +21,17 @@ exports.sendToDb = function(req, res, next) {
   console.log(req.body);
 
   // PART 1: ARRAY CONVERSIONS
-  let tags = req.body.tags;
-  if (!tags) {
-    tags = new Array("not tagged");
-  } else if (!(req.body.tags instanceof Array)) {
-    tags = new Array(req.body.tags);
+  let tags = [];
+  if (req.body.tags.length == 0) {
+    tags = new Array(mongo.getObjectID("5efae5553d85b4652872481f"));
+  } else {
+    for (tag of req.body.tags) {
+      tags.push(mongo.getObjectID(tag));
+    }
   }
-  let textEn = req.body.textEn;
-  if (!textEn) {
-    textEn = new Array();
-  } else if (!(req.body.textEn instanceof Array)) {
-    textEn = new Array(req.body.textEn);
-  }
-  let textCn = req.body.textCn;
-  if (!textCn) {
-    textCn = new Array();
-  } else if (!(req.body.textCn instanceof Array)) {
-    textCn = new Array(req.body.textCn);
-  }
-  let order = req.body.order;
-  if (!order) {
-    order = new Array();
-  } else if (!(req.body.order instanceof Array)) {
-    order = new Array(req.body.order);
-  }
+  if (!req.body.order) req.body.order = [];
+  if (!req.body.textEn) req.body.textEn = [];
+  if (!req.body.textCn) req.body.textCn = [];
 
   // PART 2: BLOCK BUILDING
   let allBlocks = [], allImages = [];
@@ -52,15 +39,15 @@ exports.sendToDb = function(req, res, next) {
   let descriptionEn = "", descriptionCn = "";
   let textIdx = 0, imageIdx = 0;
 
-  for (section of order) {
+  for (section of req.body.order) {
     let newBlock = {
       type: section
       // Optional fields:
       // contentEn, contentCn, url, imgName
     }
     if (section === 'text') {
-      newBlock.contentEn = textEn[textIdx];
-      newBlock.contentCn = textCn[textIdx];
+      newBlock.contentEn = req.textEn[textIdx];
+      newBlock.contentCn = req.textCn[textIdx];
       if (textIdx === 0) {
         descriptionEn = newBlock.contentEn;
         descriptionCn = newBlock.contentCn;
