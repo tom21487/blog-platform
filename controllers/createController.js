@@ -4,7 +4,7 @@ var db = mongo.getDb();
 var Post = require('../models/post');
 
 exports.showForm = function(req, res, next) {
-  db.collection('tags').find({title: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
+  db.collection('tags').find({name: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
     res.render('post_form', {
       title: 'Create new post',

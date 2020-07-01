@@ -15,7 +15,7 @@ exports.list = function(req, res, next) {
 }
 
 exports.showForm = function(req, res, next) {
-  db.collection('tags').find({title: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
+  db.collection('tags').find({name: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
     let collectionString = req.params.type + "s";
     db.collection(collectionString).findOne({_id: req.params.id}, function(err, post) {
@@ -29,7 +29,7 @@ exports.showForm = function(req, res, next) {
             break;
           }
         }
-        checkedTags.push({title: tags[i].title, checked: tagMatch});
+        checkedTags.push({name: tags[i].name, checked: tagMatch});
       }
       res.render('post_form', {
         title: 'Update existing post',
