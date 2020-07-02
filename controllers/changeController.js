@@ -14,30 +14,44 @@ exports.list = function(req, res, next) {
   });
 }
 
-exports.showForm = function(req, res, next) {
-  db.collection('tags').find({name: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
-    if (err) return next(err);
-    let collectionString = req.params.type + "s";
-    db.collection(collectionString).findOne({_id: req.params.id}, function(err, post) {
-      if (err) return next(err);
-      let checkedTags = [];
-      for (let i = 0; i < tags.length; i++) {
-        let tagMatch = false;
-        for (let j = 0; j < post.tags.length; j++) {
-          if (post.tags[j] == tags[i].title) {
-            tagMatch = true;
-            break;
-          }
+exports.showForm = async function(req, res, next) {
+  try {
+    let findPost = db.collection(req.params.type + "s").findOne({_id: req.params.id});
+    let findTags = db.collection('tags').find({name: {'$ne': 'not tagged'}}).toArray();
+    let [post, tags] = await Promise.all([findPost, findTags]);
+
+    // Convert post.tags[i] from an ObjectID into a string (name)
+    let postTagNames = [];
+    for (let i = 0; i < post.tags.length; i++) {
+      let postTag = await db.collection("tags").findOne({_id: post.tags[i] });
+      postTagNames.push(postTag.name);
+    }    
+
+    // Find which tags are checked
+    let checkedTags = [];
+    for (let i = 0; i < tags.length; i++) {
+      let tagMatch = false;
+      for (let j = 0; j < postTagNames.length; j++) {
+        if (tags[i].name == postTagNames[j]) {
+          tagMatch = true;
+          break;
         }
-        checkedTags.push({name: tags[i].name, checked: tagMatch});
       }
-      res.render('post_form', {
-        title: 'Update existing post',
-        tags: checkedTags,
-        post: post
+      checkedTags.push({
+        _id: tags[i]._id,
+        name: tags[i].name,
+        checked: tagMatch
       });
+    }
+    
+    res.render('post_form', {
+      title: 'Update existing post',
+      tags: checkedTags,
+      post: post
     });
-  });
+  } catch(err) {
+    return next(err);
+  }
 }
 
 exports.updateInDb = function(req, res, next) {  
@@ -51,30 +65,18 @@ exports.updateInDb = function(req, res, next) {
     console.log(originalPost);
 
     // PART 1: ARRAY CONVERSIONS
-    let tags = req.body.tags;
-    if (!tags) {
-      tags = new Array("not tagged");
-    } else if (!(req.body.tags instanceof Array)) {
-      tags = new Array(req.body.tags);
+    let tags = [];
+    if (!req.body.tags) {
+      console.log("This should be changed after deployment.");
+      tags = new Array(mongo.getObjectID("5efae5553d85b4652872481f"));
+    } else {
+      for (tag of req.body.tags) {
+        tags.push(mongo.getObjectID(tag));
+      }
     }
-    let textEn = req.body.textEn;
-    if (!textEn) {
-      textEn = new Array();
-    } else if (!(req.body.textEn instanceof Array)) {
-      textEn = new Array(req.body.textEn);
-    }
-    let textCn = req.body.textCn;
-    if (!textCn) {
-      textCn = new Array();
-    } else if (!(req.body.textCn instanceof Array)) {
-      textCn = new Array(req.body.textCn);
-    }
-    let order = req.body.order;
-    if (!order) {
-      order = new Array();
-    } else if (!(req.body.order instanceof Array)) {
-      order = new Array(req.body.order);
-    }
+    if (!req.body.order) req.body.order = [];
+    if (!req.body.textEn) req.body.textEn = [];
+    if (!req.body.textCn) req.body.textCn = [];
 
     // PART 2: BLOCK BUILDING
     let allBlocks = [], allImages = [];
@@ -82,12 +84,12 @@ exports.updateInDb = function(req, res, next) {
     let descriptionEn = "", descriptionCn = "";
     let textIdx = 0, imageIdx = 0, oldIdx = 0;
 
-    for (section of order) {
+    for (section of req.body.order) {
       let newBlock = {}
       if (section === 'text') {
         newBlock.type = "text";
-        newBlock.contentEn = textEn[textIdx];
-        newBlock.contentCn = textCn[textIdx];
+        newBlock.contentEn = req.body.textEn[textIdx];
+        newBlock.contentCn = req.body.textCn[textIdx];
         if (textIdx === 0) {
           descriptionEn = newBlock.contentEn;
           descriptionCn = newBlock.contentCn;
@@ -135,17 +137,17 @@ exports.updateInDb = function(req, res, next) {
     console.log(newPost);
 
     if (newPost.titleEn !== originalPost.titleEn || newPost.type !== originalPost.type) {      
-      db.collection(originalPost.type + "s").deleteOne({_id: req.params.id}, function(err, result) {
+      db.collection(originalPost.type).deleteOne({_id: req.params.id}, function(err, result) {
         if (err) return next(err);
         // check result.deletedCount == 1
-        db.collection(newPost.type + "s").insertOne(newPost, function(err, result) {
+        db.collection(newPost.type).insertOne(newPost, function(err, result) {
           if (err) return next(err);
           // check result.insertedCount == 1
           res.redirect('/control/change');
         });
       });
     } else {
-      db.collection(newPost.type + "s").updateOne({_id: req.params.id}, {$set: newPost}, function(err, result) {
+      db.collection(newPost.type).updateOne({_id: req.params.id}, {$set: newPost}, function(err, result) {
         if (err) return next(err);
         // check result.updatedCount == 1
         res.redirect('/control/change');
