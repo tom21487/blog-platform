@@ -9,14 +9,14 @@ Use Promise.all() (you can use this either with promises or with async - it's re
 - https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/promise/all
 - https://stackoverflow.com/questions/35612428/call-async-await-functions-in-parallel
 
-Asynchronous queries
+Asynchronous queries (do this gradually)
 Delete images using fs
 Set up .env file to hide mongo uri, jwt secret key
 Add multer to controller file by making controller an array of middleware functions
-Create layout for control, user
-Deploy
 Make sure creating a "not tagged" post works
 Use formatName instead of encodeURIComponent
+Testing and bug fixes
+Deploy
 
 These are equal:
 // Callback
