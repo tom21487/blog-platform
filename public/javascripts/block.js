@@ -127,7 +127,7 @@ class Block {
       let currentRank = parseInt(currentblock.id, 10);
       currentRank -= 1;
       currentblock.id = currentRank;
-      currentblock.childNodes[2].innerText = currentblock.id;
+      //currentblock.childNodes[2].innerText = currentblock.id;
     }
     document.getElementById(this.container.id).remove();
     blocksGlobalArray.splice(rank, 1);

@@ -24,7 +24,12 @@ Testing and bug fixes
 Bug: create new post with multiple images, then click update post. Then remove the first existing image. The buttons now display numbers, and the wrong image is removed.
 Files: block.js, changeController.js
 To fix this bug, use: firefox inspector, vscode debugger
-
+- Buttons now display numbers: fixed
+- Wrong image is removed: not fixed
+  - If you delete an existing image ("old" section), then the createController indexing is wrong
+  - I'm trying to pass oldImageIndicesToRemove via: block.js delete() -> post_form.pug input type="hidden" -> changeController updateInDb()
+  - Then, I will first remove oldImageIndicesToRemove from originalPost.images before using originalPost.images[oldIdx]
+Clean up block.js
 Deploy
 
 These are equal:
