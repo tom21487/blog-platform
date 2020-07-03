@@ -1,3 +1,5 @@
+var fs = require("fs");
+
 var mongo = require('../mongo');
 var db = mongo.getDb();
 
@@ -170,18 +172,17 @@ exports.confirmation = function(req, res, next) {
   });
 }
 
-exports.removeFromDb = function(req, res, next) {
+exports.removeFromDb = async function(req, res, next) {
   if (req.body.result == "yes") {
-    let collectionString = req.params.type + "s";
-    db.collection(collectionString).deleteOne({_id: req.params.id}, function(err, result) {
-      if (err) return next(err);
-      if (result.deletedCount != 1) {
-        var err = new Error('Incorrect deletedCount');
-        err.status = 404;
-        return next(err);
+    try {
+      let result = await db.collection(req.params.type + "s").findOneAndDelete({_id: req.params.id});
+      for (image of result.value.images) {
+        fs.unlinkSync("public" + image);
       }
       res.redirect(`/control/change/${req.params.type}`);
-    });
+    } catch(err) {
+      return next(err);
+    }
   } else if (req.body.result == "no") {
     res.redirect(`/control/change/${req.params.type}`);
   }

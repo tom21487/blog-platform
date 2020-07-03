@@ -23,6 +23,7 @@ exports.sendToDb = function(req, res, next) {
   // PART 1: ARRAY CONVERSIONS
   let tags = [];
   if (!req.body.tags) {
+    console.log("This should be changed after deployment.");
     tags = new Array(mongo.getObjectID("5efae5553d85b4652872481f"));
   } else {
     for (tag of req.body.tags) {

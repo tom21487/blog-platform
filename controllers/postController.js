@@ -44,28 +44,6 @@ exports.list = async function(req, res, next) {
   }
 }
 
-/*exports.list = function(req, res, next) {
-  let queryObject = req.query.tag ? {tags: req.query.tag} : {};
-  let n = (req.params.type == "projects") ? (10) : ((req.params.type == "blogs") ? (5) : (0));
-  db.collection(req.params.type).find(queryObject).sort({$natural:-1}).skip((req.params.page-1)*10).limit(n).toArray(function(err, posts) {
-    if (err) return next(err);
-    db.collection('tags').find().toArray(function(err, tags) {
-      if (err) return next(err);
-      db.collection(req.params.type).countDocuments(function(err, count) {
-        if (err) return next(err);
-        res.render('post_list', {
-          title: `Tom\'s site - ${req.params.type}`,
-          posts: posts,
-          page: req.params.type,
-          tags: tags,
-          language: req.params.language,
-          documentCount: count
-        });
-      });
-    });
-  });
-}*/
-
 exports.detail = function(req, res, next) {
   db.collection(req.params.type).findOne({_id: req.params.id}, function(err, post) {
     if (err) return next(err);
