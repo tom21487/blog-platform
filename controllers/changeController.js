@@ -67,9 +67,11 @@ exports.updateInDb = async function(req, res, next) {
     console.log(req.body);
     console.log("original post:");
     console.log(originalPost);
+    console.log("oldImageIndicesToRemove:");
+    console.log(req.body.oldImageIndicesToRemove.split(","));
 
     // PART 1: ARRAY CONVERSIONS
-    let tags = [];
+    /* let tags = [];
     if (!req.body.tags) {
       console.log("This should be changed after deployment.");
       tags = new Array(mongo.getObjectID("5efae5553d85b4652872481f"));
@@ -159,7 +161,7 @@ exports.updateInDb = async function(req, res, next) {
         fs.unlinkSync("public" + image);
       }
       res.redirect('/control/change');
-    }
+    } */
   } catch(err) {
     for (image of newPost.images) {
       fs.unlinkSync("public" + image);

@@ -1,4 +1,5 @@
 var blocksGlobalArray = [];
+var oldImageIndicesToRemove = [];
 
 class Block {
   constructor(b) {
@@ -6,6 +7,11 @@ class Block {
     this.container = document.createElement('div');
     this.container.id = document.getElementById("all-blocks").childNodes.length;
     
+    // SECTION
+    this.section = "";
+    this.isOriginalImage = false;
+    this.originalId = parseInt(this.container.id);
+
     // SELECT
     this.select = document.createElement('select');
     this.select.name = 'order[]';
@@ -70,18 +76,24 @@ class Block {
     this.container.appendChild(this.select);
     this.container.appendChild(this.deleteBtn);
     if (b.type == "text") {
+      this.section = "text";
       this.container.appendChild(this.inputEn);
       this.container.appendChild(this.inputCn);
     } else if (b.type == "image") {
+      this.section = "old";
+      this.isOriginalImage = true;
       this.select.name = "";
       this.imageUploadSelector.name = "order[]";
       this.container.insertBefore(this.imageUploadSelector, this.deleteBtn);
+      this.section = "old";
     }
   }
 
   displayField() {
     this.select.name = "order[]";
     if (this.select.value == 'text') {
+      this.section = "text";
+
       this.imageUploadSelector.remove();
       this.inputImg.remove();
 
@@ -107,14 +119,18 @@ class Block {
     else if (this.select.value == 'image') {
       this.inputEn.remove();
       this.inputCn.remove();
-
-      this.inputImg = document.createElement('input');
-      this.inputImg.type = 'file';
-      this.inputImg.name = 'image';
-      this.inputImg.style.display = "block";
-      this.inputImg.style.marginBottom = "10px";
-
-      this.container.appendChild(this.inputImg);
+      if (this.isOriginalImage) {
+        this.section = "old";
+        this.select.name = "";
+        this.imageUploadSelector.name = "order[]";
+        this.imageUploadSelector.value = "old";
+        this.container.insertBefore(this.imageUploadSelector, this.deleteBtn);
+      } else {
+        this.section = "image";
+        this.select.name = "order[]";
+        this.imageUploadSelector.name = "";
+        this.container.appendChild(this.inputImg);
+      }
     }
   }
 
@@ -129,18 +145,27 @@ class Block {
       currentblock.id = currentRank;
       //currentblock.childNodes[2].innerText = currentblock.id;
     }
+
+    if (this.section == "old") {
+      oldImageIndicesToRemove.push(this.originalId);
+      console.log("updating value of oldImageIndicesToRemove");
+      document.getElementById("oldImageIndicesToRemove").value = oldImageIndicesToRemove;
+    }
+    
     document.getElementById(this.container.id).remove();
     blocksGlobalArray.splice(rank, 1);
   }
 
   toggleImageUpload() {
     if (this.imageUploadSelector.value == "new") {
+      this.section = "image";
       this.select.name = "order[]";
       this.imageUploadSelector.name = "";
       this.container.replaceChild(this.select, this.select);
       this.container.replaceChild(this.imageUploadSelector, this.imageUploadSelector);
       this.container.appendChild(this.inputImg);
     } else if (this.imageUploadSelector.value == "old") {
+      this.section = "old";
       this.select.name = "";
       this.imageUploadSelector.name = "order[]";
       this.container.replaceChild(this.select, this.select);
