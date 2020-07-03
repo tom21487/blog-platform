@@ -10,7 +10,9 @@ var multer = require('multer');
 var upload = multer({dest: './public/images'});
 
 router.get('/', function(req, res, next) {
-  res.render('control');
+  res.render('control', {
+    title: "Control panel"
+  });
 });
 
 router.get('/create', createController.showForm);

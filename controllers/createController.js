@@ -84,7 +84,12 @@ exports.sendToDb = function(req, res, next) {
   });
 
   db.collection(req.body.type).insertOne(post, function(err, result) {
-    if (err) return next(err);
+    if (err) {
+      for (image of post.images) {
+        fs.unlinkSync("public" + image);
+      }
+      return next(err);
+    }
     res.redirect('/control/change');
   });
 }

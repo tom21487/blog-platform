@@ -11,13 +11,17 @@ Use Promise.all() (you can use this either with promises or with async - it's re
 
 Asynchronous queries (do this gradually)
 Delete images using fs
-1. Delete post
+1. Delete post (done)
 2. Error during createController and changeController
+3. changeController: remove old post images (if replaced)
 Set up .env file to hide mongo uri, jwt secret key
 Add multer to controller file by making controller an array of middleware functions
 Make sure creating a "not tagged" post works
 Use formatName instead of encodeURIComponent
+Change control routes to /projects, /blogs instead of /project, /blog
 Testing and bug fixes
+Bug: create new post with multiple images, then click update post. Then remove the first existing image. The buttons now display numbers, and the wrong image is removed.
+
 Deploy
 
 These are equal:

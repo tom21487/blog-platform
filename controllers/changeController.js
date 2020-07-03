@@ -56,8 +56,10 @@ exports.showForm = async function(req, res, next) {
   }
 }
 
-exports.updateInDb = function(req, res, next) {  
-  db.collection(req.params.type + "s").findOne({_id: req.params.id}, function(err, originalPost) {
+exports.updateInDb = async function(req, res, next) {
+  try {
+    let originalPost = await db.collection(req.params.type + "s").findOne({_id: req.params.id});
+
     // PART 0: DEBUG LOGS
     console.log("files:")
     console.log(req.files);
@@ -85,6 +87,7 @@ exports.updateInDb = function(req, res, next) {
     let coverImage = "";
     let descriptionEn = "", descriptionCn = "";
     let textIdx = 0, imageIdx = 0, oldIdx = 0;
+    let imagesToRemove = originalPost.images;
 
     for (section of req.body.order) {
       let newBlock = {}
@@ -100,7 +103,6 @@ exports.updateInDb = function(req, res, next) {
       } else if (section === 'image') {
         newBlock.type = "image";
         newBlock.url = '/images/' + req.files[imageIdx].filename;
-        //newBlock.imgName = req.files[imageIdx].name
         if (imageIdx === 0 && oldIdx === 0) {
           coverImage = newBlock.url;
         }
@@ -113,6 +115,8 @@ exports.updateInDb = function(req, res, next) {
           coverImage = newBlock.url;
         }
         allImages.push(newBlock.url);
+        let imageRemoveIdx = imagesToRemove.indexOf(newBlock.url);
+        imagesToRemove.splice(imageRemoveIdx, 1);
         oldIdx++;
       } else {
         var err = new Error('Undefined block type');
@@ -138,28 +142,36 @@ exports.updateInDb = function(req, res, next) {
     console.log("new post:");
     console.log(newPost);
 
+    console.log("images to remove:");
+    console.log(imagesToRemove);
+
     if (newPost.titleEn !== originalPost.titleEn || newPost.type !== originalPost.type) {      
-      db.collection(originalPost.type).deleteOne({_id: req.params.id}, function(err, result) {
-        if (err) return next(err);
-        // check result.deletedCount == 1
-        db.collection(newPost.type).insertOne(newPost, function(err, result) {
-          if (err) return next(err);
-          // check result.insertedCount == 1
-          res.redirect('/control/change');
-        });
-      });
+      let deleteOldPost = db.collection(originalPost.type).deleteOne({_id: req.params.id});
+      let insertNewPost = db.collection(newPost.type).insertOne(newPost);
+      await Promise.all([deleteOldPost, insertNewPost]);
+      for (image of imagesToRemove) {
+        fs.unlinkSync("public" + image);
+      }
+      res.redirect('/control/change');
     } else {
-      db.collection(newPost.type).updateOne({_id: req.params.id}, {$set: newPost}, function(err, result) {
-        if (err) return next(err);
-        // check result.updatedCount == 1
-        res.redirect('/control/change');
-      });
+      await db.collection(newPost.type).updateOne({_id: req.params.id}, {$set: newPost});
+      for (image of imagesToRemove) {
+        fs.unlinkSync("public" + image);
+      }
+      res.redirect('/control/change');
     }
-  });
+  } catch(err) {
+    for (image of newPost.images) {
+      fs.unlinkSync("public" + image);
+    }
+    return next(err);
+  }
 }
 
 exports.selectType = function(req, res, next) {
-  res.render('select_type');
+  res.render('select_type', {
+    title: "Select type"
+  });
 }
 
 exports.confirmation = function(req, res, next) {
