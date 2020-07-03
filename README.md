@@ -20,7 +20,10 @@ Make sure creating a "not tagged" post works
 Use formatName instead of encodeURIComponent
 Change control routes to /projects, /blogs instead of /project, /blog
 Testing and bug fixes
+
 Bug: create new post with multiple images, then click update post. Then remove the first existing image. The buttons now display numbers, and the wrong image is removed.
+Files: block.js, changeController.js
+To fix this bug, use: firefox inspector, vscode debugger
 
 Deploy
 
