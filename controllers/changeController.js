@@ -57,7 +57,6 @@ exports.showForm = async function(req, res, next) {
 }
 
 exports.updateInDb = async function(req, res, next) {
-  let imagesToRemove = [];
   try {
     let originalPost = await db.collection(req.params.type + "s").findOne({_id: req.params.id});
 
@@ -88,7 +87,7 @@ exports.updateInDb = async function(req, res, next) {
     let coverImage = "";
     let descriptionEn = "", descriptionCn = "";
     let textIdx = 0, imageIdx = 0, oldIdx = 0;
-    imagesToRemove = originalPost.images;
+    let imagesToRemove = originalPost.images;
 
     for (section of req.body.order) {
       let newBlock = {}
@@ -162,8 +161,8 @@ exports.updateInDb = async function(req, res, next) {
       res.redirect('/control/change');
     }
   } catch(err) {
-    for (image of imagesToRemove) {
-      fs.unlinkSync("public" + image);
+    for (image of req.files) {
+      fs.unlinkSync(image.path);
     }
     return next(err);
   }
