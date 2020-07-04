@@ -30,7 +30,9 @@ To fix this bug, use: firefox inspector, vscode debugger
   - I'm trying to pass oldImageIndicesToRemove via: block.js delete() -> post_form.pug input type="hidden" -> changeController updateInDb()
   - Then, I will first remove oldImageIndicesToRemove from originalPost.images before using originalPost.images[oldIdx]
   - WAIT WHY DON'T YOU JUST SEND THE OLD IMAGE URL TO THE FRONT END AND SEND IT BACK ONCE CHANGES ARE MADE? This is much more efficient (less calculations), and would work if you ever want to implement changing order of blocks. Put the old image url in a hidden input under this.imageUploadSelector if (b.type == "image"). If displayField() or toggleImageUpload(), then clear/restore the input value when appropriate.
-  
+
+Bug: post detail page still shows tag as id
+Bug: click upload new image and submit, you will get filename undefined, you should make file inputs required on the client side
 Clean up block.js
 Deploy
 

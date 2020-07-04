@@ -61,17 +61,15 @@ exports.updateInDb = async function(req, res, next) {
     let originalPost = await db.collection(req.params.type + "s").findOne({_id: req.params.id});
 
     // PART 0: DEBUG LOGS
-    console.log("files:")
+    console.log("files:");
     console.log(req.files);
     console.log("body:");
     console.log(req.body);
     console.log("original post:");
     console.log(originalPost);
-    console.log("oldImageIndicesToRemove:");
-    console.log(req.body.oldImageIndicesToRemove.split(","));
 
     // PART 1: ARRAY CONVERSIONS
-    /* let tags = [];
+    let tags = [];
     if (!req.body.tags) {
       console.log("This should be changed after deployment.");
       tags = new Array(mongo.getObjectID("5efae5553d85b4652872481f"));
@@ -112,13 +110,13 @@ exports.updateInDb = async function(req, res, next) {
         imageIdx++;
       } else if (section === 'old') {
         newBlock.type = "image";
-        newBlock.url = originalPost.images[oldIdx];
+        newBlock.url = req.body.originalImageURLs[oldIdx];
         if (imageIdx === 0 && oldIdx === 0) {
           coverImage = newBlock.url;
         }
         allImages.push(newBlock.url);
-        let imageRemoveIdx = imagesToRemove.indexOf(newBlock.url);
-        imagesToRemove.splice(imageRemoveIdx, 1);
+        let keepImageIdx = imagesToRemove.indexOf(newBlock.url);
+        imagesToRemove.splice(keepImageIdx, 1);
         oldIdx++;
       } else {
         var err = new Error('Undefined block type');
@@ -161,11 +159,8 @@ exports.updateInDb = async function(req, res, next) {
         fs.unlinkSync("public" + image);
       }
       res.redirect('/control/change');
-    } */
-  } catch(err) {
-    for (image of newPost.images) {
-      fs.unlinkSync("public" + image);
     }
+  } catch(err) {
     return next(err);
   }
 }
