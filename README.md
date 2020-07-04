@@ -29,7 +29,7 @@ To fix this bug, use: firefox inspector, vscode debugger
   - If you delete an existing image ("old" section), then the createController indexing is wrong
   - I'm trying to pass oldImageIndicesToRemove via: block.js delete() -> post_form.pug input type="hidden" -> changeController updateInDb()
   - Then, I will first remove oldImageIndicesToRemove from originalPost.images before using originalPost.images[oldIdx]
-  - WAIT WHY DON'T YOU JUST SEND THE OLD IMAGE URL TO THE FRONT END AND SEND IT BACK ONCE CHANGES ARE MADE? This is much more efficient (less calculations), and would work if you ever want to implement changing order of blocks. Put the information in the section name. else { newBlock.url = section // section = "1q2w3e4r" }, do this instead of if (section == "old")
+  - WAIT WHY DON'T YOU JUST SEND THE OLD IMAGE URL TO THE FRONT END AND SEND IT BACK ONCE CHANGES ARE MADE? This is much more efficient (less calculations), and would work if you ever want to implement changing order of blocks. Put the old image url in a hidden input under this.imageUploadSelector if (b.type == "image"). If displayField() or toggleImageUpload(), then clear/restore the input value when appropriate.
   
 Clean up block.js
 Deploy
