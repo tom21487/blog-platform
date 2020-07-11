@@ -14,7 +14,7 @@ Delete images using fs
 1. Delete post (done)
 2. Error during createController and changeController (done)
 3. changeController: remove old post images (if replaced)
-Set up .env file to hide mongo uri, jwt secret key
+Set up .env file to hide mongo uri, jwt secret key (done)
 Add multer to controller file by making controller an array of middleware functions
 Make sure creating a "not tagged" post works
 Use formatName instead of encodeURIComponent

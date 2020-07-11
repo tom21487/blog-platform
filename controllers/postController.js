@@ -19,12 +19,16 @@ exports.list = async function(req, res, next) {
 
     // 3. Resolve queries
     let [posts, tags, documentCount] = await Promise.all([findPosts, findTags, countDocuments]);
-    console.log("posts:");
-    console.log(posts);
     // 4. Convert post tag ids to tag names
     for (let i = 0; i < posts.length; i++) {
+      console.log(`i: ${i}`);
       for (let j = 0; j < posts[i].tags.length; j++) {
+        console.log(`j: ${j}`);
         // Binary search (find by id) is better than linear search (loop through all tags)
+        console.log("posts:");
+        console.log(posts);
+        console.log("posts[i].tags:");
+        console.log(posts[i].tags);
         let postTagObject = await db.collection("tags").findOne({ _id: mongo.getObjectID(posts[i].tags[j]) });
         posts[i].tags[j] = postTagObject.name;
       }

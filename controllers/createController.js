@@ -24,7 +24,7 @@ exports.sendToDb = function(req, res, next) {
   let tags = [];
   if (!req.body.tags) {
     console.log("This should be changed after deployment.");
-    tags = new Array(mongo.getObjectID("5efae5553d85b4652872481f"));
+    tags = new Array(mongo.getObjectID(process.env.NOT_TAGGED_ID));
   } else {
     for (tag of req.body.tags) {
       tags.push(mongo.getObjectID(tag));
@@ -47,8 +47,8 @@ exports.sendToDb = function(req, res, next) {
       // contentEn, contentCn, url, imgName
     }
     if (section === 'text') {
-      newBlock.contentEn = req.textEn[textIdx];
-      newBlock.contentCn = req.textCn[textIdx];
+      newBlock.contentEn = req.body.textEn[textIdx];
+      newBlock.contentCn = req.body.textCn[textIdx];
       if (textIdx === 0) {
         descriptionEn = newBlock.contentEn;
         descriptionCn = newBlock.contentCn;
