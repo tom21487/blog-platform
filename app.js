@@ -1,3 +1,7 @@
+// Configure .env file
+var dotenv = require("dotenv");
+dotenv.config();
+
 // Require mongo wrapper
 var mongo = require('./mongo');
 
@@ -15,7 +19,7 @@ mongo.connect(function(err) {
   var createError = require('http-errors');
   var cookieParser = require("cookie-parser");
   var verifyToken = require("./verifyToken");
-
+  
   // Routers
   var indexRouter = require('./routes/index');
   var aboutRouter = require('./routes/about');

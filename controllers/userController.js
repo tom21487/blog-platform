@@ -49,7 +49,7 @@ exports.checkUser = function(req, res, next) {
       if (err) return next(err);
       if (!result) return res.send("invalid password");
       // create token
-      const token = jwt.sign({ _id: user._id }, "secretkey", { expiresIn: "2d"});
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "2d"});
       // store token in browser cookie
       res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
       return res.redirect("/user");

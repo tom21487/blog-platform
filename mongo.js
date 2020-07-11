@@ -1,8 +1,7 @@
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 const ObjectID = mongodb.ObjectID;
-const url = 'mongodb://localhost:27017';
-const client = new MongoClient(url, { useUnifiedTopology: true });
+const client = new MongoClient(process.env.MONGO_URI, { useUnifiedTopology: true });
 
 var db;
 
