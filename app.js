@@ -29,7 +29,7 @@ mongo.connect(function(err) {
   var userRouter = require('./routes/user');
 
   var app = express();
-  var port = 3000;
+  var port = process.env.PORT || 3000;
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
