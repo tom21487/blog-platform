@@ -6,7 +6,8 @@ const tabs = {
   "about": 2,
   "projects": 3,
   "blogs": 4,
-  "contact": 5
+    "contact": 5,
+    "user": 6
 }
 const selectedID = tabs[navbar.dataset.select];
 navbar.childNodes[selectedID].classList.add("selected");

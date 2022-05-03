@@ -1,7 +1,8 @@
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 const ObjectID = mongodb.ObjectID;
-const client = new MongoClient(process.env.MONGO_URI, { useUnifiedTopology: true });
+// const client = new MongoClient(process.env.MONGO_URI, { useUnifiedTopology: true });
+const client = new MongoClient("mongodb://localhost:27017", { useUnifiedTopology: true });
 
 var db;
 
@@ -13,7 +14,7 @@ module.exports = {
     });
   },
   getDb: function() {
-    if (!db || !client.isConnected()) {
+    if (!db /* || !client.isConnected() */) {
       console.error("Connection has been unexpectedly closed, unable to return database!");
       return;
     }

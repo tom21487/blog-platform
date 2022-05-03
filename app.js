@@ -42,11 +42,11 @@ mongo.connect(function(err) {
   app.use(cookieParser());
 
   app.use('/control', verifyToken, controlRouter);
-  app.use('/user', userRouter);
   app.use('/:language', indexRouter);
   app.use('/:language/about', aboutRouter);
   app.use('/:language/:type', postRouter);
   app.use('/:language/contact', contactRouter);
+  app.use('/:language/user', userRouter);
   
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
