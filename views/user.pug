@@ -1,4 +1,15 @@
-    a(href='/user/signup' style="display: block") Sign up
-    a(href='/user/login' style="display: block") Log in
-    a(href='/control' style="display: block") Control
-    a(href='/en' style="display: block") Home
+extends layout
+
+block content
+  -
+    text = {
+      signup: ["Sign up", "注册新账户"],
+      login: ["Log in", "登陆账户"],
+      control: ["Control panel", "控制面板"],
+      home: ["Home", "首页"]
+    };
+  div#about-text
+    a(href='/user/signup') #{text.signup[lang]}
+    a(href='/user/login') #{text.login[lang]}
+    a(href='/control') #{text.control[lang]}
+    a(href='/' + language) #{text.home[lang]}

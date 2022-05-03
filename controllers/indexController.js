@@ -2,7 +2,7 @@ var mongo = require('../mongo');
 var db = mongo.getDb();
 
 exports.index = async function(req, res, next) {
-  console.log("index controller in use");
+  // console.log("index controller in use");
   try {
     // no more sorting for now (because I can't get it to work with Azure CosmosDB)
     let findProjects = db.collection("projects").find().limit(2).toArray();

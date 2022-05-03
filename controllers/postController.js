@@ -36,7 +36,9 @@ exports.list = async function(req, res, next) {
 
     // 5. Render view
     res.render('post_list', {
-      title: `Tom\'s site - ${req.params.type}`,
+        title: req.params.type == 'projects' ?
+            (req.params.language == 'en' ? 'Projects' : '项目') :
+            (req.params.language == 'en' ? 'Blogs': '博客'),
       posts: posts,
       page: req.params.type,
       tags: tags,

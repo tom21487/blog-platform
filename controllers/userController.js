@@ -5,7 +5,9 @@ const jwt = require("jsonwebtoken");
 
 exports.index = function(req, res, next) {
   res.render('user', {
-    title: 'Tom\'s site - user'
+      title: req.params.language == 'en' ? 'User' : '用户',
+      page: 'user',
+      language: req.params.language
   });
 }
 
