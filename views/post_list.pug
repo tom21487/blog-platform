@@ -14,7 +14,9 @@ block content
       text.posts.push({
         title: [post.titleEn, post.titleCn],
         description: [post.descriptionEn, post.descriptionCn],
-        tags: post.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : post.tags,
+        tags: post.tags == 0 ? 
+          (language == "en" ? ["No tags"] : ["没有标签"]) :
+          post.tags,
         coverImage: post.coverImage,
         url: [post.urlEn, post.urlCn]
       });

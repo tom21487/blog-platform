@@ -1,10 +1,11 @@
 #+title: Todo tasks
 * 别删，这是功能介绍
+** DONE Fix tags system
+** DONE CRUD
+** TODO Review tag deletion mechanism
 ** TODO Duplicate user sign-up
 ** TODO Already logged in
 ** TODO Center about message
-** DONE Fix tags system
-** TODO CRUD
 ** TODO Logout (delete token or search 'JWT logout')
 ** TODO Database asyncronous queries
 ** TODO Use ID for project/blog URL instead of name

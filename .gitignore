@@ -1,5 +1,5 @@
 # Node
-node_modules
+node_modules/
 
 # Emacs
 *~
@@ -13,3 +13,6 @@ tramp
 
 # VS Code
 .vscode/
+
+# Resources
+public/images/

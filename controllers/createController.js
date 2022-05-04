@@ -23,13 +23,18 @@ exports.sendToDb = function(req, res, next) {
 
   // PART 1: ARRAY CONVERSIONS
   let tags = [];
-  if (!req.body.tags) {
+  /*if (!req.body.tags) {
     console.log("This should be changed after deployment.");
     tags = new Array(mongo.getObjectID(process.env.NOT_TAGGED_ID));
   } else {
     for (tag of req.body.tags) {
       tags.push(mongo.getObjectID(tag));
     }
+    }*/
+  if (req.body.tags) {
+      for (tag of req.body.tags) {
+          tags.push(mongo.getObjectID(tag));
+      }
   }
   if (!req.body.order) req.body.order = [];
   if (!req.body.textEn) req.body.textEn = [];

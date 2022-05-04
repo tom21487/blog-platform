@@ -16,7 +16,9 @@ block content
       text.projects.push({
         title: [project.titleEn, project.titleCn],
         description: [project.descriptionEn, project.descriptionCn],
-        tags: project.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : project.tags,
+        tags: project.tags == 0 ? 
+          (language == "en" ? ["No tags"] : ["没有标签"]) :
+          project.tags,
         coverImage: project.coverImage,
         url: [project.urlEn, project.urlCn]
       });
@@ -25,7 +27,9 @@ block content
       text.blogs.push({
         title: [blog.titleEn, blog.titleCn],
         description: [blog.descriptionEn, blog.descriptionCn],
-        tags: blog.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : blog.tags,
+        tags: blog.tags == 0 ? 
+          (language == "en" ? ["No tags"] : ["没有标签"]) :
+          blog.tags,
         coverImage: blog.coverImage,
         url: [blog.urlEn, blog.urlCn]
       });
@@ -63,7 +67,7 @@ block content
         img.cover-image(src=blog.coverImage)
         p.description
           | #{blog.description[lang]}
-          a(href=blog.url[lang]) #{text.postLink[lang]}
+          a(href=blog.url[lang]) #{text.more[lang]}
     else
       p #{text.noProjects[lang]}
   center
