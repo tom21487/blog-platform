@@ -13,7 +13,7 @@ exports.index = function(req, res, next) {
 
 exports.signUpPage = function(req, res, next) {
   res.render('signup', {
-    title: 'Sign up'
+      title: req.params.language == 'en' ? 'Sign up' : '注册'
   });
 }
 
@@ -46,15 +46,17 @@ exports.checkUser = function(req, res, next) {
   db.collection("users").findOne({_id: req.body.username}, function(err, user) {
     if (err) return next(err);
     if (!user) return res.send("username does not exist");
-    // check password
+      // check password
+      console.log("req.body.password: " + req.body.password);
+      console.log("user.password: " + user.password);
     bcrypt.compare(req.body.password, user.password, function(err, result) {
       if (err) return next(err);
-      if (!result) return res.send("invalid password");
+        if (!result) return res.send("invalid password");
       // create token
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "2d"});
       // store token in browser cookie
       res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
-      return res.redirect("/user");
+      return res.redirect(req.params.language + "/user");
     });
   });
 }

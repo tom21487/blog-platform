@@ -9,9 +9,12 @@ var tagController = require('../controllers/tagController.js');;
 var multer = require('multer');
 var upload = multer({dest: './public/images'});
 
+// Index
 router.get('/', function(req, res, next) {
   res.render('control', {
-    title: "Control panel"
+      title: req.params.language == 'en' ? "Control panel" : '控制面板',
+      page: 'user',
+      language: req.params.language
   });
 });
 
