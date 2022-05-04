@@ -5,7 +5,9 @@ exports.showTags = function(req, res, next) {
   db.collection("tags").find({name: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
     res.render('tag_list', {
-      title: 'Tom\'s site - tags',
+        title: req.params.language == 'en' ? 'Control panel' : '控制面板',
+        page: 'user',
+        language: req.params.language,
       tags: tags
     });
   });
@@ -20,7 +22,7 @@ exports.showCreate = function(req, res, next) {
 exports.sendToDb = function(req, res, next) {
   db.collection("tags").insertOne({ name: encodeURIComponent(req.body.name) }, function(err, result) {
     if (err) return next(err);
-    res.redirect("/control/tags");
+    res.redirect('/'+req.params.language+'/control/tags');
   });
 }
 
@@ -40,7 +42,7 @@ exports.updateInDb = function(req, res, next) {
     { $set: { name: req.body.name } },
     function(err, result) {
       if (err) return next(err);
-      res.redirect("/control/tags");
+      res.redirect('/'+req.params.language+'/control/tags');
     }
   );
 }
@@ -67,9 +69,9 @@ exports.removeFromDb = async function(req, res, next) {
   try {
     if (req.body.result == "yes") {
       await db.collection("tags").deleteOne({ _id: mongo.getObjectID(req.params.id) });
-      res.redirect("/control/tags");
+      res.redirect("/"+req.params.language+"/control/tags");
     } else if (req.body.result == "no") {
-      res.redirect("/control/tags");
+      res.redirect("/"+req.params.language+"/control/tags");
     }
   } catch(err) {
     return next(err);

@@ -9,7 +9,10 @@ exports.list = function(req, res, next) {
   db.collection(req.params.type + "s").find().toArray(function(err, posts) {
     if (err) return next(err);
     res.render('change', {
-      title: "Change existing " + req.params.type,
+        title: req.params.language == "en" ?
+            ("Change " + req.params.type) :
+            ("更新" + req.params.type == "project" ? "项目" : "博客"),
+        language: req.params.language,
       posts: posts,
       type: req.params.type
     });
@@ -47,7 +50,9 @@ exports.showForm = async function(req, res, next) {
     }
     
     res.render('post_form', {
-      title: 'Update existing post',
+        title: 'Update existing post',
+        language: req.params.language,
+        page: 'user',
       tags: checkedTags,
       post: post
     });
@@ -170,7 +175,9 @@ exports.updateInDb = async function(req, res, next) {
 
 exports.selectType = function(req, res, next) {
   res.render('select_type', {
-    title: "Select type"
+      title: req.params.language == 'en' ? 'Select page type' : '选择页面类型',
+      page: 'user',
+      language: req.params.language
   });
 }
 
@@ -191,11 +198,11 @@ exports.removeFromDb = async function(req, res, next) {
       for (image of result.value.images) {
         fs.unlinkSync("public" + image);
       }
-      res.redirect(`/control/change/${req.params.type}`);
+      res.redirect('/'+req.params.language+`/control/change/${req.params.type}`);
     } catch(err) {
       return next(err);
     }
   } else if (req.body.result == "no") {
-    res.redirect(`/control/change/${req.params.type}`);
+    res.redirect('/'+req.params.language+`/control/change/${req.params.type}`);
   }
 }

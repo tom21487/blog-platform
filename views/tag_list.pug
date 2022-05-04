@@ -1,14 +1,14 @@
 extends basicHTML
 
 block content
-  a(href='/control/tags/create' style="display: block") New tag
+  a(href='/'+language+'/control/tags/create' style="display: block") New tag
   h4 All tags:
   each tag of tags
     div
       | #{tag.name}
       | (
-      a(href=`/control/tags/${tag._id}/update`) update
+      a(href='/'+language+`/control/tags/${tag._id}/update`) update
       | ) (
-      a(href=`/control/tags/${tag._id}/delete`) delete
+      a(href='/'+language+`/control/tags/${tag._id}/delete`) delete
       | )
-  a(href='/control' style="display: block") Back
+  a(href='/'+language+'/control' style="display: block") Back
