@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  -
+    text = {
+      logout: ["Log out", "注销新账户"],
+      control: ["Control panel", "控制面板"],
+      home: ["Home", "首页"]
+    };
+  div#about-text
+    a(href='/' + language + '/user/logout') #{text.logout[lang]}
+    a(href='/' + language + '/control') #{text.control[lang]}
+    a(href='/' + language) #{text.home[lang]}

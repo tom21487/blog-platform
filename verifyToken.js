@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 function verifyToken(req, res, next) {
   const token = req.cookies.token;
-  if (!token) return res.send("no token found in browser cookie");
+  if (!token) return res.render("user_out");
   var decoded = jwt.verify(token, process.env.JWT_SECRET);
   // Error handling middleware currently takes care of:
   // invalid and expired token errors

@@ -9,7 +9,7 @@ block content
     h4 Blogs:
     each blog in blogs
       div #{blog.titleEn} | #{blog.titleCn}
-    a(href="/control/tags" style="display: block") Back
+    a(href='/'+language+'/control/tags' style="display: block") Back
   else
     h3 Are you sure you want to delete: #{tag.name}?
     form(method="POST" action="")

@@ -56,6 +56,8 @@ exports.confirmation = async function(req, res, next) {
     let findBlogs = db.collection("blogs").find(queryObject).toArray();
     let [tag, projects, blogs] = await Promise.all([findTag, findProjects, findBlogs]);
     res.render("tag_delete", {
+      title: req.params.language == "en" ? "Confirm delete tab" : "确认删除标签",
+      language: req.params.language,
       tag: tag,
       projects: projects,
       blogs: blogs
