@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.index = function(req, res, next) {
-  res.render('user_out', {
-      title: req.params.language == 'en' ? 'User' : '用户',
+  res.render('user_in', {
+      title: req.params.language == 'en' ? 'User system' : '用户系统',
       page: 'user',
       language: req.params.language
   });

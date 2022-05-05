@@ -3,13 +3,13 @@ extends layout
 block content
   -
     text = {
-      signup: ["Sign up", "注册新账户"],
+      message: ["You have not signed in!", "您未登陆！"],
       login: ["Log in", "登陆账户"],
-      control: ["Control panel (should be blocked)", "控制面板（应该被封）"],
+      signup: ["Sign up", "注册新账户"],
       home: ["Home", "首页"]
     };
   div#about-text
-    a(href='/' + language + '/user/signup') #{text.signup[lang]}
+    | #{text.message[lang]}
     a(href='/' + language + '/user/login') #{text.login[lang]}
-    a(href='/' + language + '/control') #{text.control[lang]}
+    a(href='/' + language + '/user/signup') #{text.signup[lang]}
     a(href='/' + language) #{text.home[lang]}
