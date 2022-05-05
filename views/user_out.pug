@@ -6,10 +6,8 @@ block content
       message: ["You have not signed in!", "您未登陆！"],
       login: ["Log in", "登陆账户"],
       signup: ["Sign up", "注册新账户"],
-      home: ["Home", "首页"]
     };
   div#about-text
     | #{text.message[lang]}
     a(href='/' + language + '/user/login') #{text.login[lang]}
     a(href='/' + language + '/user/signup') #{text.signup[lang]}
-    a(href='/' + language) #{text.home[lang]}

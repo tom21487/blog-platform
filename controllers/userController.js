@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.index = function(req, res, next) {
+  console.log(req.body.requestMode);
   res.render('user_in', {
       title: req.params.language == 'en' ? 'User system' : '用户系统',
       page: 'user',
@@ -41,22 +42,28 @@ exports.logInPage = function(req, res, next) {
   });
 }
 
-exports.checkUser = function(req, res, next) {
-  // check if username exists
-  db.collection("users").findOne({_id: req.body.username}, function(err, user) {
-    if (err) return next(err);
+exports.checkUser = async function(req, res, next) {
+  try {
+    // Check username
+    let findUser = db.collection("users").findOne({ _id: req.body.username });
+    let user = await findUser;
     if (!user) return res.send("username does not exist");
-      // check password
-      console.log("req.body.password: " + req.body.password);
-      console.log("user.password: " + user.password);
-    bcrypt.compare(req.body.password, user.password, function(err, result) {
-      if (err) return next(err);
-        if (!result) return res.send("invalid password");
-      // create token
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "2d"});
-      // store token in browser cookie
-      res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
-      return res.redirect(req.params.language + "/user");
+    // Check password
+    let checkPwd = bcrypt.compare(req.body.password, user.password);
+    let result = await checkPwd;
+    if (!result) return res.send("invalid password");
+    // Create token
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "2d"});
+    // Store token in browser cookie
+    res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
+    return res.render('user_in', {
+      title: req.params.language == 'en' ? 'User system' : '用户系统',
+      page: 'user',
+      language: req.params.language
     });
-  });
+    // TODO tell user_in the username (through URL?)
+  } catch (err) {
+    return next(err);
+  }
 }

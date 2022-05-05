@@ -44,8 +44,8 @@ mongo.connect(function(err) {
   app.use('/:language', indexRouter);
   app.use('/:language/about', aboutRouter);
   app.use('/:language/contact', contactRouter);
-  app.use('/:language/user/control', verifyToken, controlRouter);
-  app.use('/:language/user', verifyToken, userRouter);
+  app.use('/:language/user/control', verifyToken.restrictAccess, controlRouter);
+  app.use('/:language/user', userRouter);
   app.use('/:language/:type', postRouter);
   
   // catch 404 and forward to error handler

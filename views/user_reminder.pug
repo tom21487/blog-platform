@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  -
+    text = {
+      msg: ["Return to home page.", "返回主页。"],
+    };
+  p#about-text
+    span #{text.msg[lang]}

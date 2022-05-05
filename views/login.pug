@@ -1,9 +1,10 @@
 extends basicHTML
 
 block content
-  form(method='POST' action='')
+  form(method='POST' action='./')
     | username:
     input(type='text' style='display: block' name="username")
     | password:
     input(type='password' style='display: block' name="password")
     button(type='submit' style='display: block') submit
+    input(type='hidden' name='requestMode' value='login')
