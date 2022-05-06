@@ -1,18 +1,15 @@
-;; This buffer is for text that is not saved, and for Lisp evaluation.
-;; To create a file, visit it with C-x C-f and enter text in its buffer.
-
 if valid token:
 user.index -> user_in.pug { done }
-user.login -> user_reminder.pug
-user.signup -> user_reminder.pug
+user.login -> user_reminder.pug { done }
+user.signup -> user_reminder.pug { done }
 
 if no valid token:
 user.index -> user_out.pug { done }
 user.login -> log_in.pug { done }
-user.signup -> sign_up.pug { done }
+user.signup -> sign_up.pug{ done }
 
 user_reminder.pug:
-You have already logged in, please [sign out]
+You have already logged in, please [log out] { done }
 
 user_in.pug:
 Hello [user]! | Control panel | Log out { done }

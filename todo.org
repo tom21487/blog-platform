@@ -6,7 +6,7 @@
 ** DONE Already logged in
 ** DONE Logout (delete token)
 ** DONE Center about message
-** TODO login_plan.txt 
+** DONE login_plan.txt 
 ** TODO Duplicate user sign-up
 ** TODO Database asyncronous queries
 ** TODO Use ID for project/blog URL instead of name
