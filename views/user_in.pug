@@ -3,11 +3,14 @@ extends layout
 block content
   -
     text = {
+      welcome: [`Hello ${username}`, `您好 ${username}`],
       logout: ["Log out", "注销新账户"],
-      control: ["Control panel", "控制面板"],
-      home: ["Home", "首页"]
+      control: ["Control panel", "控制面板"]
     };
-  div#about-text
-    a(href='/' + language + '/user/logout') #{text.logout[lang]}
+  p#about-text
+    span #{text.welcome[lang]}
     a(href='/' + language + '/control') #{text.control[lang]}
-    a(href='/' + language) #{text.home[lang]}
+    form(method='POST' action='')
+      button(type='submit') #{text.logout[lang]}
+      input(type='hidden' name='requestMode' value='logout')
+      // a(href='/' + language + '/user/logout') #{text.logout[lang]}

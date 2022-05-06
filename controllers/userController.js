@@ -3,13 +3,25 @@ var db = mongo.getDb();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+// GET /:lang/user
 exports.index = function(req, res, next) {
-  console.log(req.body.requestMode);
-  res.render('user_in', {
+    return res.render('user_in', {
       title: req.params.language == 'en' ? 'User system' : '用户系统',
       page: 'user',
-      language: req.params.language
-  });
+      language: req.params.language,
+      username: req.userId
+    });
+}
+
+// POST /:lang/user
+exports.handleRequestMode = function(req, res, next) {
+  if (req.body.requestMode == "signup") {
+    createAccount(req, res, next);
+  } else if (req.body.requestMode == "login") {
+    checkUser(req, res, next);
+  } else {
+    logout(req, res, next);
+  }
 }
 
 exports.signUpPage = function(req, res, next) {
@@ -18,7 +30,7 @@ exports.signUpPage = function(req, res, next) {
   });
 }
 
-exports.createAccount = function(req, res, next) {
+function createAccount(req, res, next) {
   // hash password
   bcrypt.hash(req.body.password, 10, function(err, hash) {
     if (err) return next(err);
@@ -42,7 +54,7 @@ exports.logInPage = function(req, res, next) {
   });
 }
 
-exports.checkUser = async function(req, res, next) {
+async function checkUser(req, res, next) {
   try {
     // Check username
     let findUser = db.collection("users").findOne({ _id: req.body.username });
@@ -60,10 +72,20 @@ exports.checkUser = async function(req, res, next) {
     return res.render('user_in', {
       title: req.params.language == 'en' ? 'User system' : '用户系统',
       page: 'user',
-      language: req.params.language
+      language: req.params.language,
+      username: req.body.username
     });
     // TODO tell user_in the username (through URL?)
   } catch (err) {
     return next(err);
   }
+}
+
+function logout(req, res, next) {
+  res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
+  return res.render("user_out", {
+    title: req.params.language == "en" ? "Access user account" : "访问用户账号",
+    page: 'user',
+    language: req.params.language
+  });
 }
