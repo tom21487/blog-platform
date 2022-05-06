@@ -10,5 +10,6 @@
 ** DONE Duplicate user sign-up
 ** TODO Use ID for project/blog URL instead of name
 ** TODO Add author to posts
+** TODO Log out all users
 ** 太懒 Token blacklist
 ** 太懒 Database asyncronous queries
