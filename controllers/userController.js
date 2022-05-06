@@ -30,22 +30,36 @@ exports.signUpPage = function(req, res, next) {
   });
 }
 
-function createAccount(req, res, next) {
-  // hash password
-  bcrypt.hash(req.body.password, 10, function(err, hash) {
-    if (err) return next(err);
-    console.log("hash:");
-    console.log(hash);
-    // create user
+async function createAccount(req, res, next) {
+  try {
+    // Hash password
+    let hashPassword = bcrypt.hash(req.body.password, 10);
+    let hash = await hashPassword;
+    // Create user
     let user = {
       _id: req.body.username,
       password: hash
     }
-    db.collection("users").insertOne(user, function(err, result) {
-      if (err) return next(err);
-      res.send("successfully created user");
+    let insertUser = db.collection("users").insertOne(user);
+    let result = await insertUser;
+    return res.render('user_in', {
+      title: req.params.language == 'en' ? 'User system' : '用户系统',
+      page: 'user',
+      language: req.params.language,
+      username: req.body.username
     });
-  });
+  } catch(err) {
+    let errCode = err.message.substring(0, 6);
+    if (errCode == "E11000") {
+      return res.render("user_dup", {
+	title: req.params.language == "en" ? "Alert" : "警告",
+	page: "user",
+	language: req.params.language,
+	username: req.body.username
+      });
+    }
+    return next(err);
+  }
 }
 
 exports.logInPage = function(req, res, next) {

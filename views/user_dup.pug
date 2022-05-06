@@ -1,0 +1,13 @@
+extends layout
+block content
+  -
+    text = {
+      user: ['User ', '用户 '],
+      exists: [' already exists!', ' 已存在！'],
+      back: ['Back', '返回']
+    };
+  p#about-text
+    span #{text.user[lang]}
+    span #{username}
+    span #{text.exists[lang]}
+    a(href='./') #{text.back[lang]}
