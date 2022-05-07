@@ -9,7 +9,8 @@
 ** DONE login_plan.txt 
 ** DONE Duplicate user sign-up
 ** TODO Use ID for project/blog URL instead of name
+   How does tag manager do it?
 ** TODO Add author to posts
 ** TODO Log out all users
 ** 太懒 Token blacklist
-** 太懒 Database asyncronous queries
+** 太懒 Database asynchronous queries

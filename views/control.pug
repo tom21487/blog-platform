@@ -1,7 +1,12 @@
-extends basicHTML
+extends layout
 
 block content
-	a(href='/'+language+'/control/create' style="display: block") Create
-	a(href='/'+language+'/control/change' style="display: block") Change
-	a(href='/'+language+'/control/tags' style="display: block") Tag manager
-	a(href='/'+language style="display: block") Home
+  -
+    text = {
+      create: ["Create", "创建"],
+      change: ["Change", "更改"],
+      tag: ["Tag manager", "标签管理"],
+    };
+  a(href='control/create' style="display: block") #{text.create[lang]}
+  a(href='control/change' style="display: block") #{text.change[lang]}
+  a(href='control/tags' style="display: block") #{text.tag[lang]}
