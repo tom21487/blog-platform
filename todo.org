@@ -12,5 +12,6 @@
    How does tag manager do it?
 ** TODO Add author to posts
 ** TODO Log out all users
+** TODO Choose language/选择语言 page
 ** 太懒 Token blacklist
 ** 太懒 Database asynchronous queries

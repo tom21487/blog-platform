@@ -78,7 +78,6 @@ exports.sendToDb = function(req, res, next) {
 
   // PART 4: ADD PROJECT TO DATABASE
   let post = new Post({
-    _id: mongo.newId() // TODO
     titleEn: req.body.titleEn,
     titleCn: req.body.titleCn,
     type: req.body.type,

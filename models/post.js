@@ -1,7 +1,9 @@
+var mongo = require('../mongo');
+
 class Post {
   constructor(p) {
     // user-defined
-    this._id = p.titleEn;
+    this._id = new mongo.getObjectID();
     this.titleEn = p.titleEn;
     this.titleCn = p.titleCn;
     this.descriptionEn = p.descriptionEn;
