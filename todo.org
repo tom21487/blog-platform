@@ -8,8 +8,8 @@
 ** DONE Center about message
 ** DONE login_plan.txt 
 ** DONE Duplicate user sign-up
-** TODO Use ID for project/blog URL instead of name
-   How does tag manager do it?
+** DONE Use ID for project/blog URL instead of name
+** DONE Proper pagination
 ** TODO Add author to posts
 ** TODO Log out all users
 ** TODO Choose language/选择语言 page

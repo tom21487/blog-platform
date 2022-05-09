@@ -9,19 +9,20 @@ exports.list = function(req, res, next) {
   db.collection(req.params.type + "s").find().toArray(function(err, posts) {
     if (err) return next(err);
     res.render('change', {
-        title: req.params.language == "en" ?
-            ("Change " + req.params.type) :
-            ("更新" + req.params.type == "project" ? "项目" : "博客"),
-        language: req.params.language,
+      title: req.params.language == "en" ?
+	  ("Change " + req.params.type) :
+	  ("更新" + req.params.type == "project" ? "项目" : "博客"),
+      language: req.params.language,
       posts: posts,
-      type: req.params.type
+      type: req.params.type,
+      page: "user"
     });
   });
 }
 
 exports.showForm = async function(req, res, next) {
   try {
-    let findPost = db.collection(req.params.type + "s").findOne({_id: req.params.id});
+    let findPost = db.collection(req.params.type + "s").findOne({_id: mongo.getDb(req.params.id)});
     let findTags = db.collection('tags').find({name: {'$ne': 'not tagged'}}).toArray();
     let [post, tags] = await Promise.all([findPost, findTags]);
 
@@ -63,7 +64,7 @@ exports.showForm = async function(req, res, next) {
 
 exports.updateInDb = async function(req, res, next) {
   try {
-    let originalPost = await db.collection(req.params.type + "s").findOne({_id: req.params.id});
+    let originalPost = await db.collection(req.params.type + "s").findOne({_id: mongo.getObjectID(req.params.id)});
 
     // PART 0: DEBUG LOGS
     console.log("files:");
@@ -151,19 +152,19 @@ exports.updateInDb = async function(req, res, next) {
     console.log(imagesToRemove);
 
     if (newPost.titleEn !== originalPost.titleEn || newPost.type !== originalPost.type) {      
-      let deleteOldPost = db.collection(originalPost.type).deleteOne({_id: req.params.id});
+      let deleteOldPost = db.collection(originalPost.type).deleteOne({_id: mongo.getObjectID(req.params.id)});
       let insertNewPost = db.collection(newPost.type).insertOne(newPost);
       await Promise.all([deleteOldPost, insertNewPost]);
       for (image of imagesToRemove) {
         fs.unlinkSync("public" + image);
       }
-      res.redirect('/control/change');
+      res.redirect('/user/control/change');
     } else {
-      await db.collection(newPost.type).updateOne({_id: req.params.id}, {$set: newPost});
+      await db.collection(newPost.type).updateOne({_id: mongo.getObjectID(req.params.id)}, {$set: newPost});
       for (image of imagesToRemove) {
         fs.unlinkSync("public" + image);
       }
-      res.redirect('/control/change');
+      res.redirect('/user//control/change');
     }
   } catch(err) {
     for (image of req.files) {
@@ -183,7 +184,7 @@ exports.selectType = function(req, res, next) {
 
 exports.confirmation = function(req, res, next) {
   let collectionString = req.params.type + "s";
-  db.collection(collectionString).findOne({_id: req.params.id}, function(err, post) {
+  db.collection(collectionString).findOne({_id: mongo.getObjectID(req.params.id)}, function(err, post) {
     if (err) return next(err);
     res.render('post_delete', {
       post: post
@@ -194,15 +195,15 @@ exports.confirmation = function(req, res, next) {
 exports.removeFromDb = async function(req, res, next) {
   if (req.body.result == "yes") {
     try {
-      let result = await db.collection(req.params.type + "s").findOneAndDelete({_id: req.params.id});
+      let result = await db.collection(req.params.type + "s").findOneAndDelete({_id: mongo.getObjectID(req.params.id)});
       for (image of result.value.images) {
         fs.unlinkSync("public" + image);
       }
-      res.redirect('/'+req.params.language+`/control/change/${req.params.type}`);
+      res.redirect('/'+req.params.language+`/user/control/change/${req.params.type}`);
     } catch(err) {
       return next(err);
     }
   } else if (req.body.result == "no") {
-    res.redirect('/'+req.params.language+`/control/change/${req.params.type}`);
+    res.redirect('/'+req.params.language+`/user/control/change/${req.params.type}`);
   }
 }

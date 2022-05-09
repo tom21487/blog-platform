@@ -1,12 +1,14 @@
-extends basicHTML
+extends layout
 
 block content
-  each post of posts
-    div
-      | #{post.titleEn} | #{post.titleCn} 
-      | (
-      a(href='/'+language+`/control/change/${type}/${post._id}/update`) update
-      | ) (
-      a(href='/'+language+`/control/change/${type}/${post._id}/delete`) delete
-      | )
-  a(href='/'+language+'/control/change' style="display: block") Back
+  p#about-text
+    span #{title}
+    each post of posts
+      div
+        | #{language == "en" ? post.titleEn : post.titleCn} 
+        | (
+        a(href='/'+language+`/user/control/change/${type}/${post._id}/update`) update
+        | ) (
+        a(href='/'+language+`/user/control/change/${type}/${post._id}/delete`) delete
+        | )
+    a(href='/'+language+'/user/control/change' style="display: block") Back

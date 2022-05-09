@@ -9,7 +9,7 @@ block content
     };
   p#about-text
     span #{text.welcome[lang]}
-    a(href='control') #{text.control[lang]}
+    a(href='user/control') #{text.control[lang]}
     form(method='POST' action='')
       button(type='submit') #{text.logout[lang]}
       input(type='hidden' name='requestMode' value='logout')

@@ -21,6 +21,10 @@ router.get('/', function(req, res, next) {
 router.get('/create', createController.showForm);
 router.post('/create', upload.array('image'), createController.sendToDb);
 
+router.get('/change/:type/:id/foo', function(req, res, next) {
+  return res.send("bar");
+});
+
 router.get('/change', changeController.selectType);
 router.get('/change/:type', changeController.list);
 

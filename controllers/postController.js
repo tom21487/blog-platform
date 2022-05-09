@@ -15,11 +15,11 @@ exports.list = async function(req, res, next) {
     // 2. Define query actions
     let findPosts = db.collection(req.params.type).find(queryObject).sort({$natural:-1}).skip((req.params.page-1)*10).limit(n).toArray();
     let findTags = db.collection('tags').find().toArray();
-    // let countDocuments = db.collection(req.params.type).countDocuments();
+    let countDocuments = db.collection(req.params.type).countDocuments();
 
     // 3. Resolve queries
-      let [posts, tags, documentCount] = await Promise.all([findPosts, findTags
-                                                            /*, countDocuments*/]);
+    let [posts, tags, documentCount] = await Promise.all([findPosts, findTags,
+                                                          countDocuments]);
     // 4. Convert post tag ids to tag names
     for (let i = 0; i < posts.length; i++) {
       /*console.log(posts[i].titleEn + "的tags: ");
@@ -47,14 +47,20 @@ exports.list = async function(req, res, next) {
   }
 }
 
-exports.detail = function(req, res, next) {
-  db.collection(req.params.type).findOne({_id: req.params.id}, function(err, post) {
-    if (err) return next(err);
+exports.detail = async function(req, res, next) {
+  try {
+    let findPost = db.collection(req.params.type).findOne(
+      { _id: mongo.getObjectID(req.params.id) });
+    let post = await findPost;
     let title = "";
     if (req.params.language == "en") {
-      title = `${(req.params.type == "projects") ? ("Project") : ((req.params.type == "blogs") ? ("Blog") : (""))} - ${post.titleEn}`;
+      title = `${(req.params.type == "projects") ?
+                 ("Project") : ((req.params.type == "blogs") ?
+                 ("Blog") : (""))} - ${post.titleEn}`;
     } else if (req.params.language == "cn") {
-      title = `${(req.params.type == "projects") ? ("项目") : ((req.params.type == "blogs") ? ("博客") : (""))} - ${post.titleCn}`;
+      title = `${(req.params.type == "projects") ?
+                 ("项目") : ((req.params.type == "blogs") ?
+                 ("博客") : (""))} - ${post.titleCn}`;
     }
     res.render('post_detail', {
       title: title,
@@ -62,5 +68,7 @@ exports.detail = function(req, res, next) {
       page: req.params.type,
       language: req.params.language
     });
-  });
+  } catch(err) {
+    return next(err);
+  }
 }

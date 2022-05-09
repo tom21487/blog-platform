@@ -24,7 +24,7 @@ module.exports = {
       return callback();
     });
   },
-  getObjectID: function() {
-    return new ObjectID();
+  getObjectID: function(str) {
+    return new ObjectID(str);
   }
 };
