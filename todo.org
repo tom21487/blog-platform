@@ -11,7 +11,9 @@
 ** DONE Use ID for project/blog URL instead of name
 ** DONE Proper pagination
 ** DONE Add author to posts (create, update)
-** TODO Fix cyclic dependency (change -> update)
+** DONE Fix cyclic dependency (change -> update)
+** DONE Post detail page show tag name not tag ID
+** TODO Create redirect to detail page
 ** TODO Log out all users
 ** TODO Choose language/选择语言 page
 ** 太懒 Token blacklist

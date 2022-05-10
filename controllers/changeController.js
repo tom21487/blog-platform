@@ -22,7 +22,8 @@ exports.list = function(req, res, next) {
 
 exports.showForm = async function(req, res, next) {
   try {
-    let findPost = db.collection(req.params.type + "s").findOne({_id: mongo.getDb(req.params.id)});
+    console.log("[changeController::showForm]: hello world!");
+    let findPost = db.collection(req.params.type + "s").findOne({_id: mongo.getObjectID(req.params.id)});
     let findTags = db.collection('tags').find({name: {'$ne': 'not tagged'}}).toArray();
     let [post, tags] = await Promise.all([findPost, findTags]);
 
@@ -60,6 +61,7 @@ exports.showForm = async function(req, res, next) {
   } catch(err) {
     return next(err);
   }
+
 }
 
 exports.updateInDb = async function(req, res, next) {
@@ -134,6 +136,7 @@ exports.updateInDb = async function(req, res, next) {
 
     // PART 4: ADD PROJECT TO DATABASE
     let newPost = new Post({
+      _id: originalPost._id,
       author: originalPost.author,
       titleEn: req.body.titleEn,
       titleCn: req.body.titleCn,
@@ -152,7 +155,7 @@ exports.updateInDb = async function(req, res, next) {
     console.log("images to remove:");
     console.log(imagesToRemove);
 
-    if (newPost.titleEn !== originalPost.titleEn || newPost.type !== originalPost.type) {      
+    /*if (newPost.titleEn !== originalPost.titleEn || newPost.type !== originalPost.type) {      
       let deleteOldPost = db.collection(originalPost.type).deleteOne({_id: mongo.getObjectID(req.params.id)});
       let insertNewPost = db.collection(newPost.type).insertOne(newPost);
       await Promise.all([deleteOldPost, insertNewPost]);
@@ -160,13 +163,13 @@ exports.updateInDb = async function(req, res, next) {
         fs.unlinkSync("public" + image);
       }
       res.redirect('/user/control/change');
-    } else {
+    } else {*/
       await db.collection(newPost.type).updateOne({_id: mongo.getObjectID(req.params.id)}, {$set: newPost});
       for (image of imagesToRemove) {
         fs.unlinkSync("public" + image);
       }
-      res.redirect('/user//control/change');
-    }
+      res.redirect('/'+req.params.language+'/'+newPost.type+'/detail/'+newPost._id);
+    //}
   } catch(err) {
     for (image of req.files) {
       fs.unlinkSync(image.path);

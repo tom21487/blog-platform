@@ -8,7 +8,6 @@ block content
       noPosts: ["There are no results matching your filter", "找不到符合标签选项的结果"],
       filter: ["Filter by tag:", "标签过滤："],
       allTags: ["All tags", "全部标签"],
-      noTags: ["No tags", "没有标签"],
       author: ["Author:", "作者："]
     };
     for (post of posts) {
@@ -28,13 +27,7 @@ block content
     | #{text.filter[lang]}
     button.tag(type='button' onclick='redirect()') #{text.allTags[lang]}
     each tag in tags
-      button.tag(type='submit' name='tag' value=tag.name)
-        if tag.name == "not tagged" && language == "cn"
-          | 没有标签
-        else
-          | #{tag.name}
-    else
-      p #{text.noTags[lang]}
+      button.tag(type='submit' name='tag' value=tag.name) #{tag.name}
 
   div(id=page + '-container')
     each post in text.posts

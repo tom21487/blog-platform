@@ -62,6 +62,12 @@ exports.detail = async function(req, res, next) {
                  ("项目") : ((req.params.type == "blogs") ?
                  ("博客") : (""))} - ${post.titleCn}`;
     }
+    for (let j = 0; j < post.tags.length; j++) {
+      let postTagObject = await db.collection("tags").findOne({
+        _id: mongo.getObjectID(post.tags[j])
+      });
+      post.tags[j] = postTagObject.name;
+    }
     res.render('post_detail', {
       title: title,
       post: post,

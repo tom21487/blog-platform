@@ -5,7 +5,9 @@ block content
     text = {
       title: [post.titleEn, post.titleCn],
       tagsHeading: ["Tags: ", "标签："],
-      tags: post.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : post.tags,
+      tags: post.tags == 0 ? 
+        (language == "en" ? ["No tags"] : ["没有标签"]) :
+        post.tags,
       descriptionHeading: ["Description: ", "描述："],
       descriptionContent: [post.descriptionEn, post.descriptionCn],
       author: ["Author:", "作者："],
