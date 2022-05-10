@@ -10,7 +10,7 @@
 ** DONE Duplicate user sign-up
 ** DONE Use ID for project/blog URL instead of name
 ** DONE Proper pagination
-** TODO Add author to posts
+** DONE Add author to posts (create, update)
 ** TODO Log out all users
 ** TODO Choose language/选择语言 page
 ** 太懒 Token blacklist

@@ -77,8 +77,8 @@ exports.updateInDb = async function(req, res, next) {
     // PART 1: ARRAY CONVERSIONS
     let tags = [];
     if (!req.body.tags) {
-      console.log("This should be changed after deployment.");
-      tags = new Array(mongo.getObjectID("5efae5553d85b4652872481f"));
+      /*console.log("This should be changed after deployment.");
+      tags = new Array(mongo.getObjectID("5efae5553d85b4652872481f"));*/
     } else {
       for (tag of req.body.tags) {
         tags.push(mongo.getObjectID(tag));
@@ -134,6 +134,7 @@ exports.updateInDb = async function(req, res, next) {
 
     // PART 4: ADD PROJECT TO DATABASE
     let newPost = new Post({
+      author: originalPost.author,
       titleEn: req.body.titleEn,
       titleCn: req.body.titleCn,
       type: req.body.type,

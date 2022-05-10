@@ -8,11 +8,13 @@ block content
       noPosts: ["There are no results matching your filter", "找不到符合标签选项的结果"],
       filter: ["Filter by tag:", "标签过滤："],
       allTags: ["All tags", "全部标签"],
-      noTags: ["No tags", "没有标签"]
+      noTags: ["No tags", "没有标签"],
+      author: ["Author:", "作者："]
     };
     for (post of posts) {
       text.posts.push({
         title: [post.titleEn, post.titleCn],
+        author: post.author,
         description: [post.descriptionEn, post.descriptionCn],
         tags: post.tags == 0 ? 
           (language == "en" ? ["No tags"] : ["没有标签"]) :
@@ -41,6 +43,7 @@ block content
         div.tagspace
           each tag in post.tags
             span.tag #{tag}
+        | #{text.author[lang]} #{post.author}
         img.cover-image(src=post.coverImage)
         p.description
             span #{post.descriptionEn}

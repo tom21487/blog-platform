@@ -4,6 +4,7 @@ class Post {
   constructor(p) {
     // user-defined
     this._id = new mongo.getObjectID();
+    this.author = p.author;
     this.titleEn = p.titleEn;
     this.titleCn = p.titleCn;
     this.descriptionEn = p.descriptionEn;

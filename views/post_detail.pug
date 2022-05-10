@@ -8,6 +8,7 @@ block content
       tags: post.tags[0] == "not tagged" && language == "cn" ? ["没有标签"] : post.tags,
       descriptionHeading: ["Description: ", "描述："],
       descriptionContent: [post.descriptionEn, post.descriptionCn],
+      author: ["Author:", "作者："],
       blocks: []
     };
     for (block of post.blocks) {
@@ -22,7 +23,8 @@ block content
     | #{text.tagsHeading[lang]}
     each tag in text.tags
       span.tag #{tag}
-
+  p.description
+    | #{text.author[lang]} #{post.author}
   p.description
     | #{text.descriptionHeading[lang]}
     | #{text.descriptionContent[lang]}
