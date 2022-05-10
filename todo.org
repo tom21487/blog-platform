@@ -11,6 +11,7 @@
 ** DONE Use ID for project/blog URL instead of name
 ** DONE Proper pagination
 ** DONE Add author to posts (create, update)
+** TODO Fix cyclic dependency (change -> update)
 ** TODO Log out all users
 ** TODO Choose language/选择语言 page
 ** 太懒 Token blacklist
