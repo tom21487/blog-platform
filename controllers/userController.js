@@ -35,10 +35,15 @@ async function createAccount(req, res, next) {
     // Hash password
     let hashPassword = bcrypt.hash(req.body.password, 10);
     let hash = await hashPassword;
+    // Create token
+    const token = jwt.sign({ _id: req.body.username }, process.env.JWT_SECRET, {
+      expiresIn: "2d"});
+    res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
     // Create user
     let user = {
       _id: req.body.username,
-      password: hash
+      password: hash,
+      token: token
     }
     let insertUser = db.collection("users").insertOne(user);
     let result = await insertUser;
@@ -71,8 +76,7 @@ exports.logInPage = function(req, res, next) {
 async function checkUser(req, res, next) {
   try {
     // Check username
-    let findUser = db.collection("users").findOne({ _id: req.body.username });
-    let user = await findUser;
+    let user = req.user;
     if (!user) return res.send("username does not exist");
     // Check password
     let checkPwd = bcrypt.compare(req.body.password, user.password);
@@ -83,6 +87,13 @@ async function checkUser(req, res, next) {
       expiresIn: "2d"});
     // Store token in browser cookie
     res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
+    // Update user field
+    const userMod = {
+      $set: {
+        token: token
+      }
+    };
+    await db.collection("users").updateOne({ _id: req.body.username }, userMod);
     return res.render('user_in', {
       title: req.params.language == 'en' ? 'User system' : '用户系统',
       page: 'user',

@@ -6,7 +6,7 @@ var verifyToken = require("../verifyToken");
 var userController = require('../controllers/userController.js');
 
 router.get('/', verifyToken.restrictAccess, userController.index);
-router.post('/', userController.handleRequestMode);
+router.post('/', verifyToken.restrictAccess, userController.handleRequestMode);
 router.get('/signup', verifyToken.checkLoginState, userController.signUpPage);
 // router.post('/signup', userController.createAccount);
 router.get('/login', verifyToken.checkLoginState, userController.logInPage);

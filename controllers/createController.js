@@ -97,7 +97,7 @@ exports.sendToDb = function(req, res, next) {
       }
       return next(err);
     }
-    res.redirect('/'+req.params.language+'/user/control/change');
+    res.redirect('/'+req.params.language+'/'+post.type+'/detail/'+post._id);
   });
 }
 
