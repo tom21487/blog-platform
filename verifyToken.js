@@ -31,8 +31,8 @@ exports.restrictAccess = async function(req, res, next) {
       return res.render("user_out", userOut);
     }
     // Pass all checks: send username to next function
-    // req.userId = decoded._id;
-    req.userObj = user;
+    req.userId = decoded._id;
+    // req.userObj = user;
   } catch(err) {
     // [handle] error type 1: invalid token
     if (err.message == "invalid signature") {

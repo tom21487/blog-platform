@@ -15,9 +15,5 @@
 ** DONE Post detail page show tag name not tag ID
 ** DONE Create redirect to detail page
 ** TODO Log out all devices: user field
-Check in restrictAccess and checkLoginState
-In both cases if cookie is valid but userfield is invalid then delete the cookie and ask the user to log in again (issue a new cookie).
-** TODO User use ObjectId as primary key, not username
 ** TODO Choose language/选择语言 page
-** 太懒 Token blacklist
-** 太懒 Database asynchronous queries
+** TODO Pass user object from verifyToken to other pages if needed

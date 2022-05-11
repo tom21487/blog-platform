@@ -9,7 +9,7 @@ exports.index = function(req, res, next) {
       title: req.params.language == 'en' ? 'User system' : '用户系统',
       page: 'user',
       language: req.params.language,
-      username: req.userObj._id
+      username: req.userId
     });
 }
 
@@ -106,7 +106,23 @@ async function checkUser(req, res, next) {
 }
 
 function logout(req, res, next) {
+  let didReset = false;
+  try {
+    // Clear user db token entry
+    const token = req.cookies.token;
+    var decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch(err) {
+    console.log("[userController::logout]: invalid token during logout, " +
+                "resetting db token entry for all users");
+    didReset = true;
+    db.collection("users").updateMany({}, { $set: { token: null } });
+  }
+  console.log("[userController:logout]: cleaning 'token' cookie.");
   res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
+  if (!didReset) {
+    console.log("[userController:logout]: resetting db token entry for correct user");
+    db.collection("users").updateOne({ _id: decoded._id }, { $set: { token: null } });
+  }
   return res.render("user_out", {
     title: req.params.language == "en" ? "Access user account" : "访问用户账号",
     page: 'user',
