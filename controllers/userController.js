@@ -9,7 +9,7 @@ exports.index = function(req, res, next) {
       title: req.params.language == 'en' ? 'User system' : '用户系统',
       page: 'user',
       language: req.params.language,
-      username: req.userId
+      username: req.userObj._id
     });
 }
 
@@ -76,7 +76,8 @@ exports.logInPage = function(req, res, next) {
 async function checkUser(req, res, next) {
   try {
     // Check username
-    let user = req.user;
+    let findUser = db.collection("users").findOne({ _id: req.body.username });
+    let user = await findUser;
     if (!user) return res.send("username does not exist");
     // Check password
     let checkPwd = bcrypt.compare(req.body.password, user.password);
@@ -84,23 +85,21 @@ async function checkUser(req, res, next) {
     if (!result) return res.send("invalid password");
     // Create token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "2d"});
+      expiresIn: "1d"});
     // Store token in browser cookie
     res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
-    // Update user field
-    const userMod = {
-      $set: {
-        token: token
-      }
-    };
-    await db.collection("users").updateOne({ _id: req.body.username }, userMod);
+    // Update token entry for user
+    await db.collection("users").updateOne(
+      { _id: user._id },
+      {
+        $set: { token: token }
+      });
     return res.render('user_in', {
       title: req.params.language == 'en' ? 'User system' : '用户系统',
       page: 'user',
       language: req.params.language,
       username: req.body.username
     });
-    // TODO tell user_in the username (through URL?)
   } catch (err) {
     return next(err);
   }
