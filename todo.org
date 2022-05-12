@@ -14,6 +14,6 @@
 ** DONE Fix cyclic dependency (change -> update)
 ** DONE Post detail page show tag name not tag ID
 ** DONE Create redirect to detail page
-** TODO Log out all devices: user field
-** TODO Choose language/选择语言 page
-** TODO Pass user object from verifyToken to other pages if needed
+** DONE Log out all devices: user field
+** DONE Choose language/选择语言 page
+** TODO Replace **basicHTML** with **layout**

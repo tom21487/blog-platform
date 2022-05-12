@@ -1,6 +1,12 @@
-extends basicHTML
+extends layout
 
 block content
+  -
+    text = {
+      username: ["Username", "用户名"],
+      password: ["Password", "密码"],
+      submit: ["Submit", "提交"]
+    }
   form(method='POST' action='./')
     | username:
     input(type='text' style='display: block' name="username")

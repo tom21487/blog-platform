@@ -41,12 +41,14 @@ mongo.connect(function(err) {
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(cookieParser());
 
+  // 选择语言
   app.use('/:language', indexRouter);
   app.use('/:language/about', aboutRouter);
   app.use('/:language/contact', contactRouter);
   app.use('/:language/user/control', verifyToken.restrictAccess, controlRouter);
   app.use('/:language/user', userRouter);
   app.use('/:language/:type', postRouter);
+  app.use('/', function(req, res, next) { return res.render("choose_lang") });
   
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

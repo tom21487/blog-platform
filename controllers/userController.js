@@ -26,7 +26,9 @@ exports.handleRequestMode = function(req, res, next) {
 
 exports.signUpPage = function(req, res, next) {
   res.render('signup', {
-      title: req.params.language == 'en' ? 'Sign up' : '注册'
+    title: req.params.language == 'en' ? 'Sign up' : '注册',
+    page: 'user',
+    language: req.params.language
   });
 }
 
@@ -69,7 +71,9 @@ async function createAccount(req, res, next) {
 
 exports.logInPage = function(req, res, next) {
   res.render('login', {
-    title: 'Log in'
+    title: req.params.language == 'en' ? 'Log in' : '登陆',
+    page: 'user',
+    language: req.params.language
   });
 }
 
