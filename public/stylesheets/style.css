@@ -221,9 +221,19 @@ body {
   font-weight: bold;
 }
 
-/* Form group */
+/* Forms */
 .form-group {
   display: block;
+}
+.form-div {
+  display: block;
+  text-align: center
+}
+.form-inner {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
 }
 
 /* Block */

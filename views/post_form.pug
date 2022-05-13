@@ -1,44 +1,58 @@
-extends basicHTML
+extends layout
 
 block content
-  form(method='POST' action='' enctype="multipart/form-data")
-    div.form-group
-      | type: 
-      select(name='type')
-        option(value='projects') project
-        option(value='blogs') blog
+  -
+    text = {
+      type: ["Type: ", "类型："],
+      project: ["Project", "项目"],
+      blog: ["Blog", "博客"],
+      titleEn: ["Title (en): ", "标题（英）："],
+      titleCn: ["Title (cn): ", "标题（中）："],
+      tags: ["Tags: ", "标签："],
+      manageTags: ["(Manage tags)", "（管理模块）"],
+      blocks: ["Blocks: ", "模块："],
+      addBlock: ["Add block", "添加模块"],
+      submit: ["Submit", "提交"]
+    }
+  div.form-div
+    form.form-inner(method='POST' action='' enctype="multipart/form-data")
+      div.form-group
+        | #{text.type[lang]}
+        select(name='type')
+          option(value='projects') #{text.project[lang]}
+          option(value='blogs') #{text.blog[lang]}
 
-    div.form-group
-      | title (en): 
-      input(name='titleEn' type='text' autocomplete='off' required
-      value = post==undefined ? "" : post.titleEn)
-      
-    div.form-group
-      | title (cn): 
-      input(name='titleCn' type='text' autocomplete='off' required
-      value = post==undefined ? "" : post.titleCn)
+      div.form-group
+        | #{text.titleEn[lang]}
+        input(name='titleEn' type='text' autocomplete='off' required
+        value = post==undefined ? "" : post.titleEn)
 
-    div.form-group
-      | tags: 
-      each tag, index in tags
-        if tag.checked
-          input(name='tags[]' type='checkbox' value=tag._id checked)
-        else
-          input(name='tags[]' type='checkbox' value=tag._id)
-        | #{tag.name}
-        if index < tags.length - 1
-          | ,
-      | 
-      a(href='/tags') (manage tags)
-    
-    div.form-group
-      | blocks:
-      br
-      div#all-blocks
-      button(type='button' onclick='addBlock("none")') add block
-    
-    button(type='submit' style="display: block") submit
-  a(href='javascript:history.back()' style="display: block") Back
+      div.form-group
+        | #{text.titleCn[lang]}
+        input(name='titleCn' type='text' autocomplete='off' required
+        value = post==undefined ? "" : post.titleCn)
+
+      div.form-group
+        | #{text.tags[lang]}
+        each tag, index in tags
+          if tag.checked
+            input(name='tags[]' type='checkbox' value=tag._id checked)
+          else
+            input(name='tags[]' type='checkbox' value=tag._id)
+          | #{tag.name}
+          if index < tags.length - 1
+            | ,
+        | 
+        a(href='/tags') #{text.manageTags[lang]}
+
+      div.form-group
+        | #{text.blocks[lang]}
+        br
+        div#all-blocks
+        button(type='button' onclick='addBlock("none")') #{text.addBlock[lang]}
+
+      button(type='submit' style="display: block") #{text.submit[lang]}
+
   script(src='/javascripts/block.js')
   if post != undefined
     script.

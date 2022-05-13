@@ -8,9 +8,9 @@ block content
       control: ["Control panel", "控制面板"]
     };
   p#about-text
-    span #{text.welcome[lang]}
-    a(href='control') #{text.control[lang]}
-    form(method='POST' action='')
-      button(type='submit') #{text.logout[lang]}
-      input(type='hidden' name='requestMode' value='logout')
-      // a(href='/' + language + '/user/logout') #{text.logout[lang]}
+    div.form-div
+      form.form-inner(method='POST' action='')
+        span #{text.welcome[lang]}
+        a(href='/'+language+'/user/control/') #{text.control[lang]}
+        button(type='submit') #{text.logout[lang]}
+        input(type='hidden' name='requestMode' value='logout')

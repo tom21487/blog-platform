@@ -7,8 +7,9 @@ exports.showForm = function(req, res, next) {
   db.collection('tags').find({name: {'$ne': 'not tagged'}}).toArray(function(err, tags) {
     if (err) return next(err);
     res.render('post_form', {
-        title: req.params.language == "en" ? 'Create new post' : "创建新帖子",
-        page: 'user',
+      title: req.params.language == "en" ? 'Create new post' : "创建新帖子",
+      language: req.params.language,
+      page: 'user',
       tags: tags,
     });
   });
