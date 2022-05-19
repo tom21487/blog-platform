@@ -17,3 +17,8 @@
 ** DONE Log out all devices: user field
 ** DONE Choose language/选择语言 page
 ** TODO Replace **basicHTML** with **layout**
+** DONE Duplicate tags
+- [X] New tag
+- [X] Update tag
+** DONE Tag deletion routing
+** TODO Test some login attacks

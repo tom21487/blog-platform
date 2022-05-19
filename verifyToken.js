@@ -12,8 +12,6 @@ exports.restrictAccess = async function(req, res, next) {
   // [check] error type 0: no token
   const token = req.cookies.token;
   // [handle] error type 0: no token
-  console.log("[verifyToken::restrictAccess]: token: ")
-  console.log(token);
   if (!token) {
     console.log("[verifyToken::restrictAccess]: no token, rendering user_out");
     return res.render("user_out", userOut);

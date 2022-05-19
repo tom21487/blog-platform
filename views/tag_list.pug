@@ -1,14 +1,21 @@
-extends basicHTML
+extends layout
 
 block content
-  a(href='/'+language+'/control/tags/create' style="display: block") New tag
-  h4 All tags:
-  each tag of tags
-    div
-      | #{tag.name}
-      | (
-      a(href='/'+language+`/control/tags/${tag._id}/update`) update
-      | ) (
-      a(href='/'+language+`/control/tags/${tag._id}/delete`) delete
-      | )
-  a(href='/'+language+'/control' style="display: block") Back
+  -
+    text = {
+      newTag: ["New tag", "新标签"],
+      allTags: ["All tags", "全部标签"],
+      update: ["Update", "更新"],
+      delete: ["Delete", "删除"]
+    }
+  center
+    a(href='/'+language+'/user/control/tags/create' style="display: block") #{text.newTag[lang]}
+    h4 #{text.allTags[lang]}
+    each tag of tags
+      div
+        | #{tag.name}
+        | (
+        a(href='/'+language+`/user/control/tags/${tag._id}/update`) #{text.update[lang]}
+        | ) (
+        a(href='/'+language+`/user/control/tags/${tag._id}/delete`) #{text.delete[lang]}
+        | )

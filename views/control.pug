@@ -8,6 +8,6 @@ block content
       tag: ["Tag manager", "标签管理"],
     };
   div#about-text
-    a(href='control/create' style="display: block") #{text.create[lang]}
-    a(href='control/change' style="display: block") #{text.change[lang]}
-    a(href='control/tags' style="display: block") #{text.tag[lang]}
+    a(href='/'+language+'/user/control/create' style="display: block") #{text.create[lang]}
+    a(href='/'+language+'/user/control/change' style="display: block") #{text.change[lang]}
+    a(href='/'+language+'/user/control/tags' style="display: block") #{text.tag[lang]}

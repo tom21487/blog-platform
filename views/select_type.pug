@@ -1,6 +1,13 @@
-extends basicHTML
+extends layout
 
 block content
-  a(href='change/project' style="display: block") Projects
-  a(href='change/blog' style="display: block") Blogs
-  a(href='/'+language+'/user/control' style="display: block") Back
+  -
+    text = {
+      projects: ["Projects" , "项目"],
+      blogs: ["Blogs", "博客"],
+      back: ["Back", "返回"],
+    }
+  center
+    a(href='change/project' style="display: block") #{text.projects[lang]}
+    a(href='change/blog' style="display: block") #{text.blogs[lang]}
+    a(href='/'+language+'/user/control' style="display: block") #{text.back[lang]}

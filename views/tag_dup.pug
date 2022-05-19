@@ -1,0 +1,11 @@
+extends layout
+block content
+  -
+    text = {
+      tag: ["Tag", "标签"],
+      exists: ["already exists!", "已存在！"],
+      try: ["Try again", "再试一次"]
+    }
+  p#about-text
+    span #{text.tag[lang]} #{tag} #{text.exists[lang]}
+    a(href='javascript:history.back()') #{text.try[lang]}

@@ -1,17 +1,33 @@
-extends basicHTML
+extends layout
 
 block content
+  -
+    text = {
+      msg: ["Cannot delete tag because the following posts contain it:",
+            "无法删除标签，因为以下帖子包含标签："],
+      projects: ["Projects:", "项目："],
+      blogs: ["Blogs:", "博客："],
+      back: ["Back", "返回"],
+      confirm: ["Confirm deletion of ", "确认删除 "],
+      yes: ["Yes", "是"],
+      no: ["No", "否"]
+    }
   if projects.length > 0 || blogs.length > 0
-    h3 Cannot delete tag because the following posts contain it:
-    h4 Projects:
-    each project in projects
-      div #{project.titleEn} | #{project.titleCn}
-    h4 Blogs:
-    each blog in blogs
-      div #{blog.titleEn} | #{blog.titleCn}
-    a(href='/'+language+'/control/tags' style="display: block") Back
+    center
+      div #{text.msg[lang]}
+      strong #{text.projects[lang]}
+      each project in projects
+        if language == "en"
+          div #{project.titleEn}
+        else
+          div #{project.titleCn}
+      strong #{text.blogs[lang]}
+      each blog in blogs
+        div language == "en" ? #{blog.titleEn} : #{blog.titleCn}
+      a(href='/'+language+'/user/control/tags' style="display: block") #{text.back[lang]}
   else
-    h3 Are you sure you want to delete: #{tag.name}?
-    form(method="POST" action="")
-      button(type="submit" name="result" value="yes") yes
-      button(type="submit" name="result" value="no") no
+    div.form-div
+      form.form-inner(method="POST" action="")
+        span #{text.confirm[lang]} #{tag.name}? 
+        button(style="margin-right: 5px" type="submit" name="result" value="yes") #{text.yes[lang]}
+        button(type="submit" name="result" value="no") #{text.no[lang]}

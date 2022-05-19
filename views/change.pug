@@ -1,14 +1,20 @@
 extends layout
 
 block content
-  p#about-text
-    span #{title}
+  -
+    text = {
+      update: ["Update", "更新"],
+      delete: ["Delete", "删除"],
+      back: ["Back", "返回"]
+    }
+  center
+    h4 #{title}
     each post of posts
       div
         | #{language == "en" ? post.titleEn : post.titleCn} 
         | (
-        a(href='/'+language+`/user/control/change/${type}/${post._id}/update`) update
+        a(href='/'+language+`/user/control/change/${type}/${post._id}/update`) #{text.update[lang]}
         | ) (
-        a(href='/'+language+`/user/control/change/${type}/${post._id}/delete`) delete
+        a(href='/'+language+`/user/control/change/${type}/${post._id}/delete`) #{text.delete[lang]}
         | )
-    a(href='/'+language+'/user/control/change' style="display: block") Back
+    a(href='/'+language+'/user/control/change' style="display: block") #{text.back[lang]}

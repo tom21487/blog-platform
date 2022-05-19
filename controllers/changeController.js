@@ -191,6 +191,8 @@ exports.confirmation = function(req, res, next) {
   db.collection(collectionString).findOne({_id: mongo.getObjectID(req.params.id)}, function(err, post) {
     if (err) return next(err);
     res.render('post_delete', {
+      language: req.params.language,
+      page: 'user',
       post: post
     });
   });

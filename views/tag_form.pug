@@ -1,9 +1,15 @@
-extends basicHTML
+extends layout
 
 block content
-  form(method='POST' action='')
-    div.form-group
-      | name: 
-      input(name='name' autocomplete='off' required
-      value= tag==undefined ? "" : tag.name)
-    button(type='submit' style='display: block') submit
+  -
+    text = {
+      name: ["Name:", "标签名："],
+      submit: ["Submit", "提交"]
+    }
+  p#about-text
+    div.form-div
+      form.form-inner(method='POST' action='')
+        span #{text.name[lang]} 
+        input(name='name' autocomplete='off' required
+          value= tag==undefined ? "" : tag.name)
+        button(type='submit') #{text.submit[lang]}
