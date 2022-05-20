@@ -32,8 +32,9 @@ exports.restrictAccess = async function(req, res, next) {
     req.userId = decoded._id;
     // req.userObj = user;
   } catch(err) {
+    console.log("[verifyToken::restrictAccess]: err.message = " + err.message);
     // [handle] error type 1: invalid token
-    if (err.message == "invalid signature") {
+    if (err.message == "invalid signature" || err.message == "jwt malformed") {
       console.log("[verifyToken::restrictAccess]: invalid token, deleting cookie " +
                   "and rendering user_out");
       res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
@@ -66,12 +67,13 @@ exports.checkLoginState = async function(req, res, next) {
     }
   } catch(err) {
     // [handle] error type 1: invalid token
-    if (err.message == "invalid signature") {
+    if (err.message == "invalid signature" || err.message == "jwt malformed") {
       console.log("[verifyToken::checkLoginState]: invalid token, deleting cookie " +
                   "and proceeding to next()");
       res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
       return next();
     }
+    return next(err);
   }
   // Pass all checks: display user reminder
   return res.render("user_reminder", {
