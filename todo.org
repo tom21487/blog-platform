@@ -16,9 +16,15 @@
 ** DONE Create redirect to detail page
 ** DONE Log out all devices: user field
 ** DONE Choose language/选择语言 page
-** TODO Replace **basicHTML** with **layout**
+** DONE Replace **basicHTML** with **layout**
+- [X] control/change
 ** DONE Duplicate tags
 - [X] New tag
 - [X] Update tag
 ** DONE Tag deletion routing
-** TODO Test some login attacks
+** DONE Fix project detail page
+** DONE Test some login attacks
+** TODO Handle jwt malformed error? (i.e. change token to 'asdf')
+先把路径话好。
+** TODO Test pagination
+** Feature: hamburger/small screen support

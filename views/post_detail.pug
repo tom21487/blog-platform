@@ -20,19 +20,20 @@ block content
         url: block.type == "image" ? block.url : null
       });
     }
-  h3 #{text.title[lang]}
-  div.tagspace
-    | #{text.tagsHeading[lang]}
-    each tag in text.tags
-      span.tag #{tag}
-  p.description
-    | #{text.author[lang]} #{post.author}
-  p.description
-    | #{text.descriptionHeading[lang]}
-    | #{text.descriptionContent[lang]}
+  div(style="margin-left: 20%; margin-right: 20%; width: 60%")
+    h3 #{text.title[lang]}
+    div.tagspace
+      | #{text.tagsHeading[lang]}
+      each tag in text.tags
+        span.tag #{tag}
+    p.description
+      | #{text.author[lang]} #{post.author}
+    p.description
+      | #{text.descriptionHeading[lang]}
+      | #{text.descriptionContent[lang]}
 
-  each block in text.blocks
-    if (block.type == "text")
-      p #{block.content[lang]}
-    else if (block.type == "image")
-      img.block-img(src=block.url)
+    each block in text.blocks
+      if (block.type == "text")
+        p #{block.content[lang]}
+      else if (block.type == "image")
+        img.block-img(src=block.url)

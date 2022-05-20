@@ -1,7 +1,17 @@
-extends basicHTML
+extends layout
 
 block content
-  h3 Are you sure you want to delete: #{post.titleEn}/#{post.titleCn}?
-  form(method="POST" action="")
-    button(type="submit" name="result" value="yes") yes
-    button(type="submit" name="result" value="no") no
+  -
+    text = {
+      confirm: ["Confirm deletion of ", "确认删除"]
+    }
+  div.form-div
+    form.form-inner(method="POST" action="")
+      span #{text.confirm[lang]}
+      if language == "en"
+        | #{post.titleEn}
+      else
+        | #{post.titleCn}
+      | ? 
+      button(style="margin-right: 5px" type="submit" name="result" value="yes") yes
+      button(type="submit" name="result" value="no") no

@@ -12,7 +12,8 @@ block content
       manageTags: ["(Manage tags)", "（管理模块）"],
       blocks: ["Blocks: ", "模块："],
       addBlock: ["Add block", "添加模块"],
-      submit: ["Submit", "提交"]
+      submit: ["Submit", "提交"],
+      back: ["Back", "返回"]
     }
   div.form-div
     form.form-inner(method='POST' action='' enctype="multipart/form-data")
@@ -43,7 +44,7 @@ block content
           if index < tags.length - 1
             | ,
         | 
-        a(href='/tags') #{text.manageTags[lang]}
+        a(href='/'+language+'/user/control/tags') #{text.manageTags[lang]}
 
       div.form-group
         | #{text.blocks[lang]}
@@ -51,7 +52,8 @@ block content
         div#all-blocks
         button(type='button' onclick='addBlock("none")') #{text.addBlock[lang]}
 
-      button(type='submit' style="display: block") #{text.submit[lang]}
+      button(type='submit' style="display: inline-block") #{text.submit[lang]}
+      a(href='/'+language+'/user/control/' style='display: inline-block') #{text.back[lang]}
 
   script(src='/javascripts/block.js')
   if post != undefined

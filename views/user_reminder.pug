@@ -8,7 +8,8 @@ block content
       logout: ["log out", "注销账户"]
     };
   p#about-text
-    span #{text.reminder[lang]}
-    form(method='POST' action='./')
-      button(type='submit') #{text.logout[lang]}
-      input(type='hidden' name='requestMode' value='logout')
+    div.form-div
+      form.form-inner(method='POST' action='./')
+        span #{text.reminder[lang]}
+        button(type='submit' style="display: inline-block") #{text.logout[lang]}
+        input(type='hidden' name='requestMode' value='logout')
