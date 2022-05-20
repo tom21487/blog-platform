@@ -6,5 +6,5 @@
 // if pages > 1
 div(style="margin-top: 10px")
   | #{text.page[lang]}
-  while p <= pages && p < 1000
+  while p <= pages
     a(href=`/${language}/${page}/${p}`)= p++

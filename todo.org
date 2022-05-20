@@ -24,8 +24,9 @@
 ** DONE Tag deletion routing
 ** DONE Fix project detail page
 ** DONE Test some login attacks
-** TODO Handle jwt malformed error? (i.e. change token to 'asdf')
-先把路径话好。
-** TODO Test pagination
-** TODO Make signup.pug look like login.pug
+** DONE Handle jwt malformed error? (i.e. change token to 'asdf')
+** DONE Make signup.pug look like login.pug
+** DONE Test pagination
+- [X] Blogs
+- [X] Projects
 ** Feature: hamburger/small screen support

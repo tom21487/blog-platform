@@ -5,8 +5,11 @@ block content
     text = {
       username: ["Username:", "用户名："],
       password: ["Password:", "密码："],
-      submit: ["Submit", "提交"]
+      submit: ["Submit", "提交"],
+      login: ["Log in", "登陆账号"]
     }
+  center
+    h3 #{text.login[lang]}
   div.form-div
     form.form-inner(method='POST' action='./')
       | #{text.username[lang]}

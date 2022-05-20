@@ -1,10 +1,20 @@
-extends basicHTML
+extends layout
 
 block content
-  form(method='POST' action='./')
-    | username:
-    input(type='text' style='display: block' name="username")
-    | password:
-    input(type='password' style='display: block' name="password")
-    button(type='submit' style='display: block') submit
-    input(type='hidden' name='requestMode' value='signup')
+  -
+    text = {
+      username: ["Username:", "用户名："],
+      password: ["Password:", "密码："],
+      submit: ["Submit", "提交"],
+      signup: ["Sign up", "注册账号"]
+    }
+  center
+    h3 #{text.signup[lang]}
+  div.form-div
+    form.form-inner(method='POST' action='./')
+      | #{text.username[lang]}
+      input(type='text' style='display: block' name="username")
+      | #{text.password[lang]}
+      input(type='password' style='display: block' name="password")
+      button(type='submit' style='display: block') #{text.submit[lang]}
+      input(type='hidden' name='requestMode' value='signup')

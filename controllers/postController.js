@@ -13,7 +13,7 @@ exports.list = async function(req, res, next) {
     let n = (req.params.type == "projects") ? (10) : ((req.params.type == "blogs") ? (5) : (0));
     
     // 2. Define query actions
-    let findPosts = db.collection(req.params.type).find(queryObject).sort({$natural:-1}).skip((req.params.page-1)*10).limit(n).toArray();
+    let findPosts = db.collection(req.params.type).find(queryObject).sort({$natural:-1}).skip((req.params.page-1)*n).limit(n).toArray();
     let findTags = db.collection('tags').find().toArray();
     let countDocuments = db.collection(req.params.type).countDocuments();
 
