@@ -19,4 +19,16 @@ This project was originally written in the summer of 2020 for my personal websit
 - Web framework: Express.js
 - Template engine: Pug.js
 - Database: MongoDB
-- Authentication: JSON web tokens
+- Authentication: JSON web token
+## Getting started
+1. Start MongoDB
+```
+$ sudo systemctl start mongod
+```
+2. Start Node.js server
+```
+$ pwd
+<blog-platform>
+$ npm start
+```
+3. Open browser and locate to http://localhost:3000
